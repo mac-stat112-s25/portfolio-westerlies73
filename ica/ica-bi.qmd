@@ -13,9 +13,6 @@ code-fold: false
 ```{r}
 # Load data
 elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
-
-# Check it out
-head(elections)
 ```
 
 ```{r}
@@ -123,7 +120,7 @@ Summarize the relationship between the Republican support in 2020 and 2016. Be s
 -   the direction of the relationship (positive/negative)\
 -   outliers (in what state do counties deviate from the national trend? Any ideas why this might be the case?)
 
-The relationship of 2020 and 2016 Republican support is strong. It is a positive relationship. Texas, Utah, Idaho, and Arkansas
+The relationship of 2020 and 2016 Republican support is strong. It is a positive relationship. Texas, Utah, Idaho, and Arkansas have many counties that shifted red. COVID pandemic.
 
 ### Exercise 4: Visualizing trend {.unnumbered}
 
@@ -161,15 +158,16 @@ To examine how the 2020 results are related to some county demographics, constru
 
 ```{r}
 # Scatterplot of repub_pct_20 vs median_rent
-
+ggplot(elections, aes(x = repub_pct_20, y = median_rent)) + geom_point() + geom_smooth(method = "lm")
 
 
 # Scatterplot of repub_pct_20 vs median_age
-
+ggplot(elections, aes(x = repub_pct_20, y = median_age)) + geom_point() + geom_smooth(method = "lm")
 
 
 ```
 
+Republican percentage is negatively correlated to median_rent and positively correlated to median_age. It is better predicted by median age.
 
 ### Exercise 6: A Sad Scatterplot {.unnumbered}
 
@@ -180,6 +178,7 @@ ggplot(elections, aes(y = repub_pct_20, x = historical)) +
   geom_point()
 ```
 
+It fails to visualize how ti change over time due to its scattering nature. It does help answer the relationship between two variables, but it doesn't help answer the trend of a property. 
 
 ### Exercise 7: Quantitative vs Categorical -- Violins & Boxes {.unnumbered}
 
@@ -205,6 +204,8 @@ Box plots are constructed from five numbers - the minimum, 25th percentile, medi
 
 Summarize what you've learned about the 2020 Republican county-level support within and between red/purple/blue states.
 
+In blue, purple, and red states, their median counties' republican supporters are all over 50%. However, the overall supporting county numbers is in an ascending order from blue, purple, to red.
+
 
 ### Exercise 8: Quantitative vs Categorical -- Intuition Check {.unnumbered}
 
@@ -220,7 +221,7 @@ We can also visualize the relationship between `repub_pct_20` and `historical` u
 
 ```{r}
 ggplot(elections, aes(x = repub_pct_20)) +
-  geom_density()
+  geom_density(fill = "red") 
 ```
 
 
@@ -229,13 +230,14 @@ ggplot(elections, aes(x = repub_pct_20)) +
 Work through the chunks below and address the comments therein.
 
 ```{r eval = FALSE}
-# Name two "bad" things about this plot
+# 1. The color scheme is wrong (blue for red and red for blue and green for purple). 2. The blue part is completely overlapped by purple and red
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
   geom_density()
 ```
 
 ```{r eval = FALSE}
 # What does scale_fill_manual do?
+# Manually assign colors for all fills
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
   geom_density() +
   scale_fill_manual(values = c("blue", "purple", "red"))
@@ -243,14 +245,16 @@ ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
 
 ```{r eval = FALSE}
 # What does alpha = 0.5 do?
+# Controls transparency of the color
 # Play around with different values of alpha, between 0 and 1
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
-  geom_density(alpha = 0.5) +
+  geom_density(alpha = 0.7) +
   scale_fill_manual(values = c("blue", "purple", "red"))
 ```
 
 ```{r eval = FALSE}
 # What does facet_wrap do?!
+# Separates the density chart into one each variable.
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
   geom_density() +
   scale_fill_manual(values = c("blue", "purple", "red")) +
@@ -260,6 +264,7 @@ ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
 ```{r eval = FALSE}
 # Let's try a similar grouping strategy with a histogram instead of density plot.
 # Why is this terrible?
+# Some information is completely covered by others
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
   geom_histogram(color = "white") +
   scale_fill_manual(values = c("blue", "purple", "red"))
@@ -271,9 +276,16 @@ ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
 We've now learned 3 (of many) ways to visualize the relationship between a quantitative and categorical variable: side-by-side violins, boxplots, and density plots.
 
 -   Which do you like best?
+
+I like density plots the best. They're more beautiful while violins look creepy.
+
 -   What is one pro of density plots relative to boxplots?
+
+Boxplots are hard to read without previous knowledge of what it represents.
+
 -   What is one con of density plots relative to boxplots?
 
+Boxplots show median and quartiles clearly.
 
 ### Exercise 11: Categorical vs Categorical -- Intuition Check {.unnumbered}
 
@@ -291,14 +303,14 @@ Spend at most 5 minutes on the following intuition check. Adjust the code below 
 
 ```{r}
 # Plot 1: adjust this to recreate the top plot
-ggplot(elections, aes(x = historical)) +
+ggplot(elections, aes(x = historical, fill = winner_20)) +
   geom_bar()
 ```
 
 ```{r}
 # Plot 2: adjust this to recreate the bottom plot
 ggplot(elections, aes(x = winner_20)) +
-  geom_bar()
+  geom_bar() + facet_wrap(~ historical)
 ```
 
 
@@ -309,6 +321,7 @@ Construct the following 4 bar plot visualizations.
 ```{r eval = FALSE}
 # A stacked bar plot
 # How are the "historical" and "winner_20" variables mapped to the plot, i.e. what roles do they play?
+# Historical is the first variable visualized by a bar chart; winner_20 is a fill into the bar chart.
 ggplot(elections, aes(x = historical, fill = winner_20)) +
   geom_bar()
 ```
@@ -338,9 +351,13 @@ ggplot(elections, aes(x = historical, fill = winner_20)) +
 
 Name one pro and one con of using the "proportional bar plot" instead of one of the other three options.
 
+Proportional bar plot is very good for showing percentage difference, but is not good at showing numerical difference like stacked bar chart.
+
 #### Part b {.unnumbered}
 
 What's your favorite bar plot from part and why?
+
+side-by-side. They just look better than others.
 
 
 ### Exercise 13: Practice (now or later) {.unnumbered}
@@ -366,7 +383,7 @@ Reflect before doing anything. What types of variables are these? How might you 
 
 ```{r}
 # How do 3pm temperatures (temp3pm) differ by location?
-
+ggplot(weather, aes(x=location, y = temp3pm)) + geom_boxplot()
 
 
 ```
@@ -374,13 +391,14 @@ Reflect before doing anything. What types of variables are these? How might you 
 ```{r}
 # How might we predict the 3pm temperature (temp3pm) by the 9am temperature (temp9am)?
 
-
+ggplot(weather, aes(x = temp9am, y = temp3pm)) + geom_point() + geom_smooth(method = "lm")
 
 ```
 
 ```{r}
 # How do the number of rainy days (raintoday) differ by location?
 
+ggplot(weather, aes(x = location, fill = raintoday)) + geom_bar()
 
 ```
 
