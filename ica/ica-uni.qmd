@@ -2,11 +2,25 @@
 title: "Univariate Viz"
 number-sections: true
 execute: 
-  eval: false
+  warning: false
+  fig-height: 2.75
+  fig-width: 4.25
+  fig-env: 'figure'
+  fig-pos: 'h'
+  fig-align: center
+  code-fold: false
+  eval: true
 ---
 ### Import data
 ```{r}
 hikes <- read.csv("https://mac-stat.github.io/data/high_peaks.csv")
+```
+
+```{r}
+#| eval: true
+#| message: false
+
+library(tidyverse)
 ```
 
 ### Exercise 1: Research Questions {.unnumbered}
@@ -38,7 +52,6 @@ In order to use `ggplot` tools, we have to first *load* the `tidyverse` package 
 #| eval: true
 #| message: false
 
-# Load the package
 library(tidyverse)
 ```
 
