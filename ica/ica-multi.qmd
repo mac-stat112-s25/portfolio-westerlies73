@@ -29,6 +29,7 @@ A codebook is provided by Danny Kaplan who also made these data accessible:
 Construct a plot of how the average `sat` scores vary from state to state. (Just use 1 variable -- `sat` not `State`!)
 
 ```{r}
+library(tidyverse)
 ggplot(education, aes(x=sat)) + geom_density()
 ```
 
