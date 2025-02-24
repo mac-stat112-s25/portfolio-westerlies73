@@ -4,6 +4,10 @@ title: "Spatial Viz"
 
 ```{r}
 library(tidyverse)
+library(openintro)
+library(maps)
+library(ggthemes)
+library(viridisLite)
 starbucks <- read.csv("https://mac-stat.github.io/data/starbucks.csv")
 ```
 
