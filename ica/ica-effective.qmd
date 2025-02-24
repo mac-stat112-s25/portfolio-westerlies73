@@ -36,7 +36,7 @@ Replace A, B, C, and D in the code below to:
 ```{r}
 ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
   geom_point() + 
-  labs(x = "A", y = "B", title = "C", color = "D")  
+  labs(x = "9 AM Temperature (°C)", y = "3 PM Temperature (°C)", title = "Temperature at 9AM and 3PM at same location", color = "Legend")
 ```
 
 #### Part b {.unnumbered}
@@ -48,11 +48,11 @@ When we're including our plot in an article, paper, book, or other similar outle
 -   Render your Rmd and check out how the figure caption appears.
 
 ```{r}
-#| fig-cap: "???"
+#| fig-cap: "Temperature at 9AM and 3PM shows positive correlation"
 
-ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location, size = rainfall)) + 
   geom_point() + 
-  labs(x = "???", y = "???", color = "???")  
+  labs(x = "9 AM Temperature (°C)", y = "3 PM Temperature (°C)", color = "Island", size = "Rainfall (mm)")  
 ```
 
 \
@@ -85,7 +85,7 @@ Add appropriate alt text at the top of the chunk, in `fig-alt`. Then knit your R
 
 ```{r}
 #| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."
-#| fig-alt: "???"
+#| fig-alt: "Density plots of 3pm temperatures in 3 Australian locations."
 
 ggplot(weather, aes(x = temp3pm, fill = location)) + 
   geom_density(alpha = 0.5) + 
@@ -107,6 +107,8 @@ Color is another important accessibility consideration. Let's check out the colo
 -   Above the image of crayons (I think it's crayons?), click "Choose file" and choose the plot file you just saved.
 -   Click the various simulator buttons (eg: Red-Weak/Protanomaly) to check out how the colors in this plot might appear to others.
 -   Summarize what you learn. What impact might our color choices have on one's ability to interpret the viz?
+
+For color weakness, color scale might affect the understanding. For one-color blindness, inappropriate color scale can be confusing. We shall use color scales that are friendly to colorblind people.
 
 #### Part c {.unnumbered}
 

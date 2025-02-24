@@ -398,10 +398,9 @@ ggplot(___, aes(x = ___)) +
 The style of the code is bad without indents
 
 ```{r}
-# YUCK
 ggplot(hikes, aes(x = elevation)) +
 geom_histogram(color = "white", binwidth = 200) +
-labs(x = "Elevation (feet)", y = "Number of hikes")
+labs(x = "Elevation (feet)", y = "Number of hikes") + theme_minimum()
 ```
 
 -   Though not *necessary* to the code working, it's common, good practice to put a *line break* after each `+` (counterexample below). Why?

@@ -2,4 +2,47 @@
 title: "Spatial Viz"
 ---
 
+```{r}
+library(tidyverse)
+starbucks <- read.csv("https://mac-stat.github.io/data/starbucks.csv")
+```
+
+```{r}
+starbucks_us_by_state <- starbucks |>
+  filter(Country == "US") |>
+  count(State.Province) |>
+  mutate(state_name = str_to_lower(abbr2state(State.Province)))
+```
+
+```{r}
+census_pop_est_2018 <- read_csv("https://mac-stat.github.io/data/us_census_2018_state_pop_est.csv") |>
+  separate(state, into = c("dot", "state"), extra = "merge") |>
+  select(-dot) |>
+  mutate(state = str_to_lower(state))
+
+starbucks_with_2018_pop_est <-
+  starbucks_us_by_state |>
+  left_join(census_pop_est_2018,
+    by = c("state_name" = "state")
+  ) |>
+  mutate(starbucks_per_10000 = (n / est_pop_2018) * 10000)
+```
+
+```{r}
+states_map <- map_data("state")
+starbucks_contiguous_us <- starbucks |>
+  filter(Country == "US", State.Province != "AK", State.Province != "HI")
+ggplot(starbucks_with_2018_pop_est, aes(map_id = state_name, fill = starbucks_per_10000)) +
+  geom_map(map = states_map) +
+  expand_limits(x = states_map$long, y = states_map$lat) +
+  geom_point(
+    data = starbucks_contiguous_us,
+    aes(x = Longitude, y = Latitude),
+    size = 0.05,
+    alpha = 0.2,
+    inherit.aes = FALSE) + 
+  theme_map() +  scale_fill_gradientn(name = "starbucks per 10000", colors = viridis(2), values = scales::rescale(seq(0, 100, by = 5))) + labs(title = "Starbucks per 10000 in continental US", caption = "Visualized by Benjamin Weng\nSource: Starbucks")
+```
+
+
 Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.

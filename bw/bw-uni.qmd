@@ -1,5 +1,22 @@
 ---
 title: "Univariate Viz"
 ---
+```{r}
+# Data on students in this class
+survey <- read.csv("https://hash-mac.github.io/stat112site-s25/data/survey.csv")
 
+# World Cup data
+world_cup <- read.csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv")
+
+library(viridisLite)
+```
+
+```{r}
+#| fig-cap: "Number of hikes on Each Elevation plotted on bar chart. 4000 ft is the most common hikes while 5300 is the least."
+#| fig-alt: "Number of hikes on Each Elevation plotted on bar chart. 4000 ft is the most common hikes while 5300 is the least."
+
+ggplot(hikes, aes(x = elevation)) +
+geom_histogram(color = "white", binwidth = 200, fill = viridis(1)) +
+labs(x = "Elevation (feet)", y = "Number of hikes", title = "Number of Hikes of Each Elevation", caption = "Visualized by: Benjamin Weng\nSource: Survey") + theme_minimal()
+```
 Use this file to generate a professional looking **univariate** visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
