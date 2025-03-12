@@ -1,5 +1,5 @@
 ---
-title: "ica-reshaping"
+title: "Reshaping"
 format: html
 ---
 
@@ -10,6 +10,7 @@ Consider data on a sleep study in which subjects received only 3 hours of sleep 
 [^10-reshaping-data-1]: Gregory Belenky, Nancy J. Wesensten, David R. Thorne, Maria L. Thomas, Helen C. Sing, Daniel P. Redmond, Michael B. Russo and Thomas J. Balkin (2003) Patterns of performance degradation and restoration during sleep restriction and subsequent recovery: a sleep dose-response study. Journal of Sleep Research 12, 1–12.
 
 ```{r}
+library(tidyverse)
 sleep_wide <- read.csv("https://mac-stat.github.io/data/sleep_wide.csv")
 
 head(sleep_wide)
@@ -18,20 +19,19 @@ head(sleep_wide)
 #### Part a {.unnumbered}
 
 What are the units of observation in `sleep_wide`?
+Each test subject.
 
 #### Part b {.unnumbered}
 
-Suppose I ask you to plot each subject's reaction time (y-axis) vs the number of days of sleep restriction (x-axis). "Sketch" out in words what the first few rows of the data need to look like in order to do this. It might help to think about what you'd need to complete the plotting frame:
+Suppose I ask you to plot each subject's reaction time (y-axis) vs the number of days of sleeacep restriction (x-axis). "Sketch" out in words what the first few rows of the data need to look like in order to do this. It might help to think about what you'd need to complete the plotting frame:
 
-`ggplot(___, aes(y = ___, x = ___, color = ___))`
+`ggplot(sleep, aes(y = reaction_time, x = day, color = subject))`
 
 #### Part c {.unnumbered}
 
 How can you obtain the dataset you sketched in part b?
 
--   just using `sleep_wide`
 -   `pivot_longer()`
--   `pivot_wider()`
 
 
 ### Exercise 2: Pivot longer {.unnumbered}
@@ -50,8 +50,10 @@ Use `pivot_longer()` to create the long-format dataset above. Show the first 3 l
 
 ```{r}
 # For cols, try 2 appproaches: using - and starts_with
-# ___ |> 
-#   pivot_longer(cols = ___, names_to = "___", values_to = "___")
+sleep_wide |>
+  pivot_longer(cols = -Subject, names_to = "day", values_to = "reaction_time")|>
+  head(3)
+# day is chr, need to be int; prefix is not removed.
 ```
 
 #### Part b {.unnumbered}
@@ -71,13 +73,17 @@ head(sleep_long)
 Follow-up:
 
 -   Besides putting each argument on a different line for readability and storing the results, what changed in the code?
+Created a new dataset called sleep_long
 -   How did this impact how the values are recorded in the `day` column?
-
+The prefix is removed.
 #### Part c {.unnumbered}
 
 Using `sleep_long`, construct a line plot of reaction time vs day for each subject. This will look goofy no matter what you do. Why? HINT: look back at `head(sleep_long)`. What class or type of variables are `Subject` and `day`? What do we *want* them to be?
 
 ```{r}
+ggplot(sleep_long, aes(x=day, y=reaction_time, color = Subject))+geom_line()
+head(sleep_long)
+#This is because Subjects are integers but days are strings
 ```
 
 
@@ -105,13 +111,13 @@ head(sleep_long)
 ```{r}
 # Make a line plot of reaction time by day for each subject
 # Put these all on the same frame
-
+ggplot(sleep_long, aes(x=day, y=reaction_time, color = Subject)) + geom_line()
 ```
 
 ```{r}
 # Make a line plot of reaction time by day for each subject
 # Put these all on separate frames (one per subject)
-
+ggplot(sleep_long, aes(x=day, y=reaction_time, color = Subject)) + geom_line() + facet_wrap(~Subject)
 ```
 
 #### Part b {.unnumbered}
@@ -119,7 +125,9 @@ head(sleep_long)
 Summarize what you learned from the plots. For example:
 
 -   What's the general relationship between reaction time and sleep?
+Generally, the more days you're sleep deprived, the longer the reaction time.
 -   Is this the same for everybody? What differs?
+However, some poeple are not affected and always react fast. Some people get gradually slowlier. Some people gets slow first and then get very fast for some reason.
 
 
 
@@ -132,9 +140,10 @@ Make the data *wide* again, with each day becoming its own column.
 Adjust the code below. What don't you like about the column labels?
 
 ```{r}
-# sleep_long |>
-#   pivot_wider(names_from = ___, values_from = ___) |> 
-#   head()
+sleep_long |>
+  pivot_wider(names_from = day, values_from = reaction_time) |>
+  head()
+#"day" is not specified
 ```
 
 #### Part b {.unnumbered}
@@ -142,9 +151,9 @@ Adjust the code below. What don't you like about the column labels?
 Using your intuition, adjust your code from part a to name the reaction time columns "day_0", "day_1", etc.
 
 ```{r}
-# sleep_long |>
-#   pivot_wider(names_from = ___, values_from = ___, names_prefix = "___") |> 
-#   head()
+sleep_long |>
+  pivot_wider(names_from = day, values_from = reaction_time, names_prefix = "day_") |>
+  head()
 ```
 
 
@@ -169,6 +178,8 @@ In using this data, you'll need to determine if and when the data needs to be re
 Construct and summarize a plot of how a song's Billboard ranking its 2nd week on the chart (y-axis) is related to its ranking the 1st week on the charts (x-axis). Add a reference line `geom_abline(intercept = 0, slope = 1)`. Songs *above* this line *improved* their rankings from the 1st to 2nd week.
 
 ```{r}
+billboard |>
+  ggplot(aes(x=wk1, y=wk2)) + geom_point()+geom_abline(intercept = 0, slope = 1)
 ```
 
 #### Part b {.unnumbered}
@@ -176,6 +187,9 @@ Construct and summarize a plot of how a song's Billboard ranking its 2nd week on
 Use your wrangling tools to identify *which* songs are those above the line in Part a, i.e. with rankgings that went up from week 1 to week 2.
 
 ```{r}
+billboard |>
+  mutate(change = wk2-wk1)|>
+  filter(change<0)
 ```
 
 #### Part c {.unnumbered}
@@ -187,18 +201,24 @@ Define a new dataset, `nov_1999`, which:
 
 ```{r}
 # Define nov_1999
-
+nov_1999 <- billboard |>
+  filter(date.entered == "1999-11-06")|>
+  select("artist", starts_with("wk"))
 
 # Confirm that nov_1999 has 2 rows (songs) and 77 columns
-
+str(nov_1999)
 
 ```
 
 #### Part d {.unnumbered}
 
-Create and discuss a visualization of the rankings (y-axis) over time (x-axis) for the 2 songs in `nov_1999`. There are hints below (if you scroll), but you're encouraged to play around and use as few hints as possible.
+Create and discuss a visualization of the rankings (y-axis) over time (x-axis) for the 2 songs in `nov_1999`. There are hints below (if you scroll), but you're to play around and use as few hints as possible.
 
 ```{r}
+nov_1999 |>
+  pivot_longer(cols = -artist,  values_to = "ranking", names_to = "week", names_prefix = "wk")|>
+  mutate(week = as.numeric(week))|>
+  ggplot(aes(x=week, y=ranking, color=artist)) + geom_line()
 ```
 
 Hints:
@@ -225,6 +245,11 @@ In analyzing this data, you'll need to determine if and when the data needs to b
 Identify the 15 guests that appeared the most. (This isn't a very diverse guest list!)
 
 ```{r}
+daily|>
+  group_by(raw_guest_list)|>
+  summarise(appearance = n())|>
+  arrange(desc(appearance))|>
+  head(15)
 ```
 
 #### Part b {.unnumbered}
@@ -238,6 +263,15 @@ CHALLENGE: Create the following data set containing 19 columns:
 There are hints below (if you scroll), but you're encouraged to play around and use as few hints as possible.
 
 ```{r}
+daily |> 
+  count(year, raw_guest_list) |> 
+  group_by(raw_guest_list) |> 
+  mutate(total = sum(n)) |>
+  pivot_wider(names_from = year, 
+              values_from = n,
+              values_fill = 0) |> 
+  arrange(desc(total)) |> 
+  head(15)
 ```
 
 HINTS: There are lots of ways to do this. You don't necessarily need all of these hints.
@@ -272,4 +306,10 @@ plot_data <- daily |>
 Now, using the `broad_group` variable in `plot_data`, recreate the graphic from the article, with three different lines showing the fraction of guests in each group over time. Note: You'll have to wrangle the data first.
 
 ```{r}
+plot_data |>
+  group_by(year, broad_group) |>
+  summarise(n = n()) |>
+  mutate(freq = n / sum(n)) |> 
+  ggplot(aes(y = freq, x = year, color = broad_group)) + 
+    geom_line()
 ```
