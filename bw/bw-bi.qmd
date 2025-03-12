@@ -1,5 +1,23 @@
 ---
 title: "Bivariate Viz"
 ---
+```{r}
+library(mosaic)
+library(fivethirtyeight)
+library(viridisLite)
+```
 
+```{r}
+data(bechdel)
+new_bechdel <- bechdel |>
+  mutate(clean_test = factor(clean_test, c("nowomen", "notalk", "men", "dubious", "ok"))) |>
+  mutate(half_decades = cut(year, breaks = seq(1969, 2014, by = 5)))
+```
+
+```{r fig.width = 10, fig.height = 5.5}
+#| fig-cap: "Percentage of Bechdel Test results every half decade.No talk between women is always the most prominent failing factor, but has decreased over time."
+#| fig-alt: "Percentage of Bechdel Test results every half decade.No talk between women is always the most prominent failing factor, but has decreased over time."
+
+ggplot(new_bechdel, aes(x = half_decades, fill = clean_test)) + labs(x = "Half Decades", y = "Percentage (%)", fill = "Legend", caption = ("Visualized by: Benjamin Weng\n Source: Five Thrity-Eight"), title = "The Bechdel Test results every half decade") + geom_bar(position = "fill", width = 0.75) + scale_fill_manual(values = viridis(5), labels = c("nowomen" = "No Women",  "notalk" = "No Talk Between Women",  "men" = "Only Talk About Men",  "dubious" = "Dubious Pass",  "ok" = "Passes Bechdel Test" )) + theme_minimal()
+```
 Use this file to generate a professional looking **bivariate** visualization.  The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.
