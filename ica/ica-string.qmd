@@ -21,9 +21,11 @@ Use our more familiar wrangling tools to warm up.
 ```{r}
 # Construct a table that indicates the number of classes offered in each day/time slot
 # Print only the 6 most popular time slots
-
-
-
+courses |>
+  group_by(days, time)|>
+  summarise(number = n())|>
+  arrange(desc(number))|>
+  head(6)
 ```
 
 
@@ -40,6 +42,10 @@ So that we can analyze it later, we want to wrangle the `courses` data:
 Store this as `courses_clean` so that you can use it later.
 
 ```{r}
+courses_clean <- courses|>
+  separate(avail_max, c("avail", "max"), sep = "/")|>
+  mutate(avail = as.numeric(avail), max = as.numeric(max), enroll = max - avail)|>
+  separate(number, c("dept", "number", "section"), sep = "[ -]")
 ```
 
 
@@ -50,10 +56,19 @@ Using `courses_clean`...
 
 ```{r}
 # Identify the 6 departments that offered the most sections
-
-
+courses_clean|>
+  group_by(dept)|>
+  summarise(count = n())|>
+  arrange(desc(count))|>
+  head(6)
 # Identify the 6 departments with the longest average course titles
-
+courses_clean|>
+  mutate(length = str_length(name))|>
+  group_by(dept)|>
+  summarise(sum = sum(length), count = n())|>
+  mutate(avg = sum/count)|>
+  arrange(desc(avg))|>
+  head(6)
 ```
 
 
@@ -65,6 +80,8 @@ Using `courses_clean`...
 Get a subset of `courses_clean` that only includes courses taught by Alicia Johnson.
 
 ```{r}
+courses_clean|>
+  filter(instructor == "Alicia Johnson")
 ```
 
 #### Part b {.unnumbered}
@@ -83,6 +100,11 @@ Create a new dataset from `courses_clean`, named `stat`, that only includes STAT
 -   The result should have 19 rows and 4 columns.
 
 ```{r}
+stat <- courses_clean|>
+  filter(dept == "STAT")|>
+  mutate(name = str_replace(name, "Introduction to", ""), name = str_replace(name, "Statistical", "Stat"))|>
+  separate(time,c("start_time", NA), sep = " - ")|>
+  select(c(number, name, start_time, enroll))
 ```
 
 
@@ -100,6 +122,10 @@ In the next exercises, we'll dig into enrollments. Let's get the data ready for 
 Save the results as `enrollments` (don't overwrite `courses_clean`).
 
 ```{r}
+enrollments <- courses_clean |> 
+  filter(dept != c("PE", "INTD"))|>
+  filter(!(dept == "MUSI" & as.numeric(number) < 100))|>
+  filter(!(str_detect(section, "L")))
 ```
 
 
@@ -121,20 +147,20 @@ To comment/uncomment several lines of code at once, highlight them then click <k
 :::
 
 ```{r}
-# enrollments |>
-#   filter(dept %in% c("STAT", "COMP"), number == 112, section == "01")
+enrollments |>
+  filter(dept %in% c("STAT", "COMP"), number == 112, section == "01")
 ```
 
 Notice that these are the exact same section! In order to not double count an instructor's enrollments, we can keep only the courses that have `distinct()` *combinations* of `days, time, instructor` values.  Uncomment the code lines in the chunk below.
 
 ```{r}
-# enrollments_2 <- enrollments |> 
-#   distinct(days, time, instructor, .keep_all = TRUE)
+enrollments_2 <- enrollments |>
+  distinct(days, time, instructor, .keep_all = TRUE)
 
 # NOTE: By default this keeps the first department alphabetically
 # That's fine because we won't use this to analyze department enrollments!
-# enrollments_2 |> 
-#   filter(instructor == "Brianna Heggeseth", name == "Introduction to Data Science")
+enrollments_2 |>
+  filter(instructor == "Brianna Heggeseth", name == "Introduction to Data Science")
 ```
 
 *Now*, explore enrollments by instructor. *You* decide what research questions to focus on. Use both visual and numerical summaries.

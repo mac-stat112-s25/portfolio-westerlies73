@@ -13,7 +13,7 @@ book:
   
   
   sidebar:
-    title: "Your Name Here"
+    title: "Benjamin Weng"
     collapse-level: 2
     style: "docked"
     pinned: true
@@ -41,6 +41,7 @@ book:
       - ica/ica-wrangling.qmd
       - ica/ica-dates.qmd
       - ica/ica-reshaping.qmd
+      - ica/ica-factors.qmd
 
 
 format:
