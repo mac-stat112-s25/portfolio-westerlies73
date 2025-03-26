@@ -1,5 +1,15 @@
 ---
 title: "Trivariate Viz"
 ---
+```{r}
+education <- read.csv("https://mac-stat.github.io/data/sat.csv")
+library(tidyverse)
+library(viridisLite)
+```
 
+```{r}
+#| fig-cap: "Percentage of students taking SAT has a stronger correlation to Average SAT than that of Expend on Education."
+#| fig-alt: "Percentage of students taking SAT has a stronger correlation to Average SAT than that of Expend on Education."
+ggplot(education, aes(x = expend, y = sat, color = fracCat)) + geom_point() + geom_smooth(method = "lm") + theme_minimal() + labs(x = "Expend on Education", y = "Average SAT Score", color = "Percentage of students taking SAT", title = "Percentage of students who Take SAT, Expend on Education, and Average SAT", caption = "Visualized by: Benjamin Weng\nSource: Education") + scale_color_viridis_d()
+```
 Use this file to generate a professional looking **trivariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
