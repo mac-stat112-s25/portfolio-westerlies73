@@ -42,6 +42,7 @@ book:
       - ica/ica-dates.qmd
       - ica/ica-reshaping.qmd
       - ica/ica-factors.qmd
+      - ica/ica-string.qmd
 
 
 format:

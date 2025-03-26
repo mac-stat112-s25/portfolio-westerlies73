@@ -1,5 +1,5 @@
 ---
-title: "ica-string"
+title: "String"
 format: html
 ---
 
@@ -11,7 +11,7 @@ If you want to learn how to scrape data, take COMP/STAT 212, Intermediate Data S
 
 ```{r}
 courses <- read.csv("https://mac-stat.github.io/data/registrar.csv")
-
+library(tidyverse)
 # Check it out
 head(courses)
 ```
@@ -165,9 +165,19 @@ enrollments_2 |>
 
 *Now*, explore enrollments by instructor. *You* decide what research questions to focus on. Use both visual and numerical summaries.
 
+Average class size of Physics department? Any relationship between course number and enrollment number?
+
 CAVEAT: The above code doesn't deal with *co-taught* courses that have more than one instructor. Thus instructors that co-taught are recorded as a pair, and their co-taught enrollments aren't added to their total enrollments. This is tough to get around with how the data were scraped as the instructor names are smushed together, not separated by a comma!
 
 ```{r}
+enrollments_2|>
+  filter(dept == "PHYS")|>
+  summarise(average = mean(enroll))
+
+enrollments_2|>
+  filter(dept == "PHYS")|>
+  mutate(number = as.numeric(number))|>
+  ggplot(aes(x = number, y = enroll)) + geom_point() + geom_line()
 ```
 
 
