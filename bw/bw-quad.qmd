@@ -1,5 +1,18 @@
 ---
 title: "Quadvariate Viz"
 ---
+```{r echo = FALSE}
+library(tidyverse)
+library(viridisLite)
+weather <- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |> 
+  mutate(date = as.Date(date))
+```
 
+```{r}
+#| fig-cap: "At three locations, temperature at 9 AM is positively correlated to 3 AM and seems to be inversely correlated to rainfall."
+#| fig-alt: "At three locations, temperature at 9 AM is positively correlated to 3 AM and seems to be inversely correlated to rainfall."
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location, size = rainfall)) + 
+  geom_point() + 
+  labs(x = "9 AM Temperature (°C)", y = "3 PM Temperature (°C)", title = "Temperature at 9AM, 3AM, and Rainfall at Three Locations", color = "Island", size = "Rainfall(mm)", caption = "Visualized by: Benjamin Weng\nSource: Weather") + theme_minimal() + scale_color_viridis_d()
+```
 Use this file to generate a professional looking **quadvariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
