@@ -1015,69 +1015,68 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb16" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">---</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="an">title:</span><span class="co"> "Solo Project"</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co">---</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a></span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="in">```{r}</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb16-10"><a href="#cb16-10"></a><span class="fu">library</span>(sf)</span>
-<span id="cb16-11"><a href="#cb16-11"></a><span class="fu">library</span>(viridisLite)</span>
-<span id="cb16-12"><a href="#cb16-12"></a>burritos <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-05-16/tornados.csv'</span>)</span>
-<span id="cb16-13"><a href="#cb16-13"></a><span class="in">```</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="co">---</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="in">```{r}</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="fu">library</span>(sf)</span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="fu">library</span>(viridisLite)</span>
+<span id="cb16-11"><a href="#cb16-11"></a>burritos <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-05-16/tornados.csv'</span>)</span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="in">```</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a></span>
 <span id="cb16-14"><a href="#cb16-14"></a></span>
-<span id="cb16-15"><a href="#cb16-15"></a></span>
-<span id="cb16-18"><a href="#cb16-18"></a><span class="in">```{r}</span></span>
-<span id="cb16-19"><a href="#cb16-19"></a>shape <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"tl_2024_us_county</span><span class="sc">\\</span><span class="st">tl_2024_us_county.shp"</span>)</span>
-<span id="cb16-20"><a href="#cb16-20"></a></span>
-<span id="cb16-21"><a href="#cb16-21"></a>ohio_shape <span class="ot">&lt;-</span> shape<span class="sc">|&gt;</span></span>
-<span id="cb16-22"><a href="#cb16-22"></a>  <span class="fu">filter</span>(STATEFP <span class="sc">==</span> <span class="dv">39</span>)<span class="sc">|&gt;</span> <span class="co">#Ohio state number</span></span>
-<span id="cb16-23"><a href="#cb16-23"></a>  <span class="fu">mutate</span>(<span class="at">COUNTYFP =</span> <span class="fu">as.numeric</span>(COUNTYFP))</span>
-<span id="cb16-24"><a href="#cb16-24"></a><span class="in">```</span></span>
-<span id="cb16-25"><a href="#cb16-25"></a></span>
-<span id="cb16-28"><a href="#cb16-28"></a><span class="in">```{r}</span></span>
-<span id="cb16-29"><a href="#cb16-29"></a>OHburritos <span class="ot">&lt;-</span> burritos<span class="sc">|&gt;</span></span>
-<span id="cb16-30"><a href="#cb16-30"></a>  <span class="fu">filter</span>(st <span class="sc">==</span> <span class="st">"OH"</span>, ns <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">|&gt;</span> <span class="co">#Filtering out Ohio tornado. Number of state affected filtered to 1.</span></span>
-<span id="cb16-31"><a href="#cb16-31"></a>  <span class="fu">select</span>(om, date, loss, f1, f2, f3, f4)<span class="sc">|&gt;</span></span>
-<span id="cb16-32"><a href="#cb16-32"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(f1, f2, f3, f4), <span class="at">names_to =</span> <span class="st">"county_order"</span>, <span class="at">values_to =</span> <span class="st">"county_code"</span>)<span class="sc">|&gt;</span> <span class="co">#pivot long so I can count</span></span>
-<span id="cb16-33"><a href="#cb16-33"></a>  <span class="fu">count</span>(county_code, <span class="at">name =</span> <span class="st">"n_burritos"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb16-34"><a href="#cb16-34"></a>  <span class="fu">filter</span>(county_code <span class="sc">!=</span> <span class="dv">0</span>)<span class="sc">|&gt;</span> <span class="co">#0 is placeholder for NA so filter</span></span>
-<span id="cb16-35"><a href="#cb16-35"></a>  <span class="fu">mutate</span>(<span class="at">county_code =</span> <span class="fu">as.numeric</span>(county_code))</span>
-<span id="cb16-36"><a href="#cb16-36"></a><span class="in">```</span></span>
-<span id="cb16-37"><a href="#cb16-37"></a></span>
-<span id="cb16-40"><a href="#cb16-40"></a><span class="in">```{r}</span></span>
-<span id="cb16-41"><a href="#cb16-41"></a>map_burrito <span class="ot">&lt;-</span> ohio_shape <span class="sc">|&gt;</span></span>
-<span id="cb16-42"><a href="#cb16-42"></a>  <span class="fu">left_join</span>(OHburritos, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"COUNTYFP"</span> <span class="ot">=</span> <span class="st">"county_code"</span>))</span>
-<span id="cb16-43"><a href="#cb16-43"></a><span class="in">```</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="in">```{r}</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a>shape <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"tl_2024_us_county</span><span class="sc">\\</span><span class="st">tl_2024_us_county.shp"</span>)</span>
+<span id="cb16-19"><a href="#cb16-19"></a></span>
+<span id="cb16-20"><a href="#cb16-20"></a>ohio_shape <span class="ot">&lt;-</span> shape<span class="sc">|&gt;</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a>  <span class="fu">filter</span>(STATEFP <span class="sc">==</span> <span class="dv">39</span>)<span class="sc">|&gt;</span> <span class="co">#Ohio state number</span></span>
+<span id="cb16-22"><a href="#cb16-22"></a>  <span class="fu">mutate</span>(<span class="at">COUNTYFP =</span> <span class="fu">as.numeric</span>(COUNTYFP))</span>
+<span id="cb16-23"><a href="#cb16-23"></a><span class="in">```</span></span>
+<span id="cb16-24"><a href="#cb16-24"></a></span>
+<span id="cb16-27"><a href="#cb16-27"></a><span class="in">```{r}</span></span>
+<span id="cb16-28"><a href="#cb16-28"></a>OHburritos <span class="ot">&lt;-</span> burritos<span class="sc">|&gt;</span></span>
+<span id="cb16-29"><a href="#cb16-29"></a>  <span class="fu">filter</span>(st <span class="sc">==</span> <span class="st">"OH"</span>, ns <span class="sc">==</span> <span class="dv">1</span>)<span class="sc">|&gt;</span> <span class="co">#Filtering out Ohio tornado. Number of state affected filtered to 1.</span></span>
+<span id="cb16-30"><a href="#cb16-30"></a>  <span class="fu">select</span>(om, date, loss, f1, f2, f3, f4)<span class="sc">|&gt;</span></span>
+<span id="cb16-31"><a href="#cb16-31"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(f1, f2, f3, f4), <span class="at">names_to =</span> <span class="st">"county_order"</span>, <span class="at">values_to =</span> <span class="st">"county_code"</span>)<span class="sc">|&gt;</span> <span class="co">#pivot long so I can count</span></span>
+<span id="cb16-32"><a href="#cb16-32"></a>  <span class="fu">count</span>(county_code, <span class="at">name =</span> <span class="st">"n_burritos"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb16-33"><a href="#cb16-33"></a>  <span class="fu">filter</span>(county_code <span class="sc">!=</span> <span class="dv">0</span>)<span class="sc">|&gt;</span> <span class="co">#0 is placeholder for NA so filter</span></span>
+<span id="cb16-34"><a href="#cb16-34"></a>  <span class="fu">mutate</span>(<span class="at">county_code =</span> <span class="fu">as.numeric</span>(county_code))</span>
+<span id="cb16-35"><a href="#cb16-35"></a><span class="in">```</span></span>
+<span id="cb16-36"><a href="#cb16-36"></a></span>
+<span id="cb16-39"><a href="#cb16-39"></a><span class="in">```{r}</span></span>
+<span id="cb16-40"><a href="#cb16-40"></a>map_burrito <span class="ot">&lt;-</span> ohio_shape <span class="sc">|&gt;</span></span>
+<span id="cb16-41"><a href="#cb16-41"></a>  <span class="fu">left_join</span>(OHburritos, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"COUNTYFP"</span> <span class="ot">=</span> <span class="st">"county_code"</span>))</span>
+<span id="cb16-42"><a href="#cb16-42"></a><span class="in">```</span></span>
+<span id="cb16-43"><a href="#cb16-43"></a></span>
 <span id="cb16-44"><a href="#cb16-44"></a></span>
-<span id="cb16-45"><a href="#cb16-45"></a></span>
-<span id="cb16-48"><a href="#cb16-48"></a><span class="in">```{r}</span></span>
-<span id="cb16-49"><a href="#cb16-49"></a>OHpop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"PopulationEstimates.csv"</span>)</span>
-<span id="cb16-50"><a href="#cb16-50"></a>OHpop <span class="ot">&lt;-</span> OHpop <span class="sc">|&gt;</span></span>
-<span id="cb16-51"><a href="#cb16-51"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"OH"</span>, Attribute <span class="sc">==</span> <span class="st">"POP_ESTIMATE_2023"</span>, FIPStxt <span class="sc">!=</span> <span class="dv">39000</span>)<span class="sc">|&gt;</span></span>
-<span id="cb16-52"><a href="#cb16-52"></a>  <span class="fu">mutate</span>(<span class="at">FIPStxt =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(FIPStxt, <span class="dv">3</span>)))</span>
-<span id="cb16-53"><a href="#cb16-53"></a><span class="in">```</span></span>
-<span id="cb16-54"><a href="#cb16-54"></a></span>
-<span id="cb16-57"><a href="#cb16-57"></a><span class="in">```{r}</span></span>
-<span id="cb16-58"><a href="#cb16-58"></a>map_ohpop <span class="ot">&lt;-</span> ohio_shape <span class="sc">|&gt;</span></span>
-<span id="cb16-59"><a href="#cb16-59"></a>  <span class="fu">left_join</span>(OHpop, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"COUNTYFP"</span> <span class="ot">=</span> <span class="st">"FIPStxt"</span>))</span>
-<span id="cb16-60"><a href="#cb16-60"></a><span class="in">```</span></span>
-<span id="cb16-61"><a href="#cb16-61"></a></span>
-<span id="cb16-64"><a href="#cb16-64"></a><span class="in">```{r}</span></span>
-<span id="cb16-65"><a href="#cb16-65"></a><span class="co">#| fig-cap: "Franklin, Van Vert, Lorain, Huron, Medina, Clinton, Miami, and Clark counties are most heavily affected."</span></span>
-<span id="cb16-66"><a href="#cb16-66"></a><span class="co">#| fig-alt: "Franklin, Van Vert, Lorain, Huron, Medina, Clinton, Miami, and Clark counties are most heavily affected."</span></span>
-<span id="cb16-67"><a href="#cb16-67"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> map_burrito, <span class="fu">aes</span>(<span class="at">fill =</span> n_burritos)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ohio Counties by Number of Tornadoes, 1950 - 2022"</span>, <span class="at">fill =</span> <span class="st">"Tornado Count"</span>, <span class="at">caption =</span> <span class="st">"Visualized by: Benjamin Weng</span><span class="sc">\n</span><span class="st">Source: TidyTuesday/NOAA"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"rocket"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb16-68"><a href="#cb16-68"></a><span class="in">```</span></span>
-<span id="cb16-69"><a href="#cb16-69"></a></span>
-<span id="cb16-72"><a href="#cb16-72"></a><span class="in">```{r}</span></span>
-<span id="cb16-73"><a href="#cb16-73"></a><span class="co">#| fig-cap: "Ohio population by county. Cuyahoga, Franklin, and Hamilton counties are most populated due to cities."</span></span>
-<span id="cb16-74"><a href="#cb16-74"></a><span class="co">#| fig-alt: "Ohio population by county. Cuyahoga, Franklin, and Hamilton counties are most populated due to cities."</span></span>
-<span id="cb16-75"><a href="#cb16-75"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> map_ohpop, <span class="fu">aes</span>(<span class="at">fill =</span> Value)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ohio Counties by Population, 2023"</span>, <span class="at">fill =</span> <span class="st">"Population"</span>, <span class="at">caption =</span> <span class="st">"Visualized by: Benjamin Weng</span><span class="sc">\n</span><span class="st">Source: USDA"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"rocket"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb16-76"><a href="#cb16-76"></a><span class="in">```</span></span>
-<span id="cb16-77"><a href="#cb16-77"></a></span>
-<span id="cb16-78"><a href="#cb16-78"></a>It almost seems like the surrounding counties of major cities have far more tornadoes. My hypotheses are:</span>
-<span id="cb16-79"><a href="#cb16-79"></a><span class="ss">1. </span>Tornado report is heavily relied on sightings. Without sightings, the rural area has more tornadoes unreported.</span>
-<span id="cb16-80"><a href="#cb16-80"></a><span class="ss">2. </span>Major cities monitor their tornadoes more heavily due to safety concerns. This includes monitoring surrounding counties.</span>
-<span id="cb16-81"><a href="#cb16-81"></a><span class="ss">3. </span>The urban counties themselves don't seem to have too many tornadoes except for Franklin. It might be due to the nature of urban landscape is less prone to tornadoes.</span>
+<span id="cb16-47"><a href="#cb16-47"></a><span class="in">```{r}</span></span>
+<span id="cb16-48"><a href="#cb16-48"></a>OHpop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"PopulationEstimates.csv"</span>)</span>
+<span id="cb16-49"><a href="#cb16-49"></a>OHpop <span class="ot">&lt;-</span> OHpop <span class="sc">|&gt;</span></span>
+<span id="cb16-50"><a href="#cb16-50"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"OH"</span>, Attribute <span class="sc">==</span> <span class="st">"POP_ESTIMATE_2023"</span>, FIPStxt <span class="sc">!=</span> <span class="dv">39000</span>)<span class="sc">|&gt;</span></span>
+<span id="cb16-51"><a href="#cb16-51"></a>  <span class="fu">mutate</span>(<span class="at">FIPStxt =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(FIPStxt, <span class="dv">3</span>)))</span>
+<span id="cb16-52"><a href="#cb16-52"></a><span class="in">```</span></span>
+<span id="cb16-53"><a href="#cb16-53"></a></span>
+<span id="cb16-56"><a href="#cb16-56"></a><span class="in">```{r}</span></span>
+<span id="cb16-57"><a href="#cb16-57"></a>map_ohpop <span class="ot">&lt;-</span> ohio_shape <span class="sc">|&gt;</span></span>
+<span id="cb16-58"><a href="#cb16-58"></a>  <span class="fu">left_join</span>(OHpop, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"COUNTYFP"</span> <span class="ot">=</span> <span class="st">"FIPStxt"</span>))</span>
+<span id="cb16-59"><a href="#cb16-59"></a><span class="in">```</span></span>
+<span id="cb16-60"><a href="#cb16-60"></a></span>
+<span id="cb16-63"><a href="#cb16-63"></a><span class="in">```{r}</span></span>
+<span id="cb16-64"><a href="#cb16-64"></a><span class="co">#| fig-cap: "Franklin, Van Vert, Lorain, Huron, Medina, Clinton, Miami, and Clark counties are most heavily affected."</span></span>
+<span id="cb16-65"><a href="#cb16-65"></a><span class="co">#| fig-alt: "Franklin, Van Vert, Lorain, Huron, Medina, Clinton, Miami, and Clark counties are most heavily affected."</span></span>
+<span id="cb16-66"><a href="#cb16-66"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> map_burrito, <span class="fu">aes</span>(<span class="at">fill =</span> n_burritos)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ohio Counties by Number of Tornadoes, 1950 - 2022"</span>, <span class="at">fill =</span> <span class="st">"Tornado Count"</span>, <span class="at">caption =</span> <span class="st">"Visualized by: Benjamin Weng</span><span class="sc">\n</span><span class="st">Source: TidyTuesday/NOAA"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"rocket"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb16-67"><a href="#cb16-67"></a><span class="in">```</span></span>
+<span id="cb16-68"><a href="#cb16-68"></a></span>
+<span id="cb16-71"><a href="#cb16-71"></a><span class="in">```{r}</span></span>
+<span id="cb16-72"><a href="#cb16-72"></a><span class="co">#| fig-cap: "Ohio population by county. Cuyahoga, Franklin, and Hamilton counties are most populated due to cities."</span></span>
+<span id="cb16-73"><a href="#cb16-73"></a><span class="co">#| fig-alt: "Ohio population by county. Cuyahoga, Franklin, and Hamilton counties are most populated due to cities."</span></span>
+<span id="cb16-74"><a href="#cb16-74"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> map_ohpop, <span class="fu">aes</span>(<span class="at">fill =</span> Value)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ohio Counties by Population, 2023"</span>, <span class="at">fill =</span> <span class="st">"Population"</span>, <span class="at">caption =</span> <span class="st">"Visualized by: Benjamin Weng</span><span class="sc">\n</span><span class="st">Source: USDA"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"rocket"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb16-75"><a href="#cb16-75"></a><span class="in">```</span></span>
+<span id="cb16-76"><a href="#cb16-76"></a></span>
+<span id="cb16-77"><a href="#cb16-77"></a>It almost seems like the surrounding counties of major cities have far more tornadoes. My hypotheses are:</span>
+<span id="cb16-78"><a href="#cb16-78"></a><span class="ss">1. </span>Tornado report is heavily relied on sightings. Without sightings, the rural area has more tornadoes unreported.</span>
+<span id="cb16-79"><a href="#cb16-79"></a><span class="ss">2. </span>Major cities monitor their tornadoes more heavily due to safety concerns. This includes monitoring surrounding counties.</span>
+<span id="cb16-80"><a href="#cb16-80"></a><span class="ss">3. </span>The urban counties themselves don't seem to have too many tornadoes except for Franklin. It might be due to the nature of urban landscape is less prone to tornadoes.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
