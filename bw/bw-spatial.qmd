@@ -33,6 +33,8 @@ starbucks_with_2018_pop_est <-
 ```
 
 ```{r}
+#| fig-cap: "Starbucks per 10000 in each US state. Washington has the highest Starbucks-Population proportion, while Mississippi has the lowest."
+#| fig-alt: "Starbucks per 10000 in each US state. Washington has the highest Starbucks-Population proportion, while Mississippi has the lowest."
 states_map <- map_data("state")
 starbucks_contiguous_us <- starbucks |>
   filter(Country == "US", State.Province != "AK", State.Province != "HI")

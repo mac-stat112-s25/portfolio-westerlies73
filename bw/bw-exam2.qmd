@@ -1,0 +1,90 @@
+---
+title: "Exam 2"
+format: html
+---
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(rnaturalearth)
+library(sf)
+library(viridisLite)
+```
+
+```{r}
+tuesdata <- tt_load("2020-02-18")
+fc <- tuesdata$food_consumption
+```
+
+```{r}
+str(fc)
+
+head(fc, 22)
+```
+
+```{r}
+fcc <- fc |>
+  mutate(food_category = str_replace(food_category, "Lamb & Goat", "Lamb"))|>
+  mutate(food_category = str_replace(food_category, "Milk - inc. cheese", "Diary"))|>
+  mutate(food_category = str_replace(food_category, "Wheat and Wheat Products", "Wheat"))|>
+  mutate(food_category = str_replace(food_category, "Nuts inc. Peanut Butter", "Nuts"))
+```
+
+Research Question 1:
+
+```{r}
+#| fig-cap: "5 Countries with most food consumptions are Albania, Finland, Lithuania, Netherlands, and Sweden."
+#| fig-alt: "5 Countries with most food consumptions are Albania, Finland, Lithuania, Netherlands, and Sweden."
+fcc|>
+  select(country, consumption)|>
+  group_by(country)|>
+  summarise(consumption = sum(consumption))|>
+  arrange(desc(consumption))|>
+  head(5)|>
+  ggplot( aes(x = country, y = consumption)) +
+  geom_col(fill = "blue") +
+  labs(title = "5 countries with highest consumptions", x = "Country", y = "Consumption", caption = "Visualized by Benjamin Weng\nSource: TidyTuesday") + theme_minimal()
+```
+
+Research Question 2:
+
+```{r}
+#| fig-cap: "5 Countries with most food consumptions in each category. There are a lot of data."
+#| fig-alt: "5 Countries with most food consumptions in each category. There are a lot of data."
+#| fig-width: 11
+#| fig-height: 22
+fcc |>
+  select(country, food_category, consumption)|>
+  group_by(food_category)|>
+  slice_max(consumption, n=5)|>
+  ungroup()|>
+  ggplot(aes(x = country, y = consumption)) + geom_col(fill = "blue") + coord_flip() + facet_wrap(~food_category, scales = "free_y") +
+  labs(title = "Top 5 Countries by Food Category Consumption", x = "Country", y = "Consumption", caption = "Visualized by Benjamin Weng\nSource: TidyTuesday") + theme_minimal()
+```
+
+Research Question 3:
+```{r}
+fcc_forjoin <- fcc |>
+    select(-co2_emmission)|>
+    group_by(food_category)|>
+    mutate(consumption = (consumption - mean(consumption))/sd(consumption))
+```
+
+
+```{r}
+#| fig-cap: "Standardized map for each food type's consumption."
+#| fig-alt: "Standardized map for each food type's consumption."
+#| fig-width: 11
+#| fig-height: 22
+ne_countries(returnclass = "sf")|>
+  select(name, geometry)|>
+  mutate(name = ifelse(name == "United States of America", "USA", name)) |>
+  mutate(name = ifelse(name == "Bosnia and Herz.", "Bosnia and Herzegovina", name)) |>
+  mutate(name = ifelse(name == "Czechia", "Czech Republic", name)) |>
+  mutate(name = ifelse(name == "Taiwan", "Taiwan. ROC", name)) |>
+  left_join(fcc_forjoin, join_by(name == country))|>
+  pivot_wider(names_from = food_category, values_from = consumption)|>
+  select(-"NA")|>
+  pivot_longer(cols = c(-name, -geometry), names_to = "food_category", values_to = "consumption")|>
+  ggplot() + geom_sf(aes(fill = consumption)) + facet_wrap(~food_category) + theme(legend.position = "bottom") + labs(title = "Consumption of Each Food Type By Country", caption = "Visualized by Benjamin Weng\nSource: TidyTuesday") + scale_fill_viridis_c() 
+```

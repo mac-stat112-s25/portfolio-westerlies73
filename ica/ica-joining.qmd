@@ -4,7 +4,9 @@ format: html
 ---
 
 ### Exercise 1: Where are my keys? {.unnumbered}
-
+```{r}
+library(tidyverse)
+```
 #### Part a {.unnumbered}
 
 Define two new datasets, with different students and courses:
