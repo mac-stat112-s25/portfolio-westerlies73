@@ -322,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ica/ica-uni.html">In-class Activities</a></li><li class="breadcrumb-item"><a href="../ica/ica-string.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">String</span></a></li></ol></nav><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">21</span>&nbsp; <span class="chapter-title">String</span>
-</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -340,23 +340,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The <code>courses</code> data includes <em>actual</em> data scraped from Mac’s <a href="https://macadmsys.macalester.edu/macssb/customPage/page/classSchedule">class schedule</a>. (Thanks to Prof Leslie Myint for the scraping code!!)</p>
 <p>If you want to learn how to scrape data, take COMP/STAT 212, Intermediate Data Science! NOTE: For simplicity, I removed classes that had “TBA” for the <code>days</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>courses <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/registrar.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Check it out</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">head</span>(courses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>courses <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/registrar.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># Check it out</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">head</span>(courses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>       number   crn                                                name  days
 1 AMST 112-01 10318         Introduction to African American Literature M W F
 2 AMST 194-01 10073              Introduction to Asian American Studies M W F
@@ -375,18 +363,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Use our more familiar wrangling tools to warm up.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Construct a table that indicates the number of classes offered in each day/time slot</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Print only the 6 most popular time slots</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>courses <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">group_by</span>(days, time)<span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">summarise</span>(<span class="at">number =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number))<span class="sc">|&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'days'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Construct a table that indicates the number of classes offered in each day/time slot</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># Print only the 6 most popular time slots</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>courses <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">group_by</span>(days, time)<span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">summarise</span>(<span class="at">number =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number))<span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
 # Groups:   days [2]
   days    time             number
@@ -413,21 +397,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Store this as <code>courses_clean</code> so that you can use it later.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>courses_clean <span class="ot">&lt;-</span> courses<span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">separate</span>(avail_max, <span class="fu">c</span>(<span class="st">"avail"</span>, <span class="st">"max"</span>), <span class="at">sep =</span> <span class="st">"/"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">mutate</span>(<span class="at">avail =</span> <span class="fu">as.numeric</span>(avail), <span class="at">max =</span> <span class="fu">as.numeric</span>(max), <span class="at">enroll =</span> max <span class="sc">-</span> avail)<span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">separate</span>(number, <span class="fu">c</span>(<span class="st">"dept"</span>, <span class="st">"number"</span>, <span class="st">"section"</span>), <span class="at">sep =</span> <span class="st">"[ -]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>courses_clean <span class="ot">&lt;-</span> courses<span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">separate</span>(avail_max, <span class="fu">c</span>(<span class="st">"avail"</span>, <span class="st">"max"</span>), <span class="at">sep =</span> <span class="st">"/"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">mutate</span>(<span class="at">avail =</span> <span class="fu">as.numeric</span>(avail), <span class="at">max =</span> <span class="fu">as.numeric</span>(max), <span class="at">enroll =</span> max <span class="sc">-</span> avail)<span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">separate</span>(number, <span class="fu">c</span>(<span class="st">"dept"</span>, <span class="st">"number"</span>, <span class="st">"section"</span>), <span class="at">sep =</span> <span class="st">"[ -]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section><section id="exercise-3-courses-by-department" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-3-courses-by-department">Exercise 3: Courses by department</h3>
 <p>Using <code>courses_clean</code>…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Identify the 6 departments that offered the most sections</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>courses_clean<span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">group_by</span>(dept)<span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))<span class="sc">|&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Identify the 6 departments that offered the most sections</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>courses_clean<span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">group_by</span>(dept)<span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))<span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   dept  count
   &lt;chr&gt; &lt;int&gt;
@@ -438,15 +423,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5 CHEM     33
 6 COMP     31</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Identify the 6 departments with the longest average course titles</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>courses_clean<span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">str_length</span>(name))<span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">group_by</span>(dept)<span class="sc">|&gt;</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>  <span class="fu">summarise</span>(<span class="at">sum =</span> <span class="fu">sum</span>(length), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a>  <span class="fu">mutate</span>(<span class="at">avg =</span> sum<span class="sc">/</span>count)<span class="sc">|&gt;</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))<span class="sc">|&gt;</span></span>
-<span id="cb11-8"><a href="#cb11-8"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Identify the 6 departments with the longest average course titles</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>courses_clean<span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">str_length</span>(name))<span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">group_by</span>(dept)<span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">summarise</span>(<span class="at">sum =</span> <span class="fu">sum</span>(length), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>  <span class="fu">mutate</span>(<span class="at">avg =</span> sum<span class="sc">/</span>count)<span class="sc">|&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))<span class="sc">|&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   dept    sum count   avg
   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -462,9 +447,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="part-a" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a">Part a</h4>
 <p>Get a subset of <code>courses_clean</code> that only includes courses taught by Alicia Johnson.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>courses_clean<span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">filter</span>(instructor <span class="sc">==</span> <span class="st">"Alicia Johnson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>courses_clean<span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">filter</span>(instructor <span class="sc">==</span> <span class="st">"Alicia Johnson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>  dept number section   crn                         name  days            time
 1 STAT    253      01 10806 Statistical Machine Learning  T R  9:40 - 11:10 am
 2 STAT    253      02 10807 Statistical Machine Learning  T R   1:20 - 2:50 pm
@@ -490,11 +475,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>The result should have 19 rows and 4 columns.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>stat <span class="ot">&lt;-</span> courses_clean<span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"STAT"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">"Introduction to"</span>, <span class="st">""</span>), <span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">"Statistical"</span>, <span class="st">"Stat"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">separate</span>(time,<span class="fu">c</span>(<span class="st">"start_time"</span>, <span class="cn">NA</span>), <span class="at">sep =</span> <span class="st">" - "</span>)<span class="sc">|&gt;</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">select</span>(<span class="fu">c</span>(number, name, start_time, enroll))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>stat <span class="ot">&lt;-</span> courses_clean<span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"STAT"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">"Introduction to"</span>, <span class="st">""</span>), <span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">"Statistical"</span>, <span class="st">"Stat"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">separate</span>(time,<span class="fu">c</span>(<span class="st">"start_time"</span>, <span class="cn">NA</span>), <span class="at">sep =</span> <span class="st">" - "</span>)<span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="fu">select</span>(<span class="fu">c</span>(number, name, start_time, enroll))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section></section><section id="exercise-5-more-cleaning" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-5-more-cleaning">Exercise 5: More cleaning</h3>
 <p>In the next exercises, we’ll dig into enrollments. Let’s get the data ready for that analysis here. Make the following changes to the <code>courses_clean</code> data. Because they have different enrollment structures, and we don’t want to compare apples and oranges, <em>remove</em> the following:</p>
@@ -505,10 +491,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Save the results as <code>enrollments</code> (don’t overwrite <code>courses_clean</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>enrollments <span class="ot">&lt;-</span> courses_clean <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">filter</span>(dept <span class="sc">!=</span> <span class="fu">c</span>(<span class="st">"PE"</span>, <span class="st">"INTD"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(dept <span class="sc">==</span> <span class="st">"MUSI"</span> <span class="sc">&amp;</span> <span class="fu">as.numeric</span>(number) <span class="sc">&lt;</span> <span class="dv">100</span>))<span class="sc">|&gt;</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(<span class="fu">str_detect</span>(section, <span class="st">"L"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>enrollments <span class="ot">&lt;-</span> courses_clean <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">filter</span>(dept <span class="sc">!=</span> <span class="fu">c</span>(<span class="st">"PE"</span>, <span class="st">"INTD"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(dept <span class="sc">==</span> <span class="st">"MUSI"</span> <span class="sc">&amp;</span> <span class="fu">as.numeric</span>(number) <span class="sc">&lt;</span> <span class="dv">100</span>))<span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(<span class="fu">str_detect</span>(section, <span class="st">"L"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section><section id="exercise-6-enrollment-departments" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-6-enrollment-departments">Exercise 6: Enrollment &amp; departments</h3>
 <p>Explore enrollments by department. <em>You</em> decide what research questions to focus on. Use both visual and numerical summaries.</p>
@@ -528,9 +515,9 @@ Commenting/Uncommenting Code
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>enrollments <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(dept <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"STAT"</span>, <span class="st">"COMP"</span>), number <span class="sc">==</span> <span class="dv">112</span>, section <span class="sc">==</span> <span class="st">"01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>enrollments <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">filter</span>(dept <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"STAT"</span>, <span class="st">"COMP"</span>), number <span class="sc">==</span> <span class="dv">112</span>, section <span class="sc">==</span> <span class="st">"01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>  dept number section   crn                         name  days           time
 1 COMP    112      01 10248 Introduction to Data Science  T R  3:00 - 4:30 pm
 2 STAT    112      01 10249 Introduction to Data Science  T R  3:00 - 4:30 pm
@@ -541,14 +528,14 @@ Commenting/Uncommenting Code
 </div>
 <p>Notice that these are the exact same section! In order to not double count an instructor’s enrollments, we can keep only the courses that have <code>distinct()</code> <em>combinations</em> of <code>days, time, instructor</code> values. Uncomment the code lines in the chunk below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>enrollments_2 <span class="ot">&lt;-</span> enrollments <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">distinct</span>(days, time, instructor, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-3"><a href="#cb19-3"></a></span>
-<span id="cb19-4"><a href="#cb19-4"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: By default this keeps the first department alphabetically</span></span>
-<span id="cb19-5"><a href="#cb19-5"></a><span class="co"># That's fine because we won't use this to analyze department enrollments!</span></span>
-<span id="cb19-6"><a href="#cb19-6"></a>enrollments_2 <span class="sc">|&gt;</span></span>
-<span id="cb19-7"><a href="#cb19-7"></a>  <span class="fu">filter</span>(instructor <span class="sc">==</span> <span class="st">"Brianna Heggeseth"</span>, name <span class="sc">==</span> <span class="st">"Introduction to Data Science"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>enrollments_2 <span class="ot">&lt;-</span> enrollments <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">distinct</span>(days, time, instructor, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: By default this keeps the first department alphabetically</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="co"># That's fine because we won't use this to analyze department enrollments!</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>enrollments_2 <span class="sc">|&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">filter</span>(instructor <span class="sc">==</span> <span class="st">"Brianna Heggeseth"</span>, name <span class="sc">==</span> <span class="st">"Introduction to Data Science"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>  dept number section   crn                         name  days           time
 1 COMP    112      01 10248 Introduction to Data Science  T R  3:00 - 4:30 pm
       room        instructor avail max enroll
@@ -559,18 +546,18 @@ Commenting/Uncommenting Code
 <p>Average class size of Physics department? Any relationship between course number and enrollment number?</p>
 <p>CAVEAT: The above code doesn’t deal with <em>co-taught</em> courses that have more than one instructor. Thus instructors that co-taught are recorded as a pair, and their co-taught enrollments aren’t added to their total enrollments. This is tough to get around with how the data were scraped as the instructor names are smushed together, not separated by a comma!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>enrollments_2<span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"PHYS"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">summarise</span>(<span class="at">average =</span> <span class="fu">mean</span>(enroll))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>enrollments_2<span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"PHYS"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">summarise</span>(<span class="at">average =</span> <span class="fu">mean</span>(enroll))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>   average
 1 16.85714</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>enrollments_2<span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"PHYS"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">as.numeric</span>(number))<span class="sc">|&gt;</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> number, <span class="at">y =</span> enroll)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>enrollments_2<span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"PHYS"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">as.numeric</span>(number))<span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> number, <span class="at">y =</span> enroll)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-string_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -579,8 +566,9 @@ Commenting/Uncommenting Code
 </div>
 </section><section id="optional-extra-practice" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="optional-extra-practice">Optional extra practice</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Make a bar plot showing the number of night courses by day of the week</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="co"># Use courses_clean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Make a bar plot showing the number of night courses by day of the week</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co"># Use courses_clean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section><section id="dig-deeper-regex" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="dig-deeper-regex">Dig Deeper: regex</h3>
 <p>Example 4 gave 1 small example of a regular expression.</p>
@@ -605,85 +593,87 @@ Commenting/Uncommenting Code
 <p>Work through the following examples, and the tutorial after them to learn about the syntax.</p>
 <p><strong>EXAMPLES</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Define some strings to play around with</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>example <span class="ot">&lt;-</span> <span class="st">"The quick brown fox jumps over the lazy dog."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Define some strings to play around with</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>example <span class="ot">&lt;-</span> <span class="st">"The quick brown fox jumps over the lazy dog."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">str_replace</span>(example, <span class="st">"quick"</span>, <span class="st">"really quick"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">str_replace</span>(example, <span class="st">"quick"</span>, <span class="st">"really quick"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "The really quick brown fox jumps over the lazy dog."</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)"</span>, <span class="st">"****"</span>) <span class="co"># | reads as OR</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)"</span>, <span class="st">"****"</span>) <span class="co"># | reads as OR</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "The quick brown **** jumps over the lazy ****."</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)."</span>, <span class="st">"****"</span>) <span class="co"># "." for any character</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)."</span>, <span class="st">"****"</span>) <span class="co"># "." for any character</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "The quick brown ****jumps over the lazy ****"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)</span><span class="sc">\\</span><span class="st">.$"</span>, <span class="st">"****"</span>) <span class="co"># at end of sentence only, "\\." only for a period</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)</span><span class="sc">\\</span><span class="st">.$"</span>, <span class="st">"****"</span>) <span class="co"># at end of sentence only, "\\." only for a period</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "The quick brown fox jumps over the lazy ****"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"the"</span>, <span class="st">"a"</span>) <span class="co"># case-sensitive only matches one</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"the"</span>, <span class="st">"a"</span>) <span class="co"># case-sensitive only matches one</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "The quick brown fox jumps over a lazy dog."</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"[Tt]he"</span>, <span class="st">"a"</span>) <span class="co"># # will match either t or T; could also make "a" conditional on capitalization of t</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"[Tt]he"</span>, <span class="st">"a"</span>) <span class="co"># # will match either t or T; could also make "a" conditional on capitalization of t</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "a quick brown fox jumps over a lazy dog."</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"[Tt]he"</span>, <span class="st">"a"</span>) <span class="co"># first match only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">str_replace_all</span>(example, <span class="st">"[Tt]he"</span>, <span class="st">"a"</span>) <span class="co"># first match only</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "a quick brown fox jumps over a lazy dog."</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># More examples</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a>example2 <span class="ot">&lt;-</span> <span class="st">"Two roads diverged in a yellow wood, / And sorry I could not travel both / And be one traveler, long I stood / And looked down one as far as I could"</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a>example3 <span class="ot">&lt;-</span> <span class="st">"This is a test"</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a></span>
-<span id="cb40-5"><a href="#cb40-5"></a><span class="co"># Store the examples in 1 place</span></span>
-<span id="cb40-6"><a href="#cb40-6"></a>examples <span class="ot">&lt;-</span> <span class="fu">c</span>(example, example2, example3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># More examples</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>example2 <span class="ot">&lt;-</span> <span class="st">"Two roads diverged in a yellow wood, / And sorry I could not travel both / And be one traveler, long I stood / And looked down one as far as I could"</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>example3 <span class="ot">&lt;-</span> <span class="st">"This is a test"</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="co"># Store the examples in 1 place</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a>examples <span class="ot">&lt;-</span> <span class="fu">c</span>(example, example2, example3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>pat <span class="ot">&lt;-</span> <span class="st">"[^aeiouAEIOU ]{3}"</span> <span class="co"># Regular expression for three straight consonants. Note that I've excluded spaces as well</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a></span>
-<span id="cb41-3"><a href="#cb41-3"></a><span class="fu">str_detect</span>(examples, pat) <span class="co"># TRUE/FALSE if it detects pattern</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>pat <span class="ot">&lt;-</span> <span class="st">"[^aeiouAEIOU ]{3}"</span> <span class="co"># Regular expression for three straight consonants. Note that I've excluded spaces as well</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a></span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="fu">str_detect</span>(examples, pat) <span class="co"># TRUE/FALSE if it detects pattern</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE  TRUE FALSE</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">str_subset</span>(examples, pat) <span class="co"># Pulls out those that detects pattern</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">str_subset</span>(examples, pat) <span class="co"># Pulls out those that detects pattern</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "The quick brown fox jumps over the lazy dog."                                                                                                        
 [2] "Two roads diverged in a yellow wood, / And sorry I could not travel both / And be one traveler, long I stood / And looked down one as far as I could"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>pat2 <span class="ot">&lt;-</span> <span class="st">"[^aeiouAEIOU ][aeiouAEIOU]{2}[^aeiouAEIOU ]{1}"</span> <span class="co"># consonant followed by two vowels followed by a consonant</span></span>
-<span id="cb45-2"><a href="#cb45-2"></a></span>
-<span id="cb45-3"><a href="#cb45-3"></a><span class="fu">str_extract</span>(example2, pat2) <span class="co"># extract first match</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>pat2 <span class="ot">&lt;-</span> <span class="st">"[^aeiouAEIOU ][aeiouAEIOU]{2}[^aeiouAEIOU ]{1}"</span> <span class="co"># consonant followed by two vowels followed by a consonant</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="fu">str_extract</span>(example2, pat2) <span class="co"># extract first match</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "road"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">str_extract_all</span>(example2, pat2, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="co"># extract all matches</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">str_extract_all</span>(example2, pat2, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="co"># extract all matches</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>     [,1]   [,2]   [,3]   [,4]   [,5]   [,6]  
 [1,] "road" "wood" "coul" "tood" "look" "coul"</code></pre>
 </div>
@@ -1321,293 +1311,293 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-next">
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb49" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb49-1"><a href="#cb49-1"></a><span class="co">---</span></span>
-<span id="cb49-2"><a href="#cb49-2"></a><span class="an">title:</span><span class="co"> "String"</span></span>
-<span id="cb49-3"><a href="#cb49-3"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb49-4"><a href="#cb49-4"></a><span class="co">---</span></span>
-<span id="cb49-5"><a href="#cb49-5"></a></span>
-<span id="cb49-6"><a href="#cb49-6"></a><span class="fu">### Exercise 1: Time slots {.unnumbered}</span></span>
-<span id="cb49-7"><a href="#cb49-7"></a></span>
-<span id="cb49-8"><a href="#cb49-8"></a>The <span class="in">`courses`</span> data includes *actual* data scraped from Mac's <span class="co">[</span><span class="ot">class schedule</span><span class="co">](https://macadmsys.macalester.edu/macssb/customPage/page/classSchedule)</span>. (Thanks to Prof Leslie Myint for the scraping code!!)</span>
-<span id="cb49-9"><a href="#cb49-9"></a></span>
-<span id="cb49-10"><a href="#cb49-10"></a>If you want to learn how to scrape data, take COMP/STAT 212, Intermediate Data Science! NOTE: For simplicity, I removed classes that had "TBA" for the <span class="in">`days`</span>.</span>
-<span id="cb49-11"><a href="#cb49-11"></a></span>
-<span id="cb49-14"><a href="#cb49-14"></a><span class="in">```{r}</span></span>
-<span id="cb49-15"><a href="#cb49-15"></a>courses <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/registrar.csv"</span>)</span>
-<span id="cb49-16"><a href="#cb49-16"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb49-17"><a href="#cb49-17"></a><span class="co"># Check it out</span></span>
-<span id="cb49-18"><a href="#cb49-18"></a><span class="fu">head</span>(courses)</span>
-<span id="cb49-19"><a href="#cb49-19"></a><span class="in">```</span></span>
-<span id="cb49-20"><a href="#cb49-20"></a></span>
-<span id="cb49-21"><a href="#cb49-21"></a>Use our more familiar wrangling tools to warm up.</span>
-<span id="cb49-22"><a href="#cb49-22"></a></span>
-<span id="cb49-25"><a href="#cb49-25"></a><span class="in">```{r}</span></span>
-<span id="cb49-26"><a href="#cb49-26"></a><span class="co"># Construct a table that indicates the number of classes offered in each day/time slot</span></span>
-<span id="cb49-27"><a href="#cb49-27"></a><span class="co"># Print only the 6 most popular time slots</span></span>
-<span id="cb49-28"><a href="#cb49-28"></a>courses <span class="sc">|&gt;</span></span>
-<span id="cb49-29"><a href="#cb49-29"></a>  <span class="fu">group_by</span>(days, time)<span class="sc">|&gt;</span></span>
-<span id="cb49-30"><a href="#cb49-30"></a>  <span class="fu">summarise</span>(<span class="at">number =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb49-31"><a href="#cb49-31"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number))<span class="sc">|&gt;</span></span>
-<span id="cb49-32"><a href="#cb49-32"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span>
-<span id="cb49-33"><a href="#cb49-33"></a><span class="in">```</span></span>
-<span id="cb49-34"><a href="#cb49-34"></a></span>
-<span id="cb49-35"><a href="#cb49-35"></a></span>
-<span id="cb49-36"><a href="#cb49-36"></a></span>
-<span id="cb49-37"><a href="#cb49-37"></a><span class="fu">### Exercise 2: Prep the data {.unnumbered}</span></span>
-<span id="cb49-38"><a href="#cb49-38"></a></span>
-<span id="cb49-39"><a href="#cb49-39"></a>So that we can analyze it later, we want to wrangle the <span class="in">`courses`</span> data:</span>
-<span id="cb49-40"><a href="#cb49-40"></a></span>
-<span id="cb49-41"><a href="#cb49-41"></a><span class="ss">-   </span>Let's get some enrollment info:</span>
-<span id="cb49-42"><a href="#cb49-42"></a><span class="ss">    -   </span>Split <span class="in">`avail_max`</span> into 2 separate variables: <span class="in">`avail`</span> and <span class="in">`max`</span>.</span>
-<span id="cb49-43"><a href="#cb49-43"></a><span class="ss">    -   </span>Use <span class="in">`avail`</span> and <span class="in">`max`</span> to define a new variable called <span class="in">`enroll`</span>. HINT: You'll need <span class="in">`as.numeric()`</span></span>
-<span id="cb49-44"><a href="#cb49-44"></a><span class="ss">-   </span>Split the course <span class="in">`number`</span> into 3 separate variables: <span class="in">`dept`</span>, <span class="in">`number`</span>, and <span class="in">`section`</span>. HINT: You can use <span class="in">`separate()`</span> to split a variable into 3, not just 2 new variables.</span>
-<span id="cb49-45"><a href="#cb49-45"></a></span>
-<span id="cb49-46"><a href="#cb49-46"></a>Store this as <span class="in">`courses_clean`</span> so that you can use it later.</span>
-<span id="cb49-47"><a href="#cb49-47"></a></span>
-<span id="cb49-50"><a href="#cb49-50"></a><span class="in">```{r}</span></span>
-<span id="cb49-51"><a href="#cb49-51"></a>courses_clean <span class="ot">&lt;-</span> courses<span class="sc">|&gt;</span></span>
-<span id="cb49-52"><a href="#cb49-52"></a>  <span class="fu">separate</span>(avail_max, <span class="fu">c</span>(<span class="st">"avail"</span>, <span class="st">"max"</span>), <span class="at">sep =</span> <span class="st">"/"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb49-53"><a href="#cb49-53"></a>  <span class="fu">mutate</span>(<span class="at">avail =</span> <span class="fu">as.numeric</span>(avail), <span class="at">max =</span> <span class="fu">as.numeric</span>(max), <span class="at">enroll =</span> max <span class="sc">-</span> avail)<span class="sc">|&gt;</span></span>
-<span id="cb49-54"><a href="#cb49-54"></a>  <span class="fu">separate</span>(number, <span class="fu">c</span>(<span class="st">"dept"</span>, <span class="st">"number"</span>, <span class="st">"section"</span>), <span class="at">sep =</span> <span class="st">"[ -]"</span>)</span>
-<span id="cb49-55"><a href="#cb49-55"></a><span class="in">```</span></span>
-<span id="cb49-56"><a href="#cb49-56"></a></span>
-<span id="cb49-57"><a href="#cb49-57"></a></span>
-<span id="cb49-58"><a href="#cb49-58"></a></span>
-<span id="cb49-59"><a href="#cb49-59"></a><span class="fu">### Exercise 3: Courses by department {.unnumbered}</span></span>
-<span id="cb49-60"><a href="#cb49-60"></a></span>
-<span id="cb49-61"><a href="#cb49-61"></a>Using <span class="in">`courses_clean`</span>...</span>
-<span id="cb49-62"><a href="#cb49-62"></a></span>
-<span id="cb49-65"><a href="#cb49-65"></a><span class="in">```{r}</span></span>
-<span id="cb49-66"><a href="#cb49-66"></a><span class="co"># Identify the 6 departments that offered the most sections</span></span>
-<span id="cb49-67"><a href="#cb49-67"></a>courses_clean<span class="sc">|&gt;</span></span>
-<span id="cb49-68"><a href="#cb49-68"></a>  <span class="fu">group_by</span>(dept)<span class="sc">|&gt;</span></span>
-<span id="cb49-69"><a href="#cb49-69"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb49-70"><a href="#cb49-70"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))<span class="sc">|&gt;</span></span>
-<span id="cb49-71"><a href="#cb49-71"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span>
-<span id="cb49-72"><a href="#cb49-72"></a><span class="co"># Identify the 6 departments with the longest average course titles</span></span>
-<span id="cb49-73"><a href="#cb49-73"></a>courses_clean<span class="sc">|&gt;</span></span>
-<span id="cb49-74"><a href="#cb49-74"></a>  <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">str_length</span>(name))<span class="sc">|&gt;</span></span>
-<span id="cb49-75"><a href="#cb49-75"></a>  <span class="fu">group_by</span>(dept)<span class="sc">|&gt;</span></span>
-<span id="cb49-76"><a href="#cb49-76"></a>  <span class="fu">summarise</span>(<span class="at">sum =</span> <span class="fu">sum</span>(length), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
-<span id="cb49-77"><a href="#cb49-77"></a>  <span class="fu">mutate</span>(<span class="at">avg =</span> sum<span class="sc">/</span>count)<span class="sc">|&gt;</span></span>
-<span id="cb49-78"><a href="#cb49-78"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))<span class="sc">|&gt;</span></span>
-<span id="cb49-79"><a href="#cb49-79"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span>
-<span id="cb49-80"><a href="#cb49-80"></a><span class="in">```</span></span>
-<span id="cb49-81"><a href="#cb49-81"></a></span>
-<span id="cb49-82"><a href="#cb49-82"></a></span>
-<span id="cb49-83"><a href="#cb49-83"></a></span>
-<span id="cb49-84"><a href="#cb49-84"></a><span class="fu">### Exercise 4: STAT courses {.unnumbered}</span></span>
-<span id="cb49-85"><a href="#cb49-85"></a></span>
-<span id="cb49-86"><a href="#cb49-86"></a><span class="fu">#### Part a {.unnumbered}</span></span>
-<span id="cb49-87"><a href="#cb49-87"></a></span>
-<span id="cb49-88"><a href="#cb49-88"></a>Get a subset of <span class="in">`courses_clean`</span> that only includes courses taught by Alicia Johnson.</span>
-<span id="cb49-89"><a href="#cb49-89"></a></span>
-<span id="cb49-92"><a href="#cb49-92"></a><span class="in">```{r}</span></span>
-<span id="cb49-93"><a href="#cb49-93"></a>courses_clean<span class="sc">|&gt;</span></span>
-<span id="cb49-94"><a href="#cb49-94"></a>  <span class="fu">filter</span>(instructor <span class="sc">==</span> <span class="st">"Alicia Johnson"</span>)</span>
-<span id="cb49-95"><a href="#cb49-95"></a><span class="in">```</span></span>
-<span id="cb49-96"><a href="#cb49-96"></a></span>
-<span id="cb49-97"><a href="#cb49-97"></a><span class="fu">#### Part b {.unnumbered}</span></span>
-<span id="cb49-98"><a href="#cb49-98"></a></span>
-<span id="cb49-99"><a href="#cb49-99"></a>Create a new dataset from <span class="in">`courses_clean`</span>, named <span class="in">`stat`</span>, that only includes STAT sections. In this dataset:</span>
-<span id="cb49-100"><a href="#cb49-100"></a></span>
-<span id="cb49-101"><a href="#cb49-101"></a><span class="ss">-   </span>In the course names:</span>
-<span id="cb49-102"><a href="#cb49-102"></a></span>
-<span id="cb49-103"><a href="#cb49-103"></a><span class="ss">    -   </span>Remove "Introduction to" from any name.</span>
-<span id="cb49-104"><a href="#cb49-104"></a><span class="ss">    -   </span>Shorten "Statistical" to "Stat" where relevant.</span>
-<span id="cb49-105"><a href="#cb49-105"></a></span>
-<span id="cb49-106"><a href="#cb49-106"></a><span class="ss">-   </span>Define a variable that records the <span class="in">`start_time`</span> for the course.</span>
-<span id="cb49-107"><a href="#cb49-107"></a></span>
-<span id="cb49-108"><a href="#cb49-108"></a><span class="ss">-   </span>Keep only the <span class="in">`number, name, start_time, enroll`</span> columns.</span>
-<span id="cb49-109"><a href="#cb49-109"></a></span>
-<span id="cb49-110"><a href="#cb49-110"></a><span class="ss">-   </span>The result should have 19 rows and 4 columns.</span>
-<span id="cb49-111"><a href="#cb49-111"></a></span>
-<span id="cb49-114"><a href="#cb49-114"></a><span class="in">```{r}</span></span>
-<span id="cb49-115"><a href="#cb49-115"></a>stat <span class="ot">&lt;-</span> courses_clean<span class="sc">|&gt;</span></span>
-<span id="cb49-116"><a href="#cb49-116"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"STAT"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb49-117"><a href="#cb49-117"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">"Introduction to"</span>, <span class="st">""</span>), <span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">"Statistical"</span>, <span class="st">"Stat"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb49-118"><a href="#cb49-118"></a>  <span class="fu">separate</span>(time,<span class="fu">c</span>(<span class="st">"start_time"</span>, <span class="cn">NA</span>), <span class="at">sep =</span> <span class="st">" - "</span>)<span class="sc">|&gt;</span></span>
-<span id="cb49-119"><a href="#cb49-119"></a>  <span class="fu">select</span>(<span class="fu">c</span>(number, name, start_time, enroll))</span>
-<span id="cb49-120"><a href="#cb49-120"></a><span class="in">```</span></span>
-<span id="cb49-121"><a href="#cb49-121"></a></span>
-<span id="cb49-122"><a href="#cb49-122"></a></span>
-<span id="cb49-123"><a href="#cb49-123"></a></span>
-<span id="cb49-124"><a href="#cb49-124"></a><span class="fu">### Exercise 5: More cleaning {.unnumbered}</span></span>
-<span id="cb49-125"><a href="#cb49-125"></a></span>
-<span id="cb49-126"><a href="#cb49-126"></a>In the next exercises, we'll dig into enrollments. Let's get the data ready for that analysis here. Make the following changes to the <span class="in">`courses_clean`</span> data. Because they have different enrollment structures, and we don't want to compare apples and oranges, *remove* the following:</span>
-<span id="cb49-127"><a href="#cb49-127"></a></span>
-<span id="cb49-128"><a href="#cb49-128"></a><span class="ss">-   </span>all sections in <span class="in">`PE`</span> and <span class="in">`INTD`</span> (interdisciplinary studies courses)</span>
-<span id="cb49-129"><a href="#cb49-129"></a></span>
-<span id="cb49-130"><a href="#cb49-130"></a><span class="ss">-   </span>all music ensembles and dance practicums, i.e. all MUSI and THDA classes with numbers less than 100. HINT: <span class="in">`!(dept == "MUSI" &amp; as.numeric(number) &lt; 100)`</span></span>
-<span id="cb49-131"><a href="#cb49-131"></a></span>
-<span id="cb49-132"><a href="#cb49-132"></a><span class="ss">-   </span>all lab sections. Be careful which variable you use here. For example, you don't want to search by "Lab" and accidentally eliminate courses with words such as "Labor".</span>
-<span id="cb49-133"><a href="#cb49-133"></a></span>
-<span id="cb49-134"><a href="#cb49-134"></a>Save the results as <span class="in">`enrollments`</span> (don't overwrite <span class="in">`courses_clean`</span>).</span>
-<span id="cb49-135"><a href="#cb49-135"></a></span>
-<span id="cb49-138"><a href="#cb49-138"></a><span class="in">```{r}</span></span>
-<span id="cb49-139"><a href="#cb49-139"></a>enrollments <span class="ot">&lt;-</span> courses_clean <span class="sc">|&gt;</span> </span>
-<span id="cb49-140"><a href="#cb49-140"></a>  <span class="fu">filter</span>(dept <span class="sc">!=</span> <span class="fu">c</span>(<span class="st">"PE"</span>, <span class="st">"INTD"</span>))<span class="sc">|&gt;</span></span>
-<span id="cb49-141"><a href="#cb49-141"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(dept <span class="sc">==</span> <span class="st">"MUSI"</span> <span class="sc">&amp;</span> <span class="fu">as.numeric</span>(number) <span class="sc">&lt;</span> <span class="dv">100</span>))<span class="sc">|&gt;</span></span>
-<span id="cb49-142"><a href="#cb49-142"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(<span class="fu">str_detect</span>(section, <span class="st">"L"</span>)))</span>
-<span id="cb49-143"><a href="#cb49-143"></a><span class="in">```</span></span>
-<span id="cb49-144"><a href="#cb49-144"></a></span>
-<span id="cb49-145"><a href="#cb49-145"></a></span>
-<span id="cb49-146"><a href="#cb49-146"></a></span>
-<span id="cb49-147"><a href="#cb49-147"></a><span class="fu">### Exercise 6: Enrollment &amp; departments {.unnumbered}</span></span>
-<span id="cb49-148"><a href="#cb49-148"></a></span>
-<span id="cb49-149"><a href="#cb49-149"></a>Explore enrollments by department. *You* decide what research questions to focus on. Use both visual and numerical summaries.</span>
-<span id="cb49-150"><a href="#cb49-150"></a></span>
-<span id="cb49-151"><a href="#cb49-151"></a></span>
-<span id="cb49-152"><a href="#cb49-152"></a></span>
-<span id="cb49-153"><a href="#cb49-153"></a><span class="fu">### Exercise 7: Enrollment &amp; faculty {.unnumbered}</span></span>
-<span id="cb49-154"><a href="#cb49-154"></a></span>
-<span id="cb49-155"><a href="#cb49-155"></a>Let's now explore enrollments by instructor. In doing so, we have to be cautious of cross-listed courses that are listed under multiple different departments. Uncomment the code lines in the chunk below for an example.</span>
-<span id="cb49-156"><a href="#cb49-156"></a></span>
-<span id="cb49-157"><a href="#cb49-157"></a>::: {.callout-tip title="Commenting/Uncommenting Code"}</span>
-<span id="cb49-158"><a href="#cb49-158"></a></span>
-<span id="cb49-159"><a href="#cb49-159"></a>To comment/uncomment several lines of code at once, highlight them then click &lt;kbd&gt;ctrl/cmd+shift+c&lt;/kbd&gt;.</span>
-<span id="cb49-160"><a href="#cb49-160"></a></span>
-<span id="cb49-161"><a href="#cb49-161"></a>:::</span>
-<span id="cb49-162"><a href="#cb49-162"></a></span>
-<span id="cb49-165"><a href="#cb49-165"></a><span class="in">```{r}</span></span>
-<span id="cb49-166"><a href="#cb49-166"></a>enrollments <span class="sc">|&gt;</span></span>
-<span id="cb49-167"><a href="#cb49-167"></a>  <span class="fu">filter</span>(dept <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"STAT"</span>, <span class="st">"COMP"</span>), number <span class="sc">==</span> <span class="dv">112</span>, section <span class="sc">==</span> <span class="st">"01"</span>)</span>
-<span id="cb49-168"><a href="#cb49-168"></a><span class="in">```</span></span>
-<span id="cb49-169"><a href="#cb49-169"></a></span>
-<span id="cb49-170"><a href="#cb49-170"></a>Notice that these are the exact same section! In order to not double count an instructor's enrollments, we can keep only the courses that have <span class="in">`distinct()`</span> *combinations* of <span class="in">`days, time, instructor`</span> values.  Uncomment the code lines in the chunk below.</span>
-<span id="cb49-171"><a href="#cb49-171"></a></span>
-<span id="cb49-174"><a href="#cb49-174"></a><span class="in">```{r}</span></span>
-<span id="cb49-175"><a href="#cb49-175"></a>enrollments_2 <span class="ot">&lt;-</span> enrollments <span class="sc">|&gt;</span></span>
-<span id="cb49-176"><a href="#cb49-176"></a>  <span class="fu">distinct</span>(days, time, instructor, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb49-177"><a href="#cb49-177"></a></span>
-<span id="cb49-178"><a href="#cb49-178"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: By default this keeps the first department alphabetically</span></span>
-<span id="cb49-179"><a href="#cb49-179"></a><span class="co"># That's fine because we won't use this to analyze department enrollments!</span></span>
-<span id="cb49-180"><a href="#cb49-180"></a>enrollments_2 <span class="sc">|&gt;</span></span>
-<span id="cb49-181"><a href="#cb49-181"></a>  <span class="fu">filter</span>(instructor <span class="sc">==</span> <span class="st">"Brianna Heggeseth"</span>, name <span class="sc">==</span> <span class="st">"Introduction to Data Science"</span>)</span>
-<span id="cb49-182"><a href="#cb49-182"></a><span class="in">```</span></span>
-<span id="cb49-183"><a href="#cb49-183"></a></span>
-<span id="cb49-184"><a href="#cb49-184"></a>*Now*, explore enrollments by instructor. *You* decide what research questions to focus on. Use both visual and numerical summaries.</span>
-<span id="cb49-185"><a href="#cb49-185"></a></span>
-<span id="cb49-186"><a href="#cb49-186"></a>Average class size of Physics department? Any relationship between course number and enrollment number?</span>
-<span id="cb49-187"><a href="#cb49-187"></a></span>
-<span id="cb49-188"><a href="#cb49-188"></a>CAVEAT: The above code doesn't deal with *co-taught* courses that have more than one instructor. Thus instructors that co-taught are recorded as a pair, and their co-taught enrollments aren't added to their total enrollments. This is tough to get around with how the data were scraped as the instructor names are smushed together, not separated by a comma!</span>
-<span id="cb49-189"><a href="#cb49-189"></a></span>
-<span id="cb49-192"><a href="#cb49-192"></a><span class="in">```{r}</span></span>
-<span id="cb49-193"><a href="#cb49-193"></a>enrollments_2<span class="sc">|&gt;</span></span>
-<span id="cb49-194"><a href="#cb49-194"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"PHYS"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb49-195"><a href="#cb49-195"></a>  <span class="fu">summarise</span>(<span class="at">average =</span> <span class="fu">mean</span>(enroll))</span>
-<span id="cb49-196"><a href="#cb49-196"></a></span>
-<span id="cb49-197"><a href="#cb49-197"></a>enrollments_2<span class="sc">|&gt;</span></span>
-<span id="cb49-198"><a href="#cb49-198"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"PHYS"</span>)<span class="sc">|&gt;</span></span>
-<span id="cb49-199"><a href="#cb49-199"></a>  <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">as.numeric</span>(number))<span class="sc">|&gt;</span></span>
-<span id="cb49-200"><a href="#cb49-200"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> number, <span class="at">y =</span> enroll)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span>
-<span id="cb49-201"><a href="#cb49-201"></a><span class="in">```</span></span>
-<span id="cb49-202"><a href="#cb49-202"></a></span>
-<span id="cb49-203"><a href="#cb49-203"></a></span>
-<span id="cb49-204"><a href="#cb49-204"></a></span>
-<span id="cb49-205"><a href="#cb49-205"></a><span class="fu">### Optional extra practice {.unnumbered}</span></span>
-<span id="cb49-206"><a href="#cb49-206"></a></span>
-<span id="cb49-209"><a href="#cb49-209"></a><span class="in">```{r}</span></span>
-<span id="cb49-210"><a href="#cb49-210"></a><span class="co"># Make a bar plot showing the number of night courses by day of the week</span></span>
-<span id="cb49-211"><a href="#cb49-211"></a><span class="co"># Use courses_clean</span></span>
-<span id="cb49-212"><a href="#cb49-212"></a></span>
-<span id="cb49-213"><a href="#cb49-213"></a></span>
-<span id="cb49-214"><a href="#cb49-214"></a><span class="in">```</span></span>
-<span id="cb49-215"><a href="#cb49-215"></a></span>
-<span id="cb49-216"><a href="#cb49-216"></a></span>
-<span id="cb49-217"><a href="#cb49-217"></a></span>
-<span id="cb49-218"><a href="#cb49-218"></a><span class="fu">### Dig Deeper: regex {.unnumbered}</span></span>
-<span id="cb49-219"><a href="#cb49-219"></a></span>
-<span id="cb49-220"><a href="#cb49-220"></a>Example 4 gave 1 small example of a regular expression.</span>
-<span id="cb49-221"><a href="#cb49-221"></a></span>
-<span id="cb49-222"><a href="#cb49-222"></a>These are handy when we want process a string variable, but there's no consistent pattern by which to do this. You must think about the structure of the string and how you can use regular expressions to capture the patterns you want (and exclude the patterns you don't want).</span>
-<span id="cb49-223"><a href="#cb49-223"></a></span>
-<span id="cb49-224"><a href="#cb49-224"></a>For example, how would you describe the pattern of a 10-digit phone number? Limit yourself to just a US phone number for now.</span>
-<span id="cb49-225"><a href="#cb49-225"></a></span>
-<span id="cb49-226"><a href="#cb49-226"></a><span class="ss">-   </span>The first 3 digits are the area code.</span>
-<span id="cb49-227"><a href="#cb49-227"></a><span class="ss">-   </span>The next 3 digits are the exchange code.</span>
-<span id="cb49-228"><a href="#cb49-228"></a><span class="ss">-   </span>The last 4 digits are the subscriber number.</span>
-<span id="cb49-229"><a href="#cb49-229"></a></span>
-<span id="cb49-230"><a href="#cb49-230"></a>Thus, a regular expression for a US phone number could be:</span>
-<span id="cb49-231"><a href="#cb49-231"></a></span>
-<span id="cb49-232"><a href="#cb49-232"></a><span class="ss">-   </span><span class="in">`[:digit:]{3}-[:digit:]{3}-[:digit:]{4}`</span> which limits you to XXX-XXX-XXXX pattern or</span>
-<span id="cb49-233"><a href="#cb49-233"></a><span class="ss">-   </span><span class="in">`\\([:digit:]{3}\\) [:digit:]{3}-[:digit:]{4}`</span> which limits you to (XXX) XXX-XXXX pattern or</span>
-<span id="cb49-234"><a href="#cb49-234"></a><span class="ss">-   </span><span class="in">`[:digit:]{3}\\.[:digit:]{3}\\.[:digit:]{4}`</span> which limits you to XXX.XXX.XXXX pattern</span>
-<span id="cb49-235"><a href="#cb49-235"></a></span>
-<span id="cb49-236"><a href="#cb49-236"></a>The following would include the three patterns above in addition to the XXXXXXXXXX pattern (no dashes or periods): - <span class="in">`[\\(]*[:digit:]{3}[-.\\)]*[:digit:]{3}[-.]*[:digit:]{4}`</span></span>
-<span id="cb49-237"><a href="#cb49-237"></a></span>
-<span id="cb49-238"><a href="#cb49-238"></a>In order to write a regular expression, you first need to consider what patterns you want to include and exclude.</span>
-<span id="cb49-239"><a href="#cb49-239"></a></span>
-<span id="cb49-240"><a href="#cb49-240"></a>Work through the following examples, and the tutorial after them to learn about the syntax.</span>
-<span id="cb49-241"><a href="#cb49-241"></a></span>
-<span id="cb49-242"><a href="#cb49-242"></a>**EXAMPLES**</span>
-<span id="cb49-243"><a href="#cb49-243"></a></span>
-<span id="cb49-246"><a href="#cb49-246"></a><span class="in">```{r}</span></span>
-<span id="cb49-247"><a href="#cb49-247"></a><span class="co"># Define some strings to play around with</span></span>
-<span id="cb49-248"><a href="#cb49-248"></a>example <span class="ot">&lt;-</span> <span class="st">"The quick brown fox jumps over the lazy dog."</span></span>
-<span id="cb49-249"><a href="#cb49-249"></a><span class="in">```</span></span>
-<span id="cb49-250"><a href="#cb49-250"></a></span>
-<span id="cb49-253"><a href="#cb49-253"></a><span class="in">```{r}</span></span>
-<span id="cb49-254"><a href="#cb49-254"></a><span class="fu">str_replace</span>(example, <span class="st">"quick"</span>, <span class="st">"really quick"</span>)</span>
-<span id="cb49-255"><a href="#cb49-255"></a><span class="in">```</span></span>
-<span id="cb49-256"><a href="#cb49-256"></a></span>
-<span id="cb49-259"><a href="#cb49-259"></a><span class="in">```{r}</span></span>
-<span id="cb49-260"><a href="#cb49-260"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)"</span>, <span class="st">"****"</span>) <span class="co"># | reads as OR</span></span>
-<span id="cb49-261"><a href="#cb49-261"></a><span class="in">```</span></span>
-<span id="cb49-262"><a href="#cb49-262"></a></span>
-<span id="cb49-265"><a href="#cb49-265"></a><span class="in">```{r}</span></span>
-<span id="cb49-266"><a href="#cb49-266"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)."</span>, <span class="st">"****"</span>) <span class="co"># "." for any character</span></span>
-<span id="cb49-267"><a href="#cb49-267"></a><span class="in">```</span></span>
-<span id="cb49-268"><a href="#cb49-268"></a></span>
-<span id="cb49-271"><a href="#cb49-271"></a><span class="in">```{r}</span></span>
-<span id="cb49-272"><a href="#cb49-272"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)</span><span class="sc">\\</span><span class="st">.$"</span>, <span class="st">"****"</span>) <span class="co"># at end of sentence only, "\\." only for a period</span></span>
-<span id="cb49-273"><a href="#cb49-273"></a><span class="in">```</span></span>
-<span id="cb49-274"><a href="#cb49-274"></a></span>
-<span id="cb49-277"><a href="#cb49-277"></a><span class="in">```{r}</span></span>
-<span id="cb49-278"><a href="#cb49-278"></a><span class="fu">str_replace_all</span>(example, <span class="st">"the"</span>, <span class="st">"a"</span>) <span class="co"># case-sensitive only matches one</span></span>
-<span id="cb49-279"><a href="#cb49-279"></a><span class="in">```</span></span>
-<span id="cb49-280"><a href="#cb49-280"></a></span>
-<span id="cb49-283"><a href="#cb49-283"></a><span class="in">```{r}</span></span>
-<span id="cb49-284"><a href="#cb49-284"></a><span class="fu">str_replace_all</span>(example, <span class="st">"[Tt]he"</span>, <span class="st">"a"</span>) <span class="co"># # will match either t or T; could also make "a" conditional on capitalization of t</span></span>
-<span id="cb49-285"><a href="#cb49-285"></a><span class="in">```</span></span>
-<span id="cb49-286"><a href="#cb49-286"></a></span>
-<span id="cb49-289"><a href="#cb49-289"></a><span class="in">```{r}</span></span>
-<span id="cb49-290"><a href="#cb49-290"></a><span class="fu">str_replace_all</span>(example, <span class="st">"[Tt]he"</span>, <span class="st">"a"</span>) <span class="co"># first match only</span></span>
-<span id="cb49-291"><a href="#cb49-291"></a><span class="in">```</span></span>
-<span id="cb49-292"><a href="#cb49-292"></a></span>
-<span id="cb49-295"><a href="#cb49-295"></a><span class="in">```{r}</span></span>
-<span id="cb49-296"><a href="#cb49-296"></a><span class="co"># More examples</span></span>
-<span id="cb49-297"><a href="#cb49-297"></a>example2 <span class="ot">&lt;-</span> <span class="st">"Two roads diverged in a yellow wood, / And sorry I could not travel both / And be one traveler, long I stood / And looked down one as far as I could"</span></span>
-<span id="cb49-298"><a href="#cb49-298"></a>example3 <span class="ot">&lt;-</span> <span class="st">"This is a test"</span></span>
-<span id="cb49-299"><a href="#cb49-299"></a></span>
-<span id="cb49-300"><a href="#cb49-300"></a><span class="co"># Store the examples in 1 place</span></span>
-<span id="cb49-301"><a href="#cb49-301"></a>examples <span class="ot">&lt;-</span> <span class="fu">c</span>(example, example2, example3)</span>
-<span id="cb49-302"><a href="#cb49-302"></a><span class="in">```</span></span>
-<span id="cb49-303"><a href="#cb49-303"></a></span>
-<span id="cb49-306"><a href="#cb49-306"></a><span class="in">```{r}</span></span>
-<span id="cb49-307"><a href="#cb49-307"></a>pat <span class="ot">&lt;-</span> <span class="st">"[^aeiouAEIOU ]{3}"</span> <span class="co"># Regular expression for three straight consonants. Note that I've excluded spaces as well</span></span>
-<span id="cb49-308"><a href="#cb49-308"></a></span>
-<span id="cb49-309"><a href="#cb49-309"></a><span class="fu">str_detect</span>(examples, pat) <span class="co"># TRUE/FALSE if it detects pattern</span></span>
-<span id="cb49-310"><a href="#cb49-310"></a><span class="in">```</span></span>
-<span id="cb49-311"><a href="#cb49-311"></a></span>
-<span id="cb49-314"><a href="#cb49-314"></a><span class="in">```{r}</span></span>
-<span id="cb49-315"><a href="#cb49-315"></a><span class="fu">str_subset</span>(examples, pat) <span class="co"># Pulls out those that detects pattern</span></span>
-<span id="cb49-316"><a href="#cb49-316"></a><span class="in">```</span></span>
-<span id="cb49-317"><a href="#cb49-317"></a></span>
-<span id="cb49-320"><a href="#cb49-320"></a><span class="in">```{r}</span></span>
-<span id="cb49-321"><a href="#cb49-321"></a>pat2 <span class="ot">&lt;-</span> <span class="st">"[^aeiouAEIOU ][aeiouAEIOU]{2}[^aeiouAEIOU ]{1}"</span> <span class="co"># consonant followed by two vowels followed by a consonant</span></span>
-<span id="cb49-322"><a href="#cb49-322"></a></span>
-<span id="cb49-323"><a href="#cb49-323"></a><span class="fu">str_extract</span>(example2, pat2) <span class="co"># extract first match</span></span>
-<span id="cb49-324"><a href="#cb49-324"></a><span class="in">```</span></span>
-<span id="cb49-325"><a href="#cb49-325"></a></span>
-<span id="cb49-328"><a href="#cb49-328"></a><span class="in">```{r}</span></span>
-<span id="cb49-329"><a href="#cb49-329"></a><span class="fu">str_extract_all</span>(example2, pat2, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="co"># extract all matches</span></span>
-<span id="cb49-330"><a href="#cb49-330"></a><span class="in">```</span></span>
-<span id="cb49-331"><a href="#cb49-331"></a></span>
-<span id="cb49-332"><a href="#cb49-332"></a>**TUTORIAL**</span>
-<span id="cb49-333"><a href="#cb49-333"></a></span>
-<span id="cb49-334"><a href="#cb49-334"></a>Try out this <span class="co">[</span><span class="ot">interactive tutorial</span><span class="co">](https://regexone.com/)</span>. Note that neither the tutorial nor regular expressions more generally are specific to <span class="in">`R`</span>, but it still illustrates the main ideas of regular expressions.</span>
-<span id="cb49-335"><a href="#cb49-335"></a></span>
+<div class="sourceCode" id="cb46" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb46-1"><a href="#cb46-1"></a><span class="co">---</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="an">title:</span><span class="co"> "String"</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a><span class="co">---</span></span>
+<span id="cb46-5"><a href="#cb46-5"></a></span>
+<span id="cb46-6"><a href="#cb46-6"></a><span class="fu">### Exercise 1: Time slots {.unnumbered}</span></span>
+<span id="cb46-7"><a href="#cb46-7"></a></span>
+<span id="cb46-8"><a href="#cb46-8"></a>The <span class="in">`courses`</span> data includes *actual* data scraped from Mac's <span class="co">[</span><span class="ot">class schedule</span><span class="co">](https://macadmsys.macalester.edu/macssb/customPage/page/classSchedule)</span>. (Thanks to Prof Leslie Myint for the scraping code!!)</span>
+<span id="cb46-9"><a href="#cb46-9"></a></span>
+<span id="cb46-10"><a href="#cb46-10"></a>If you want to learn how to scrape data, take COMP/STAT 212, Intermediate Data Science! NOTE: For simplicity, I removed classes that had "TBA" for the <span class="in">`days`</span>.</span>
+<span id="cb46-11"><a href="#cb46-11"></a></span>
+<span id="cb46-14"><a href="#cb46-14"></a><span class="in">```{r}</span></span>
+<span id="cb46-15"><a href="#cb46-15"></a>courses <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/registrar.csv"</span>)</span>
+<span id="cb46-16"><a href="#cb46-16"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb46-17"><a href="#cb46-17"></a><span class="co"># Check it out</span></span>
+<span id="cb46-18"><a href="#cb46-18"></a><span class="fu">head</span>(courses)</span>
+<span id="cb46-19"><a href="#cb46-19"></a><span class="in">```</span></span>
+<span id="cb46-20"><a href="#cb46-20"></a></span>
+<span id="cb46-21"><a href="#cb46-21"></a>Use our more familiar wrangling tools to warm up.</span>
+<span id="cb46-22"><a href="#cb46-22"></a></span>
+<span id="cb46-25"><a href="#cb46-25"></a><span class="in">```{r}</span></span>
+<span id="cb46-26"><a href="#cb46-26"></a><span class="co"># Construct a table that indicates the number of classes offered in each day/time slot</span></span>
+<span id="cb46-27"><a href="#cb46-27"></a><span class="co"># Print only the 6 most popular time slots</span></span>
+<span id="cb46-28"><a href="#cb46-28"></a>courses <span class="sc">|&gt;</span></span>
+<span id="cb46-29"><a href="#cb46-29"></a>  <span class="fu">group_by</span>(days, time)<span class="sc">|&gt;</span></span>
+<span id="cb46-30"><a href="#cb46-30"></a>  <span class="fu">summarise</span>(<span class="at">number =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb46-31"><a href="#cb46-31"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number))<span class="sc">|&gt;</span></span>
+<span id="cb46-32"><a href="#cb46-32"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span>
+<span id="cb46-33"><a href="#cb46-33"></a><span class="in">```</span></span>
+<span id="cb46-34"><a href="#cb46-34"></a></span>
+<span id="cb46-35"><a href="#cb46-35"></a></span>
+<span id="cb46-36"><a href="#cb46-36"></a></span>
+<span id="cb46-37"><a href="#cb46-37"></a><span class="fu">### Exercise 2: Prep the data {.unnumbered}</span></span>
+<span id="cb46-38"><a href="#cb46-38"></a></span>
+<span id="cb46-39"><a href="#cb46-39"></a>So that we can analyze it later, we want to wrangle the <span class="in">`courses`</span> data:</span>
+<span id="cb46-40"><a href="#cb46-40"></a></span>
+<span id="cb46-41"><a href="#cb46-41"></a><span class="ss">-   </span>Let's get some enrollment info:</span>
+<span id="cb46-42"><a href="#cb46-42"></a><span class="ss">    -   </span>Split <span class="in">`avail_max`</span> into 2 separate variables: <span class="in">`avail`</span> and <span class="in">`max`</span>.</span>
+<span id="cb46-43"><a href="#cb46-43"></a><span class="ss">    -   </span>Use <span class="in">`avail`</span> and <span class="in">`max`</span> to define a new variable called <span class="in">`enroll`</span>. HINT: You'll need <span class="in">`as.numeric()`</span></span>
+<span id="cb46-44"><a href="#cb46-44"></a><span class="ss">-   </span>Split the course <span class="in">`number`</span> into 3 separate variables: <span class="in">`dept`</span>, <span class="in">`number`</span>, and <span class="in">`section`</span>. HINT: You can use <span class="in">`separate()`</span> to split a variable into 3, not just 2 new variables.</span>
+<span id="cb46-45"><a href="#cb46-45"></a></span>
+<span id="cb46-46"><a href="#cb46-46"></a>Store this as <span class="in">`courses_clean`</span> so that you can use it later.</span>
+<span id="cb46-47"><a href="#cb46-47"></a></span>
+<span id="cb46-50"><a href="#cb46-50"></a><span class="in">```{r}</span></span>
+<span id="cb46-51"><a href="#cb46-51"></a>courses_clean <span class="ot">&lt;-</span> courses<span class="sc">|&gt;</span></span>
+<span id="cb46-52"><a href="#cb46-52"></a>  <span class="fu">separate</span>(avail_max, <span class="fu">c</span>(<span class="st">"avail"</span>, <span class="st">"max"</span>), <span class="at">sep =</span> <span class="st">"/"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb46-53"><a href="#cb46-53"></a>  <span class="fu">mutate</span>(<span class="at">avail =</span> <span class="fu">as.numeric</span>(avail), <span class="at">max =</span> <span class="fu">as.numeric</span>(max), <span class="at">enroll =</span> max <span class="sc">-</span> avail)<span class="sc">|&gt;</span></span>
+<span id="cb46-54"><a href="#cb46-54"></a>  <span class="fu">separate</span>(number, <span class="fu">c</span>(<span class="st">"dept"</span>, <span class="st">"number"</span>, <span class="st">"section"</span>), <span class="at">sep =</span> <span class="st">"[ -]"</span>)</span>
+<span id="cb46-55"><a href="#cb46-55"></a><span class="in">```</span></span>
+<span id="cb46-56"><a href="#cb46-56"></a></span>
+<span id="cb46-57"><a href="#cb46-57"></a></span>
+<span id="cb46-58"><a href="#cb46-58"></a></span>
+<span id="cb46-59"><a href="#cb46-59"></a><span class="fu">### Exercise 3: Courses by department {.unnumbered}</span></span>
+<span id="cb46-60"><a href="#cb46-60"></a></span>
+<span id="cb46-61"><a href="#cb46-61"></a>Using <span class="in">`courses_clean`</span>...</span>
+<span id="cb46-62"><a href="#cb46-62"></a></span>
+<span id="cb46-65"><a href="#cb46-65"></a><span class="in">```{r}</span></span>
+<span id="cb46-66"><a href="#cb46-66"></a><span class="co"># Identify the 6 departments that offered the most sections</span></span>
+<span id="cb46-67"><a href="#cb46-67"></a>courses_clean<span class="sc">|&gt;</span></span>
+<span id="cb46-68"><a href="#cb46-68"></a>  <span class="fu">group_by</span>(dept)<span class="sc">|&gt;</span></span>
+<span id="cb46-69"><a href="#cb46-69"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb46-70"><a href="#cb46-70"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count))<span class="sc">|&gt;</span></span>
+<span id="cb46-71"><a href="#cb46-71"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span>
+<span id="cb46-72"><a href="#cb46-72"></a><span class="co"># Identify the 6 departments with the longest average course titles</span></span>
+<span id="cb46-73"><a href="#cb46-73"></a>courses_clean<span class="sc">|&gt;</span></span>
+<span id="cb46-74"><a href="#cb46-74"></a>  <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">str_length</span>(name))<span class="sc">|&gt;</span></span>
+<span id="cb46-75"><a href="#cb46-75"></a>  <span class="fu">group_by</span>(dept)<span class="sc">|&gt;</span></span>
+<span id="cb46-76"><a href="#cb46-76"></a>  <span class="fu">summarise</span>(<span class="at">sum =</span> <span class="fu">sum</span>(length), <span class="at">count =</span> <span class="fu">n</span>())<span class="sc">|&gt;</span></span>
+<span id="cb46-77"><a href="#cb46-77"></a>  <span class="fu">mutate</span>(<span class="at">avg =</span> sum<span class="sc">/</span>count)<span class="sc">|&gt;</span></span>
+<span id="cb46-78"><a href="#cb46-78"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg))<span class="sc">|&gt;</span></span>
+<span id="cb46-79"><a href="#cb46-79"></a>  <span class="fu">head</span>(<span class="dv">6</span>)</span>
+<span id="cb46-80"><a href="#cb46-80"></a><span class="in">```</span></span>
+<span id="cb46-81"><a href="#cb46-81"></a></span>
+<span id="cb46-82"><a href="#cb46-82"></a></span>
+<span id="cb46-83"><a href="#cb46-83"></a></span>
+<span id="cb46-84"><a href="#cb46-84"></a><span class="fu">### Exercise 4: STAT courses {.unnumbered}</span></span>
+<span id="cb46-85"><a href="#cb46-85"></a></span>
+<span id="cb46-86"><a href="#cb46-86"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb46-87"><a href="#cb46-87"></a></span>
+<span id="cb46-88"><a href="#cb46-88"></a>Get a subset of <span class="in">`courses_clean`</span> that only includes courses taught by Alicia Johnson.</span>
+<span id="cb46-89"><a href="#cb46-89"></a></span>
+<span id="cb46-92"><a href="#cb46-92"></a><span class="in">```{r}</span></span>
+<span id="cb46-93"><a href="#cb46-93"></a>courses_clean<span class="sc">|&gt;</span></span>
+<span id="cb46-94"><a href="#cb46-94"></a>  <span class="fu">filter</span>(instructor <span class="sc">==</span> <span class="st">"Alicia Johnson"</span>)</span>
+<span id="cb46-95"><a href="#cb46-95"></a><span class="in">```</span></span>
+<span id="cb46-96"><a href="#cb46-96"></a></span>
+<span id="cb46-97"><a href="#cb46-97"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb46-98"><a href="#cb46-98"></a></span>
+<span id="cb46-99"><a href="#cb46-99"></a>Create a new dataset from <span class="in">`courses_clean`</span>, named <span class="in">`stat`</span>, that only includes STAT sections. In this dataset:</span>
+<span id="cb46-100"><a href="#cb46-100"></a></span>
+<span id="cb46-101"><a href="#cb46-101"></a><span class="ss">-   </span>In the course names:</span>
+<span id="cb46-102"><a href="#cb46-102"></a></span>
+<span id="cb46-103"><a href="#cb46-103"></a><span class="ss">    -   </span>Remove "Introduction to" from any name.</span>
+<span id="cb46-104"><a href="#cb46-104"></a><span class="ss">    -   </span>Shorten "Statistical" to "Stat" where relevant.</span>
+<span id="cb46-105"><a href="#cb46-105"></a></span>
+<span id="cb46-106"><a href="#cb46-106"></a><span class="ss">-   </span>Define a variable that records the <span class="in">`start_time`</span> for the course.</span>
+<span id="cb46-107"><a href="#cb46-107"></a></span>
+<span id="cb46-108"><a href="#cb46-108"></a><span class="ss">-   </span>Keep only the <span class="in">`number, name, start_time, enroll`</span> columns.</span>
+<span id="cb46-109"><a href="#cb46-109"></a></span>
+<span id="cb46-110"><a href="#cb46-110"></a><span class="ss">-   </span>The result should have 19 rows and 4 columns.</span>
+<span id="cb46-111"><a href="#cb46-111"></a></span>
+<span id="cb46-114"><a href="#cb46-114"></a><span class="in">```{r}</span></span>
+<span id="cb46-115"><a href="#cb46-115"></a>stat <span class="ot">&lt;-</span> courses_clean<span class="sc">|&gt;</span></span>
+<span id="cb46-116"><a href="#cb46-116"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"STAT"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb46-117"><a href="#cb46-117"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">"Introduction to"</span>, <span class="st">""</span>), <span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">"Statistical"</span>, <span class="st">"Stat"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb46-118"><a href="#cb46-118"></a>  <span class="fu">separate</span>(time,<span class="fu">c</span>(<span class="st">"start_time"</span>, <span class="cn">NA</span>), <span class="at">sep =</span> <span class="st">" - "</span>)<span class="sc">|&gt;</span></span>
+<span id="cb46-119"><a href="#cb46-119"></a>  <span class="fu">select</span>(<span class="fu">c</span>(number, name, start_time, enroll))</span>
+<span id="cb46-120"><a href="#cb46-120"></a><span class="in">```</span></span>
+<span id="cb46-121"><a href="#cb46-121"></a></span>
+<span id="cb46-122"><a href="#cb46-122"></a></span>
+<span id="cb46-123"><a href="#cb46-123"></a></span>
+<span id="cb46-124"><a href="#cb46-124"></a><span class="fu">### Exercise 5: More cleaning {.unnumbered}</span></span>
+<span id="cb46-125"><a href="#cb46-125"></a></span>
+<span id="cb46-126"><a href="#cb46-126"></a>In the next exercises, we'll dig into enrollments. Let's get the data ready for that analysis here. Make the following changes to the <span class="in">`courses_clean`</span> data. Because they have different enrollment structures, and we don't want to compare apples and oranges, *remove* the following:</span>
+<span id="cb46-127"><a href="#cb46-127"></a></span>
+<span id="cb46-128"><a href="#cb46-128"></a><span class="ss">-   </span>all sections in <span class="in">`PE`</span> and <span class="in">`INTD`</span> (interdisciplinary studies courses)</span>
+<span id="cb46-129"><a href="#cb46-129"></a></span>
+<span id="cb46-130"><a href="#cb46-130"></a><span class="ss">-   </span>all music ensembles and dance practicums, i.e. all MUSI and THDA classes with numbers less than 100. HINT: <span class="in">`!(dept == "MUSI" &amp; as.numeric(number) &lt; 100)`</span></span>
+<span id="cb46-131"><a href="#cb46-131"></a></span>
+<span id="cb46-132"><a href="#cb46-132"></a><span class="ss">-   </span>all lab sections. Be careful which variable you use here. For example, you don't want to search by "Lab" and accidentally eliminate courses with words such as "Labor".</span>
+<span id="cb46-133"><a href="#cb46-133"></a></span>
+<span id="cb46-134"><a href="#cb46-134"></a>Save the results as <span class="in">`enrollments`</span> (don't overwrite <span class="in">`courses_clean`</span>).</span>
+<span id="cb46-135"><a href="#cb46-135"></a></span>
+<span id="cb46-138"><a href="#cb46-138"></a><span class="in">```{r}</span></span>
+<span id="cb46-139"><a href="#cb46-139"></a>enrollments <span class="ot">&lt;-</span> courses_clean <span class="sc">|&gt;</span> </span>
+<span id="cb46-140"><a href="#cb46-140"></a>  <span class="fu">filter</span>(dept <span class="sc">!=</span> <span class="fu">c</span>(<span class="st">"PE"</span>, <span class="st">"INTD"</span>))<span class="sc">|&gt;</span></span>
+<span id="cb46-141"><a href="#cb46-141"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(dept <span class="sc">==</span> <span class="st">"MUSI"</span> <span class="sc">&amp;</span> <span class="fu">as.numeric</span>(number) <span class="sc">&lt;</span> <span class="dv">100</span>))<span class="sc">|&gt;</span></span>
+<span id="cb46-142"><a href="#cb46-142"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(<span class="fu">str_detect</span>(section, <span class="st">"L"</span>)))</span>
+<span id="cb46-143"><a href="#cb46-143"></a><span class="in">```</span></span>
+<span id="cb46-144"><a href="#cb46-144"></a></span>
+<span id="cb46-145"><a href="#cb46-145"></a></span>
+<span id="cb46-146"><a href="#cb46-146"></a></span>
+<span id="cb46-147"><a href="#cb46-147"></a><span class="fu">### Exercise 6: Enrollment &amp; departments {.unnumbered}</span></span>
+<span id="cb46-148"><a href="#cb46-148"></a></span>
+<span id="cb46-149"><a href="#cb46-149"></a>Explore enrollments by department. *You* decide what research questions to focus on. Use both visual and numerical summaries.</span>
+<span id="cb46-150"><a href="#cb46-150"></a></span>
+<span id="cb46-151"><a href="#cb46-151"></a></span>
+<span id="cb46-152"><a href="#cb46-152"></a></span>
+<span id="cb46-153"><a href="#cb46-153"></a><span class="fu">### Exercise 7: Enrollment &amp; faculty {.unnumbered}</span></span>
+<span id="cb46-154"><a href="#cb46-154"></a></span>
+<span id="cb46-155"><a href="#cb46-155"></a>Let's now explore enrollments by instructor. In doing so, we have to be cautious of cross-listed courses that are listed under multiple different departments. Uncomment the code lines in the chunk below for an example.</span>
+<span id="cb46-156"><a href="#cb46-156"></a></span>
+<span id="cb46-157"><a href="#cb46-157"></a>::: {.callout-tip title="Commenting/Uncommenting Code"}</span>
+<span id="cb46-158"><a href="#cb46-158"></a></span>
+<span id="cb46-159"><a href="#cb46-159"></a>To comment/uncomment several lines of code at once, highlight them then click &lt;kbd&gt;ctrl/cmd+shift+c&lt;/kbd&gt;.</span>
+<span id="cb46-160"><a href="#cb46-160"></a></span>
+<span id="cb46-161"><a href="#cb46-161"></a>:::</span>
+<span id="cb46-162"><a href="#cb46-162"></a></span>
+<span id="cb46-165"><a href="#cb46-165"></a><span class="in">```{r}</span></span>
+<span id="cb46-166"><a href="#cb46-166"></a>enrollments <span class="sc">|&gt;</span></span>
+<span id="cb46-167"><a href="#cb46-167"></a>  <span class="fu">filter</span>(dept <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"STAT"</span>, <span class="st">"COMP"</span>), number <span class="sc">==</span> <span class="dv">112</span>, section <span class="sc">==</span> <span class="st">"01"</span>)</span>
+<span id="cb46-168"><a href="#cb46-168"></a><span class="in">```</span></span>
+<span id="cb46-169"><a href="#cb46-169"></a></span>
+<span id="cb46-170"><a href="#cb46-170"></a>Notice that these are the exact same section! In order to not double count an instructor's enrollments, we can keep only the courses that have <span class="in">`distinct()`</span> *combinations* of <span class="in">`days, time, instructor`</span> values.  Uncomment the code lines in the chunk below.</span>
+<span id="cb46-171"><a href="#cb46-171"></a></span>
+<span id="cb46-174"><a href="#cb46-174"></a><span class="in">```{r}</span></span>
+<span id="cb46-175"><a href="#cb46-175"></a>enrollments_2 <span class="ot">&lt;-</span> enrollments <span class="sc">|&gt;</span></span>
+<span id="cb46-176"><a href="#cb46-176"></a>  <span class="fu">distinct</span>(days, time, instructor, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb46-177"><a href="#cb46-177"></a></span>
+<span id="cb46-178"><a href="#cb46-178"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: By default this keeps the first department alphabetically</span></span>
+<span id="cb46-179"><a href="#cb46-179"></a><span class="co"># That's fine because we won't use this to analyze department enrollments!</span></span>
+<span id="cb46-180"><a href="#cb46-180"></a>enrollments_2 <span class="sc">|&gt;</span></span>
+<span id="cb46-181"><a href="#cb46-181"></a>  <span class="fu">filter</span>(instructor <span class="sc">==</span> <span class="st">"Brianna Heggeseth"</span>, name <span class="sc">==</span> <span class="st">"Introduction to Data Science"</span>)</span>
+<span id="cb46-182"><a href="#cb46-182"></a><span class="in">```</span></span>
+<span id="cb46-183"><a href="#cb46-183"></a></span>
+<span id="cb46-184"><a href="#cb46-184"></a>*Now*, explore enrollments by instructor. *You* decide what research questions to focus on. Use both visual and numerical summaries.</span>
+<span id="cb46-185"><a href="#cb46-185"></a></span>
+<span id="cb46-186"><a href="#cb46-186"></a>Average class size of Physics department? Any relationship between course number and enrollment number?</span>
+<span id="cb46-187"><a href="#cb46-187"></a></span>
+<span id="cb46-188"><a href="#cb46-188"></a>CAVEAT: The above code doesn't deal with *co-taught* courses that have more than one instructor. Thus instructors that co-taught are recorded as a pair, and their co-taught enrollments aren't added to their total enrollments. This is tough to get around with how the data were scraped as the instructor names are smushed together, not separated by a comma!</span>
+<span id="cb46-189"><a href="#cb46-189"></a></span>
+<span id="cb46-192"><a href="#cb46-192"></a><span class="in">```{r}</span></span>
+<span id="cb46-193"><a href="#cb46-193"></a>enrollments_2<span class="sc">|&gt;</span></span>
+<span id="cb46-194"><a href="#cb46-194"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"PHYS"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb46-195"><a href="#cb46-195"></a>  <span class="fu">summarise</span>(<span class="at">average =</span> <span class="fu">mean</span>(enroll))</span>
+<span id="cb46-196"><a href="#cb46-196"></a></span>
+<span id="cb46-197"><a href="#cb46-197"></a>enrollments_2<span class="sc">|&gt;</span></span>
+<span id="cb46-198"><a href="#cb46-198"></a>  <span class="fu">filter</span>(dept <span class="sc">==</span> <span class="st">"PHYS"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb46-199"><a href="#cb46-199"></a>  <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">as.numeric</span>(number))<span class="sc">|&gt;</span></span>
+<span id="cb46-200"><a href="#cb46-200"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> number, <span class="at">y =</span> enroll)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span>
+<span id="cb46-201"><a href="#cb46-201"></a><span class="in">```</span></span>
+<span id="cb46-202"><a href="#cb46-202"></a></span>
+<span id="cb46-203"><a href="#cb46-203"></a></span>
+<span id="cb46-204"><a href="#cb46-204"></a></span>
+<span id="cb46-205"><a href="#cb46-205"></a><span class="fu">### Optional extra practice {.unnumbered}</span></span>
+<span id="cb46-206"><a href="#cb46-206"></a></span>
+<span id="cb46-209"><a href="#cb46-209"></a><span class="in">```{r}</span></span>
+<span id="cb46-210"><a href="#cb46-210"></a><span class="co"># Make a bar plot showing the number of night courses by day of the week</span></span>
+<span id="cb46-211"><a href="#cb46-211"></a><span class="co"># Use courses_clean</span></span>
+<span id="cb46-212"><a href="#cb46-212"></a></span>
+<span id="cb46-213"><a href="#cb46-213"></a></span>
+<span id="cb46-214"><a href="#cb46-214"></a><span class="in">```</span></span>
+<span id="cb46-215"><a href="#cb46-215"></a></span>
+<span id="cb46-216"><a href="#cb46-216"></a></span>
+<span id="cb46-217"><a href="#cb46-217"></a></span>
+<span id="cb46-218"><a href="#cb46-218"></a><span class="fu">### Dig Deeper: regex {.unnumbered}</span></span>
+<span id="cb46-219"><a href="#cb46-219"></a></span>
+<span id="cb46-220"><a href="#cb46-220"></a>Example 4 gave 1 small example of a regular expression.</span>
+<span id="cb46-221"><a href="#cb46-221"></a></span>
+<span id="cb46-222"><a href="#cb46-222"></a>These are handy when we want process a string variable, but there's no consistent pattern by which to do this. You must think about the structure of the string and how you can use regular expressions to capture the patterns you want (and exclude the patterns you don't want).</span>
+<span id="cb46-223"><a href="#cb46-223"></a></span>
+<span id="cb46-224"><a href="#cb46-224"></a>For example, how would you describe the pattern of a 10-digit phone number? Limit yourself to just a US phone number for now.</span>
+<span id="cb46-225"><a href="#cb46-225"></a></span>
+<span id="cb46-226"><a href="#cb46-226"></a><span class="ss">-   </span>The first 3 digits are the area code.</span>
+<span id="cb46-227"><a href="#cb46-227"></a><span class="ss">-   </span>The next 3 digits are the exchange code.</span>
+<span id="cb46-228"><a href="#cb46-228"></a><span class="ss">-   </span>The last 4 digits are the subscriber number.</span>
+<span id="cb46-229"><a href="#cb46-229"></a></span>
+<span id="cb46-230"><a href="#cb46-230"></a>Thus, a regular expression for a US phone number could be:</span>
+<span id="cb46-231"><a href="#cb46-231"></a></span>
+<span id="cb46-232"><a href="#cb46-232"></a><span class="ss">-   </span><span class="in">`[:digit:]{3}-[:digit:]{3}-[:digit:]{4}`</span> which limits you to XXX-XXX-XXXX pattern or</span>
+<span id="cb46-233"><a href="#cb46-233"></a><span class="ss">-   </span><span class="in">`\\([:digit:]{3}\\) [:digit:]{3}-[:digit:]{4}`</span> which limits you to (XXX) XXX-XXXX pattern or</span>
+<span id="cb46-234"><a href="#cb46-234"></a><span class="ss">-   </span><span class="in">`[:digit:]{3}\\.[:digit:]{3}\\.[:digit:]{4}`</span> which limits you to XXX.XXX.XXXX pattern</span>
+<span id="cb46-235"><a href="#cb46-235"></a></span>
+<span id="cb46-236"><a href="#cb46-236"></a>The following would include the three patterns above in addition to the XXXXXXXXXX pattern (no dashes or periods): - <span class="in">`[\\(]*[:digit:]{3}[-.\\)]*[:digit:]{3}[-.]*[:digit:]{4}`</span></span>
+<span id="cb46-237"><a href="#cb46-237"></a></span>
+<span id="cb46-238"><a href="#cb46-238"></a>In order to write a regular expression, you first need to consider what patterns you want to include and exclude.</span>
+<span id="cb46-239"><a href="#cb46-239"></a></span>
+<span id="cb46-240"><a href="#cb46-240"></a>Work through the following examples, and the tutorial after them to learn about the syntax.</span>
+<span id="cb46-241"><a href="#cb46-241"></a></span>
+<span id="cb46-242"><a href="#cb46-242"></a>**EXAMPLES**</span>
+<span id="cb46-243"><a href="#cb46-243"></a></span>
+<span id="cb46-246"><a href="#cb46-246"></a><span class="in">```{r}</span></span>
+<span id="cb46-247"><a href="#cb46-247"></a><span class="co"># Define some strings to play around with</span></span>
+<span id="cb46-248"><a href="#cb46-248"></a>example <span class="ot">&lt;-</span> <span class="st">"The quick brown fox jumps over the lazy dog."</span></span>
+<span id="cb46-249"><a href="#cb46-249"></a><span class="in">```</span></span>
+<span id="cb46-250"><a href="#cb46-250"></a></span>
+<span id="cb46-253"><a href="#cb46-253"></a><span class="in">```{r}</span></span>
+<span id="cb46-254"><a href="#cb46-254"></a><span class="fu">str_replace</span>(example, <span class="st">"quick"</span>, <span class="st">"really quick"</span>)</span>
+<span id="cb46-255"><a href="#cb46-255"></a><span class="in">```</span></span>
+<span id="cb46-256"><a href="#cb46-256"></a></span>
+<span id="cb46-259"><a href="#cb46-259"></a><span class="in">```{r}</span></span>
+<span id="cb46-260"><a href="#cb46-260"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)"</span>, <span class="st">"****"</span>) <span class="co"># | reads as OR</span></span>
+<span id="cb46-261"><a href="#cb46-261"></a><span class="in">```</span></span>
+<span id="cb46-262"><a href="#cb46-262"></a></span>
+<span id="cb46-265"><a href="#cb46-265"></a><span class="in">```{r}</span></span>
+<span id="cb46-266"><a href="#cb46-266"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)."</span>, <span class="st">"****"</span>) <span class="co"># "." for any character</span></span>
+<span id="cb46-267"><a href="#cb46-267"></a><span class="in">```</span></span>
+<span id="cb46-268"><a href="#cb46-268"></a></span>
+<span id="cb46-271"><a href="#cb46-271"></a><span class="in">```{r}</span></span>
+<span id="cb46-272"><a href="#cb46-272"></a><span class="fu">str_replace_all</span>(example, <span class="st">"(fox|dog)</span><span class="sc">\\</span><span class="st">.$"</span>, <span class="st">"****"</span>) <span class="co"># at end of sentence only, "\\." only for a period</span></span>
+<span id="cb46-273"><a href="#cb46-273"></a><span class="in">```</span></span>
+<span id="cb46-274"><a href="#cb46-274"></a></span>
+<span id="cb46-277"><a href="#cb46-277"></a><span class="in">```{r}</span></span>
+<span id="cb46-278"><a href="#cb46-278"></a><span class="fu">str_replace_all</span>(example, <span class="st">"the"</span>, <span class="st">"a"</span>) <span class="co"># case-sensitive only matches one</span></span>
+<span id="cb46-279"><a href="#cb46-279"></a><span class="in">```</span></span>
+<span id="cb46-280"><a href="#cb46-280"></a></span>
+<span id="cb46-283"><a href="#cb46-283"></a><span class="in">```{r}</span></span>
+<span id="cb46-284"><a href="#cb46-284"></a><span class="fu">str_replace_all</span>(example, <span class="st">"[Tt]he"</span>, <span class="st">"a"</span>) <span class="co"># # will match either t or T; could also make "a" conditional on capitalization of t</span></span>
+<span id="cb46-285"><a href="#cb46-285"></a><span class="in">```</span></span>
+<span id="cb46-286"><a href="#cb46-286"></a></span>
+<span id="cb46-289"><a href="#cb46-289"></a><span class="in">```{r}</span></span>
+<span id="cb46-290"><a href="#cb46-290"></a><span class="fu">str_replace_all</span>(example, <span class="st">"[Tt]he"</span>, <span class="st">"a"</span>) <span class="co"># first match only</span></span>
+<span id="cb46-291"><a href="#cb46-291"></a><span class="in">```</span></span>
+<span id="cb46-292"><a href="#cb46-292"></a></span>
+<span id="cb46-295"><a href="#cb46-295"></a><span class="in">```{r}</span></span>
+<span id="cb46-296"><a href="#cb46-296"></a><span class="co"># More examples</span></span>
+<span id="cb46-297"><a href="#cb46-297"></a>example2 <span class="ot">&lt;-</span> <span class="st">"Two roads diverged in a yellow wood, / And sorry I could not travel both / And be one traveler, long I stood / And looked down one as far as I could"</span></span>
+<span id="cb46-298"><a href="#cb46-298"></a>example3 <span class="ot">&lt;-</span> <span class="st">"This is a test"</span></span>
+<span id="cb46-299"><a href="#cb46-299"></a></span>
+<span id="cb46-300"><a href="#cb46-300"></a><span class="co"># Store the examples in 1 place</span></span>
+<span id="cb46-301"><a href="#cb46-301"></a>examples <span class="ot">&lt;-</span> <span class="fu">c</span>(example, example2, example3)</span>
+<span id="cb46-302"><a href="#cb46-302"></a><span class="in">```</span></span>
+<span id="cb46-303"><a href="#cb46-303"></a></span>
+<span id="cb46-306"><a href="#cb46-306"></a><span class="in">```{r}</span></span>
+<span id="cb46-307"><a href="#cb46-307"></a>pat <span class="ot">&lt;-</span> <span class="st">"[^aeiouAEIOU ]{3}"</span> <span class="co"># Regular expression for three straight consonants. Note that I've excluded spaces as well</span></span>
+<span id="cb46-308"><a href="#cb46-308"></a></span>
+<span id="cb46-309"><a href="#cb46-309"></a><span class="fu">str_detect</span>(examples, pat) <span class="co"># TRUE/FALSE if it detects pattern</span></span>
+<span id="cb46-310"><a href="#cb46-310"></a><span class="in">```</span></span>
+<span id="cb46-311"><a href="#cb46-311"></a></span>
+<span id="cb46-314"><a href="#cb46-314"></a><span class="in">```{r}</span></span>
+<span id="cb46-315"><a href="#cb46-315"></a><span class="fu">str_subset</span>(examples, pat) <span class="co"># Pulls out those that detects pattern</span></span>
+<span id="cb46-316"><a href="#cb46-316"></a><span class="in">```</span></span>
+<span id="cb46-317"><a href="#cb46-317"></a></span>
+<span id="cb46-320"><a href="#cb46-320"></a><span class="in">```{r}</span></span>
+<span id="cb46-321"><a href="#cb46-321"></a>pat2 <span class="ot">&lt;-</span> <span class="st">"[^aeiouAEIOU ][aeiouAEIOU]{2}[^aeiouAEIOU ]{1}"</span> <span class="co"># consonant followed by two vowels followed by a consonant</span></span>
+<span id="cb46-322"><a href="#cb46-322"></a></span>
+<span id="cb46-323"><a href="#cb46-323"></a><span class="fu">str_extract</span>(example2, pat2) <span class="co"># extract first match</span></span>
+<span id="cb46-324"><a href="#cb46-324"></a><span class="in">```</span></span>
+<span id="cb46-325"><a href="#cb46-325"></a></span>
+<span id="cb46-328"><a href="#cb46-328"></a><span class="in">```{r}</span></span>
+<span id="cb46-329"><a href="#cb46-329"></a><span class="fu">str_extract_all</span>(example2, pat2, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="co"># extract all matches</span></span>
+<span id="cb46-330"><a href="#cb46-330"></a><span class="in">```</span></span>
+<span id="cb46-331"><a href="#cb46-331"></a></span>
+<span id="cb46-332"><a href="#cb46-332"></a>**TUTORIAL**</span>
+<span id="cb46-333"><a href="#cb46-333"></a></span>
+<span id="cb46-334"><a href="#cb46-334"></a>Try out this <span class="co">[</span><span class="ot">interactive tutorial</span><span class="co">](https://regexone.com/)</span>. Note that neither the tutorial nor regular expressions more generally are specific to <span class="in">`R`</span>, but it still illustrates the main ideas of regular expressions.</span>
+<span id="cb46-335"><a href="#cb46-335"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

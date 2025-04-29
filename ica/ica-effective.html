@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ica/ica-uni.html">In-class Activities</a></li><li class="breadcrumb-item"><a href="../ica/ica-effective.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Effective Viz</span></a></li></ol></nav><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Effective Viz</span>
-</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -343,29 +343,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">15.1</span> Exercises</h2>
 <section id="exercise-1-professionalism" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-1-professionalism">Exercise 1: Professionalism</h3>
 <p>Let’s examine weather in 3 Australian locations.</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-</div>
 <p>The following plot is fine for things like homework or just playing around. But we’ll make it more “professional” looking below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 27 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -380,14 +362,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Change the legend title to “Location” (just for practice, not because it’s better than “location”).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"9 AM Temperature (°C)"</span>, <span class="at">y =</span> <span class="st">"3 PM Temperature (°C)"</span>, <span class="at">title =</span> <span class="st">"Temperature at 9AM and 3PM at same location"</span>, <span class="at">color =</span> <span class="st">"Legend"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 27 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"9 AM Temperature (°C)"</span>, <span class="at">y =</span> <span class="st">"3 PM Temperature (°C)"</span>, <span class="at">title =</span> <span class="st">"Temperature at 9AM and 3PM at same location"</span>, <span class="at">color =</span> <span class="st">"Legend"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -402,14 +380,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Render your Rmd and check out how the figure caption appears.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location, <span class="at">size =</span> rainfall)) <span class="sc">+</span> </span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"9 AM Temperature (°C)"</span>, <span class="at">y =</span> <span class="st">"3 PM Temperature (°C)"</span>, <span class="at">color =</span> <span class="st">"Island"</span>, <span class="at">size =</span> <span class="st">"Rainfall (mm)"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 69 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location, <span class="at">size =</span> rainfall)) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"9 AM Temperature (°C)"</span>, <span class="at">y =</span> <span class="st">"3 PM Temperature (°C)"</span>, <span class="at">color =</span> <span class="st">"Island"</span>, <span class="at">size =</span> <span class="st">"Rainfall (mm)"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption>Temperature at 9AM and 3PM shows positive correlation</figcaption></figure>
@@ -420,14 +394,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section></section><section id="exercise-2-accessibility" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-2-accessibility">Exercise 2: Accessibility</h3>
 <p>Let’s now make a graphic more accessible.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 19 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="???" width="672"></p>
 <figcaption>Density plots of 3pm temperatures in 3 Australian locations.</figcaption></figure>
@@ -443,14 +413,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Add appropriate alt text at the top of the chunk, in <code>fig-alt</code>. Then knit your Rmd, and hover over the image in your knitted html file to check out the alt text.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 19 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" alt="Density plots of 3pm temperatures in 3 Australian locations." width="672"></p>
 <figcaption>Density plots of 3pm temperatures in 3 Australian locations.</figcaption></figure>
@@ -473,15 +439,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="part-c" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-c">Part c</h4>
 <p>We can change our color schemes! There are many <a href="https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html">color-blind friendly palettes in R</a>. In the future, we’ll set a default, more color-blind friendly color theme at the top of our Rmds. We can also do this individually for any plot that uses color. Run the chunks below to explore various options.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
-<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">scale_fill_viridis_d</span>()    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 19 rows containing non-finite outside the scale range
-(`stat_density()`).</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">scale_fill_viridis_d</span>()    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -489,18 +451,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># In the color scale line:</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="co"># Change "fill" to "color" since we use color in the aes()</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="co"># Change "d" (discrete) to "c" (continuous) since maxtemp is on a continuous scale</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> maxtemp)) <span class="sc">+</span> </span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
-<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">scale_color_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 27 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># In the color scale line:</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># Change "fill" to "color" since we use color in the aes()</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># Change "d" (discrete) to "c" (continuous) since maxtemp is on a continuous scale</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> maxtemp)) <span class="sc">+</span> </span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">scale_color_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-effective_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -1234,299 +1192,299 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb16" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">---</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="an">title:</span><span class="co"> "Effective Viz"</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co">---</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="fu">## Exercises</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a></span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="fu">### Exercise 1: Professionalism {.unnumbered}</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a></span>
-<span id="cb16-10"><a href="#cb16-10"></a>Let's examine weather in 3 Australian locations.</span>
-<span id="cb16-11"><a href="#cb16-11"></a></span>
-<span id="cb16-12"><a href="#cb16-12"></a><span class="in">```{r echo = FALSE}</span></span>
-<span id="cb16-13"><a href="#cb16-13"></a><span class="in"># Load tidyverse package for plotting and wrangling</span></span>
-<span id="cb16-14"><a href="#cb16-14"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb16-15"><a href="#cb16-15"></a></span>
-<span id="cb16-16"><a href="#cb16-16"></a><span class="in"># Import the data</span></span>
-<span id="cb16-17"><a href="#cb16-17"></a><span class="in">weather &lt;- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |&gt; </span></span>
-<span id="cb16-18"><a href="#cb16-18"></a><span class="in">  mutate(date = as.Date(date))</span></span>
-<span id="cb16-19"><a href="#cb16-19"></a><span class="in">```</span></span>
-<span id="cb16-20"><a href="#cb16-20"></a></span>
-<span id="cb16-21"><a href="#cb16-21"></a>The following plot is fine for things like homework or just playing around. But we'll make it more "professional" looking below.</span>
-<span id="cb16-22"><a href="#cb16-22"></a></span>
-<span id="cb16-25"><a href="#cb16-25"></a><span class="in">```{r}</span></span>
-<span id="cb16-26"><a href="#cb16-26"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
-<span id="cb16-27"><a href="#cb16-27"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb16-28"><a href="#cb16-28"></a><span class="in">```</span></span>
-<span id="cb16-29"><a href="#cb16-29"></a></span>
-<span id="cb16-30"><a href="#cb16-30"></a><span class="fu">#### Part a {.unnumbered}</span></span>
-<span id="cb16-31"><a href="#cb16-31"></a></span>
-<span id="cb16-32"><a href="#cb16-32"></a>Replace A, B, C, and D in the code below to:</span>
-<span id="cb16-33"><a href="#cb16-33"></a></span>
-<span id="cb16-34"><a href="#cb16-34"></a><span class="ss">-   </span>Add a short, but descriptive title. Under 10 words.</span>
-<span id="cb16-35"><a href="#cb16-35"></a><span class="ss">-   </span>Change the x- and y-axis labels, currently just the names of the variables in the dataset. These should be short and include units.</span>
-<span id="cb16-36"><a href="#cb16-36"></a><span class="ss">-   </span>Change the legend title to "Location" (just for practice, not because it's better than "location").</span>
-<span id="cb16-37"><a href="#cb16-37"></a></span>
-<span id="cb16-40"><a href="#cb16-40"></a><span class="in">```{r}</span></span>
-<span id="cb16-41"><a href="#cb16-41"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
-<span id="cb16-42"><a href="#cb16-42"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb16-43"><a href="#cb16-43"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"9 AM Temperature (°C)"</span>, <span class="at">y =</span> <span class="st">"3 PM Temperature (°C)"</span>, <span class="at">title =</span> <span class="st">"Temperature at 9AM and 3PM at same location"</span>, <span class="at">color =</span> <span class="st">"Legend"</span>)</span>
-<span id="cb16-44"><a href="#cb16-44"></a><span class="in">```</span></span>
-<span id="cb16-45"><a href="#cb16-45"></a></span>
-<span id="cb16-46"><a href="#cb16-46"></a><span class="fu">#### Part b {.unnumbered}</span></span>
-<span id="cb16-47"><a href="#cb16-47"></a></span>
-<span id="cb16-48"><a href="#cb16-48"></a>When we're including our plot in an article, paper, book, or other similar outlet, we should (and are expected to) provide a more descriptive figure caption. Typically, this is *instead* of a title and is more descriptive of what exactly is being plotted.</span>
-<span id="cb16-49"><a href="#cb16-49"></a></span>
-<span id="cb16-50"><a href="#cb16-50"></a><span class="ss">-   </span>Add a figure caption in the top of the chunk.</span>
-<span id="cb16-51"><a href="#cb16-51"></a><span class="ss">-   </span>Include your x-axis, y-axis, and legend labels from Part a.</span>
-<span id="cb16-52"><a href="#cb16-52"></a><span class="ss">-   </span>Render your Rmd and check out how the figure caption appears.</span>
-<span id="cb16-53"><a href="#cb16-53"></a></span>
-<span id="cb16-56"><a href="#cb16-56"></a><span class="in">```{r}</span></span>
-<span id="cb16-57"><a href="#cb16-57"></a><span class="co">#| fig-cap: "Temperature at 9AM and 3PM shows positive correlation"</span></span>
-<span id="cb16-58"><a href="#cb16-58"></a></span>
-<span id="cb16-59"><a href="#cb16-59"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location, <span class="at">size =</span> rainfall)) <span class="sc">+</span> </span>
-<span id="cb16-60"><a href="#cb16-60"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb16-61"><a href="#cb16-61"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"9 AM Temperature (°C)"</span>, <span class="at">y =</span> <span class="st">"3 PM Temperature (°C)"</span>, <span class="at">color =</span> <span class="st">"Island"</span>, <span class="at">size =</span> <span class="st">"Rainfall (mm)"</span>)  </span>
-<span id="cb16-62"><a href="#cb16-62"></a><span class="in">```</span></span>
-<span id="cb16-63"><a href="#cb16-63"></a></span>
-<span id="cb16-64"><a href="#cb16-64"></a>\</span>
-<span id="cb16-65"><a href="#cb16-65"></a>\</span>
-<span id="cb16-66"><a href="#cb16-66"></a>\</span>
-<span id="cb16-67"><a href="#cb16-67"></a>\</span>
-<span id="cb16-68"><a href="#cb16-68"></a></span>
-<span id="cb16-69"><a href="#cb16-69"></a><span class="fu">### Exercise 2: Accessibility {.unnumbered}</span></span>
-<span id="cb16-70"><a href="#cb16-70"></a></span>
-<span id="cb16-71"><a href="#cb16-71"></a>Let's now make a graphic more accessible.</span>
-<span id="cb16-72"><a href="#cb16-72"></a></span>
-<span id="cb16-75"><a href="#cb16-75"></a><span class="in">```{r}</span></span>
-<span id="cb16-76"><a href="#cb16-76"></a><span class="co">#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
-<span id="cb16-77"><a href="#cb16-77"></a><span class="co">#| fig-alt: "???"</span></span>
-<span id="cb16-78"><a href="#cb16-78"></a></span>
-<span id="cb16-79"><a href="#cb16-79"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
-<span id="cb16-80"><a href="#cb16-80"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb16-81"><a href="#cb16-81"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span>
-<span id="cb16-82"><a href="#cb16-82"></a><span class="in">```</span></span>
-<span id="cb16-83"><a href="#cb16-83"></a></span>
-<span id="cb16-84"><a href="#cb16-84"></a><span class="fu">#### Part a {.unnumbered}</span></span>
-<span id="cb16-85"><a href="#cb16-85"></a></span>
-<span id="cb16-86"><a href="#cb16-86"></a>Let's add some alt text that can be picked up by screen readers. This is a <span class="co">[</span><span class="ot">great resource on writing alt text for data viz</span><span class="co">](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)</span>. In short, whereas figure captions are quick descriptions which assume that the viz is accessible, alt text is a longer description which assumes the viz is not accessible. Alt text should concisely articulate:</span>
-<span id="cb16-87"><a href="#cb16-87"></a></span>
-<span id="cb16-88"><a href="#cb16-88"></a><span class="ss">-   </span>What your visualization is (e.g. a density plot of 3pm temperatures in Hobart, Uluru, and Wollongong, Australia).</span>
-<span id="cb16-89"><a href="#cb16-89"></a><span class="ss">-   </span>A 1-sentence description of the most important *takeaway*.</span>
-<span id="cb16-90"><a href="#cb16-90"></a><span class="ss">-   </span>A link to your data source if it's not already in the caption.</span>
-<span id="cb16-91"><a href="#cb16-91"></a></span>
-<span id="cb16-92"><a href="#cb16-92"></a>Add appropriate alt text at the top of the chunk, in <span class="in">`fig-alt`</span>. Then knit your Rmd, and hover over the image in your knitted html file to check out the alt text.</span>
-<span id="cb16-93"><a href="#cb16-93"></a></span>
-<span id="cb16-96"><a href="#cb16-96"></a><span class="in">```{r}</span></span>
-<span id="cb16-97"><a href="#cb16-97"></a><span class="co">#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
-<span id="cb16-98"><a href="#cb16-98"></a><span class="co">#| fig-alt: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
-<span id="cb16-99"><a href="#cb16-99"></a></span>
-<span id="cb16-100"><a href="#cb16-100"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
-<span id="cb16-101"><a href="#cb16-101"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb16-102"><a href="#cb16-102"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span>
-<span id="cb16-103"><a href="#cb16-103"></a><span class="in">```</span></span>
-<span id="cb16-104"><a href="#cb16-104"></a></span>
-<span id="cb16-105"><a href="#cb16-105"></a>\</span>
-<span id="cb16-106"><a href="#cb16-106"></a>\</span>
-<span id="cb16-107"><a href="#cb16-107"></a>\</span>
-<span id="cb16-108"><a href="#cb16-108"></a>\</span>
-<span id="cb16-109"><a href="#cb16-109"></a></span>
-<span id="cb16-110"><a href="#cb16-110"></a><span class="fu">#### Part b {.unnumbered}</span></span>
-<span id="cb16-111"><a href="#cb16-111"></a></span>
-<span id="cb16-112"><a href="#cb16-112"></a>Color is another important accessibility consideration. Let's check out the color accessibility of our density plot.</span>
-<span id="cb16-113"><a href="#cb16-113"></a></span>
-<span id="cb16-114"><a href="#cb16-114"></a><span class="ss">-   </span>Run the <span class="in">`ggplot()`</span> code from Part a in your console. The viz will pop up in the Plots tab.</span>
-<span id="cb16-115"><a href="#cb16-115"></a><span class="ss">-   </span>In the Plots tab, click "Export" then "Save as image". Save the image somewhere.</span>
-<span id="cb16-116"><a href="#cb16-116"></a><span class="ss">-   </span>Navigate to <span class="ot">&lt;https://www.color-blindness.com/coblis-color-blindness-simulator/&gt;</span></span>
-<span id="cb16-117"><a href="#cb16-117"></a><span class="ss">-   </span>Above the image of crayons (I think it's crayons?), click "Choose file" and choose the plot file you just saved.</span>
-<span id="cb16-118"><a href="#cb16-118"></a><span class="ss">-   </span>Click the various simulator buttons (eg: Red-Weak/Protanomaly) to check out how the colors in this plot might appear to others.</span>
-<span id="cb16-119"><a href="#cb16-119"></a><span class="ss">-   </span>Summarize what you learn. What impact might our color choices have on one's ability to interpret the viz?</span>
-<span id="cb16-120"><a href="#cb16-120"></a></span>
-<span id="cb16-121"><a href="#cb16-121"></a>For color weakness, color scale might affect the understanding. For one-color blindness, inappropriate color scale can be confusing. We shall use color scales that are friendly to colorblind people.</span>
-<span id="cb16-122"><a href="#cb16-122"></a></span>
-<span id="cb16-123"><a href="#cb16-123"></a><span class="fu">#### Part c {.unnumbered}</span></span>
-<span id="cb16-124"><a href="#cb16-124"></a></span>
-<span id="cb16-125"><a href="#cb16-125"></a>We can change our color schemes! There are many <span class="co">[</span><span class="ot">color-blind friendly palettes in R</span><span class="co">](https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html)</span>. In the future, we'll set a default, more color-blind friendly color theme at the top of our Rmds. We can also do this individually for any plot that uses color. Run the chunks below to explore various options.</span>
-<span id="cb16-126"><a href="#cb16-126"></a></span>
-<span id="cb16-129"><a href="#cb16-129"></a><span class="in">```{r}</span></span>
-<span id="cb16-130"><a href="#cb16-130"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
-<span id="cb16-131"><a href="#cb16-131"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb16-132"><a href="#cb16-132"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
-<span id="cb16-133"><a href="#cb16-133"></a>  <span class="fu">scale_fill_viridis_d</span>()    </span>
-<span id="cb16-134"><a href="#cb16-134"></a><span class="in">```</span></span>
-<span id="cb16-135"><a href="#cb16-135"></a></span>
-<span id="cb16-138"><a href="#cb16-138"></a><span class="in">```{r}</span></span>
-<span id="cb16-139"><a href="#cb16-139"></a><span class="co"># In the color scale line:</span></span>
-<span id="cb16-140"><a href="#cb16-140"></a><span class="co"># Change "fill" to "color" since we use color in the aes()</span></span>
-<span id="cb16-141"><a href="#cb16-141"></a><span class="co"># Change "d" (discrete) to "c" (continuous) since maxtemp is on a continuous scale</span></span>
-<span id="cb16-142"><a href="#cb16-142"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> maxtemp)) <span class="sc">+</span> </span>
-<span id="cb16-143"><a href="#cb16-143"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb16-144"><a href="#cb16-144"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
-<span id="cb16-145"><a href="#cb16-145"></a>  <span class="fu">scale_color_viridis_c</span>()</span>
-<span id="cb16-146"><a href="#cb16-146"></a><span class="in">```</span></span>
-<span id="cb16-147"><a href="#cb16-147"></a></span>
-<span id="cb16-148"><a href="#cb16-148"></a>\</span>
-<span id="cb16-149"><a href="#cb16-149"></a>\</span>
-<span id="cb16-150"><a href="#cb16-150"></a>\</span>
-<span id="cb16-151"><a href="#cb16-151"></a>\</span>
-<span id="cb16-152"><a href="#cb16-152"></a></span>
-<span id="cb16-153"><a href="#cb16-153"></a><span class="fu">### Exercise 3: Ethics {.unnumbered}</span></span>
-<span id="cb16-154"><a href="#cb16-154"></a></span>
-<span id="cb16-155"><a href="#cb16-155"></a>Let's scratch the surface of ethics in data viz. Central to this discussion is the consideration of *impact*.</span>
-<span id="cb16-156"><a href="#cb16-156"></a></span>
-<span id="cb16-157"><a href="#cb16-157"></a><span class="fu">#### Part a {.unnumbered}</span></span>
-<span id="cb16-158"><a href="#cb16-158"></a></span>
-<span id="cb16-159"><a href="#cb16-159"></a>At a minimum, our data viz should not mislead. Reconsider the climate change example from above. Why is this plot unethical and what impact might it have on policy, public opinion, etc?</span>
-<span id="cb16-160"><a href="#cb16-160"></a></span>
-<span id="cb16-161"><a href="#cb16-161"></a><span class="al">![](https://mac-stat.github.io/images/112/bad_viz/bad_viz_climate_change.png)</span></span>
-<span id="cb16-162"><a href="#cb16-162"></a></span>
-<span id="cb16-163"><a href="#cb16-163"></a><span class="fu">#### Part b {.unnumbered}</span></span>
-<span id="cb16-164"><a href="#cb16-164"></a></span>
-<span id="cb16-165"><a href="#cb16-165"></a>Again, data viz ethical considerations go beyond whether or not a plot is misleading. As described in the warm-up, we need to consider: visibility, privacy, power, emotion &amp; embodiment, pluralism, &amp; context. Depending upon the audience and goals of a data viz, addressing these points might require more nuance. Mainly, the viz tools we've learned are a great base or foundation, but aren't the only approaches to data viz. </span>
-<span id="cb16-166"><a href="#cb16-166"></a></span>
-<span id="cb16-167"><a href="#cb16-167"></a>Pick one or more of the following examples of data viz to discuss with your group. How do the approaches taken:</span>
-<span id="cb16-168"><a href="#cb16-168"></a></span>
-<span id="cb16-169"><a href="#cb16-169"></a><span class="ss">-   </span>emphasize one or more of: visibility, privacy, power, emotion, embodiment, pluralism, and/or context?</span>
-<span id="cb16-170"><a href="#cb16-170"></a><span class="ss">-   </span>improve upon what we might be able to convey with a simpler bar chart, scatterplot, etc?</span>
-<span id="cb16-171"><a href="#cb16-171"></a></span>
-<span id="cb16-172"><a href="#cb16-172"></a>\</span>
-<span id="cb16-173"><a href="#cb16-173"></a>\</span>
-<span id="cb16-174"><a href="#cb16-174"></a></span>
-<span id="cb16-175"><a href="#cb16-175"></a>Example: **W.E.B. Du Bois (1868–1963)**</span>
-<span id="cb16-176"><a href="#cb16-176"></a></span>
-<span id="cb16-177"><a href="#cb16-177"></a>Du Bois ("Doo Boys") was a "sociologist, socialist, historian, civil rights activist, Pan-Africanist, author, writer, and editor"<span class="ot">[^07-effective-viz-1]</span>. He was also a *pioneer* in elevating emotion and embodiment in data visualization. For the Paris World Fair of 1900, Du Bois and his team of students from Atlanta University presented 60 data visualizations of the Black experience in America, less than 50 years after the abolishment of slavery. Du Bois noted: "I wanted to set down its aim and method in some outstanding way which would bring my work to notice by the thinking world." That is, he wanted to increase the impact of his work by partnering technical visualizations with design that better connects to lived experiences. NOTE: This work uses language common to that time period and addresses the topic of slavery. Check out:</span>
-<span id="cb16-178"><a href="#cb16-178"></a></span>
-<span id="cb16-179"><a href="#cb16-179"></a><span class="ot">[^07-effective-viz-1]: https://en.wikipedia.org/wiki/W.\_E.\_B.\_Du_Bois</span></span>
-<span id="cb16-180"><a href="#cb16-180"></a></span>
-<span id="cb16-181"><a href="#cb16-181"></a><span class="ss">-   </span>A <span class="co">[</span><span class="ot">complete set of the data visualizations provided by Anthony Starks</span><span class="co">](https://speakerdeck.com/ajstarks/du-bois-visualizations-originals)</span> (@ajstarks).</span>
-<span id="cb16-182"><a href="#cb16-182"></a><span class="ss">-   </span>An <span class="co">[</span><span class="ot">article by Allen Hillery</span><span class="co">](https://dataliteracy.com/web-du-bois-story-of-resilience/)</span> (@AlDatavizguy).</span>
-<span id="cb16-183"><a href="#cb16-183"></a></span>
-<span id="cb16-184"><a href="#cb16-184"></a>\</span>
-<span id="cb16-185"><a href="#cb16-185"></a>\</span>
-<span id="cb16-186"><a href="#cb16-186"></a></span>
-<span id="cb16-187"><a href="#cb16-187"></a>Example: **One person's experience with long COVID**</span>
-<span id="cb16-188"><a href="#cb16-188"></a></span>
-<span id="cb16-189"><a href="#cb16-189"></a><span class="co">[</span><span class="ot">NYT article</span><span class="co">](https://www.nytimes.com/interactive/2023/12/14/opinion/my-life-with-long-covid.html?unlocked_article_code=1.F00.Sz4i.NRF1fZrnwEIh&amp;smid=url-share)</span></span>
-<span id="cb16-190"><a href="#cb16-190"></a></span>
-<span id="cb16-191"><a href="#cb16-191"></a>\</span>
-<span id="cb16-192"><a href="#cb16-192"></a>\</span>
-<span id="cb16-193"><a href="#cb16-193"></a></span>
-<span id="cb16-194"><a href="#cb16-194"></a>Example: **Decolonizing data viz**</span>
-<span id="cb16-195"><a href="#cb16-195"></a></span>
-<span id="cb16-196"><a href="#cb16-196"></a><span class="co">[</span><span class="ot">blog post</span><span class="co">](https://stephanieevergreen.com/decolonizing-data-viz/)</span></span>
-<span id="cb16-197"><a href="#cb16-197"></a></span>
-<span id="cb16-198"><a href="#cb16-198"></a>\</span>
-<span id="cb16-199"><a href="#cb16-199"></a>\</span>
-<span id="cb16-200"><a href="#cb16-200"></a></span>
-<span id="cb16-201"><a href="#cb16-201"></a>Example: **Visualizing climate change through art**</span>
-<span id="cb16-202"><a href="#cb16-202"></a></span>
-<span id="cb16-203"><a href="#cb16-203"></a><span class="co">[</span><span class="ot">Futures North with Prof John Kim &amp; Mac students</span><span class="co">](https://www.variableprojects.com/#/phase-change/)</span> (by Prof Kim, Mac research students)</span>
-<span id="cb16-204"><a href="#cb16-204"></a></span>
-<span id="cb16-205"><a href="#cb16-205"></a>\</span>
-<span id="cb16-206"><a href="#cb16-206"></a>\</span>
-<span id="cb16-207"><a href="#cb16-207"></a></span>
-<span id="cb16-208"><a href="#cb16-208"></a>Example: **Personal data collection**</span>
-<span id="cb16-209"><a href="#cb16-209"></a></span>
-<span id="cb16-210"><a href="#cb16-210"></a><span class="co">[</span><span class="ot">Dear Data</span><span class="co">](https://www.dear-data.com/by-week)</span></span>
-<span id="cb16-211"><a href="#cb16-211"></a></span>
-<span id="cb16-212"><a href="#cb16-212"></a>\</span>
-<span id="cb16-213"><a href="#cb16-213"></a>\</span>
-<span id="cb16-214"><a href="#cb16-214"></a></span>
-<span id="cb16-215"><a href="#cb16-215"></a><span class="fu">#### Part c {.unnumbered}</span></span>
-<span id="cb16-216"><a href="#cb16-216"></a></span>
-<span id="cb16-217"><a href="#cb16-217"></a>For a deeper treatment of similar topics, and more examples, read <span class="co">[</span><span class="ot">Data Feminism</span><span class="co">](https://data-feminism.mitpress.mit.edu/)</span>.</span>
-<span id="cb16-218"><a href="#cb16-218"></a></span>
-<span id="cb16-219"><a href="#cb16-219"></a>\</span>
-<span id="cb16-220"><a href="#cb16-220"></a>\</span>
-<span id="cb16-221"><a href="#cb16-221"></a>\</span>
-<span id="cb16-222"><a href="#cb16-222"></a>\</span>
-<span id="cb16-223"><a href="#cb16-223"></a></span>
-<span id="cb16-224"><a href="#cb16-224"></a><span class="fu">### Exercise 4: Critique {.unnumbered}</span></span>
-<span id="cb16-225"><a href="#cb16-225"></a></span>
-<span id="cb16-226"><a href="#cb16-226"></a>Practice critiquing some more complicated data viz listed at <span class="co">[</span><span class="ot">Modern Data Science with R, Exercise 2.5</span><span class="co">](http://mdsr-book.github.io/exercises.html#exercise_25)</span>.</span>
-<span id="cb16-227"><a href="#cb16-227"></a></span>
-<span id="cb16-228"><a href="#cb16-228"></a>Think about the following questions:</span>
-<span id="cb16-229"><a href="#cb16-229"></a></span>
-<span id="cb16-230"><a href="#cb16-230"></a><span class="ss">-   </span>What story does the data graphic tell? What is the main message that you take away from it?</span>
-<span id="cb16-231"><a href="#cb16-231"></a><span class="ss">-   </span>Can the data graphic be described in terms of the Grammar of Graphics (frame, glyphs, aesthetics, facet, scale, guide)? If so, please describe.</span>
-<span id="cb16-232"><a href="#cb16-232"></a><span class="ss">-   </span>Critique and/or praise the visualization choices made by the designer. Do they work? Are they misleading? Thought-provoking? Are there things that you would have done differently?</span>
-<span id="cb16-233"><a href="#cb16-233"></a></span>
-<span id="cb16-234"><a href="#cb16-234"></a>\</span>
-<span id="cb16-235"><a href="#cb16-235"></a>\</span>
-<span id="cb16-236"><a href="#cb16-236"></a>\</span>
-<span id="cb16-237"><a href="#cb16-237"></a>\</span>
-<span id="cb16-238"><a href="#cb16-238"></a></span>
-<span id="cb16-239"><a href="#cb16-239"></a><span class="fu">### Exercise 5: Design Details {.unnumbered}</span></span>
-<span id="cb16-240"><a href="#cb16-240"></a></span>
-<span id="cb16-241"><a href="#cb16-241"></a>This final exercise is just "food for thought".  It's more of a discussion than an exercise, and gets into some of the finer design details and data viz theory. Go as deep or not deep as you'd like here.</span>
-<span id="cb16-242"><a href="#cb16-242"></a></span>
-<span id="cb16-243"><a href="#cb16-243"></a>In refining the details of our data viz, <span class="co">[</span><span class="ot">Visualize This</span><span class="co">](https://www.amazon.com/Visualize-This-FlowingData-Visualization-Statistics/dp/0470944889/)</span> and <span class="co">[</span><span class="ot">Storytelling with Data</span><span class="co">](https://www.amazon.com/Storytelling-Data-Visualization-Business-Professionals/dp/1119002257)</span> provide some of *their* guiding principles. But again, every context is different.</span>
-<span id="cb16-244"><a href="#cb16-244"></a></span>
-<span id="cb16-245"><a href="#cb16-245"></a><span class="ss">-   </span>Put yourself in a reader's shoes. What parts of the data need explanation?</span>
-<span id="cb16-246"><a href="#cb16-246"></a><span class="ss">-   </span>Shine a light on your data. Try to remove any "chart junk" that distracts from the data.</span>
-<span id="cb16-247"><a href="#cb16-247"></a><span class="ss">-   </span>Vary color and style to emphasize the viz elements that are most important to the story you're telling.</span>
-<span id="cb16-248"><a href="#cb16-248"></a><span class="ss">-   </span>It is easier to judge length than it is to judge area or angles.</span>
-<span id="cb16-249"><a href="#cb16-249"></a><span class="ss">-   </span>Be thoughtful about how your categories are ordered for categorical data.</span>
-<span id="cb16-250"><a href="#cb16-250"></a></span>
-<span id="cb16-251"><a href="#cb16-251"></a>Getting into even more of the nitty gritty, we need to be mindful of what geometric elements and aesthetics we use. The following elements/aesthetics are listed in roughly descending order of human ability to perceive and compare nearby objects:<span class="ot">[^07-effective-viz-2]</span></span>
-<span id="cb16-252"><a href="#cb16-252"></a></span>
-<span id="cb16-253"><a href="#cb16-253"></a><span class="ot">[^07-effective-viz-2]: </span>B. S. Baumer, D. T. Kaplan, and N. J. Horton, *Modern Data Science with R*, 2017, p. 15.</span>
-<span id="cb16-254"><a href="#cb16-254"></a></span>
-<span id="cb16-255"><a href="#cb16-255"></a><span class="ss">1.  </span>Position</span>
-<span id="cb16-256"><a href="#cb16-256"></a><span class="ss">2.  </span>Length</span>
-<span id="cb16-257"><a href="#cb16-257"></a><span class="ss">3.  </span>Angle</span>
-<span id="cb16-258"><a href="#cb16-258"></a><span class="ss">4.  </span>Direction</span>
-<span id="cb16-259"><a href="#cb16-259"></a><span class="ss">5.  </span>Shape (but only a very few different shapes)</span>
-<span id="cb16-260"><a href="#cb16-260"></a><span class="ss">6.  </span>Area</span>
-<span id="cb16-261"><a href="#cb16-261"></a><span class="ss">7.  </span>Volume</span>
-<span id="cb16-262"><a href="#cb16-262"></a><span class="ss">8.  </span>Shade</span>
-<span id="cb16-263"><a href="#cb16-263"></a><span class="ss">9.  </span>Color. (Color is the most difficult, because it is a 3-dimensional quantity.)</span>
-<span id="cb16-264"><a href="#cb16-264"></a></span>
-<span id="cb16-265"><a href="#cb16-265"></a>Finally, here are some facts to keep in mind about visual perception from <span class="co">[</span><span class="ot">Now You See It</span><span class="co">](https://www.amazon.com/Now-You-See-Visualization-Quantitative/dp/0970601980)</span>.</span>
-<span id="cb16-266"><a href="#cb16-266"></a></span>
-<span id="cb16-267"><a href="#cb16-267"></a><span class="fu">#### Part a: Selectivity {.unnumbered}</span></span>
-<span id="cb16-268"><a href="#cb16-268"></a></span>
-<span id="cb16-269"><a href="#cb16-269"></a>Visual perception is selective, and our attention is often drawn to contrasts from the norm.</span>
-<span id="cb16-270"><a href="#cb16-270"></a></span>
-<span id="cb16-271"><a href="#cb16-271"></a>**Implication**: We should design visualizations so that the features we want to highlight stand out in contrast from those that are not worth the audience's attention.</span>
-<span id="cb16-272"><a href="#cb16-272"></a></span>
-<span id="cb16-273"><a href="#cb16-273"></a>**Example**: What stands out in this example image? This is originally from C. Ware, *Information Visualization: Perception for Design*, 2004? Source: S. Few, *Now You See It*, 2009, p. 33.</span>
-<span id="cb16-274"><a href="#cb16-274"></a></span>
-<span id="cb16-275"><a href="#cb16-275"></a><span class="al">![](https://mac-stat.github.io/images/112/contrast.png)</span></span>
-<span id="cb16-276"><a href="#cb16-276"></a></span>
-<span id="cb16-277"><a href="#cb16-277"></a><span class="fu">#### Part b: Familiarity {.unnumbered}</span></span>
-<span id="cb16-278"><a href="#cb16-278"></a></span>
-<span id="cb16-279"><a href="#cb16-279"></a>Our eyes are drawn to familiar patterns. We observe what we know and expect.</span>
-<span id="cb16-280"><a href="#cb16-280"></a></span>
-<span id="cb16-281"><a href="#cb16-281"></a>**Implication**: Visualizations work best when they display information as patterns that familiar and easy to spot.</span>
-<span id="cb16-282"><a href="#cb16-282"></a></span>
-<span id="cb16-283"><a href="#cb16-283"></a>**Example**: Do you notice anything embedded in this rose image from coolbubble.com? Source: S. Few, *Now You See It*, 2009, p. 34.</span>
-<span id="cb16-284"><a href="#cb16-284"></a></span>
-<span id="cb16-285"><a href="#cb16-285"></a><span class="al">![](https://mac-stat.github.io/images/112/rose1.png)</span></span>
-<span id="cb16-286"><a href="#cb16-286"></a></span>
-<span id="cb16-287"><a href="#cb16-287"></a><span class="fu">#### Part c: Revisit {.unnumbered}</span></span>
-<span id="cb16-288"><a href="#cb16-288"></a></span>
-<span id="cb16-289"><a href="#cb16-289"></a>Revisit Part b. Do you notice anything in the shadows? Go to <span class="ot">&lt;https://mac-stat.github.io/images/112/rose2.png&gt;</span> for an image.</span>
-<span id="cb16-290"><a href="#cb16-290"></a></span>
-<span id="cb16-291"><a href="#cb16-291"></a>\</span>
-<span id="cb16-292"><a href="#cb16-292"></a>\</span>
-<span id="cb16-293"><a href="#cb16-293"></a>\</span>
-<span id="cb16-294"><a href="#cb16-294"></a>\</span>
-<span id="cb16-295"><a href="#cb16-295"></a></span>
-<span id="cb16-296"><a href="#cb16-296"></a><span class="fu">### Wrapping up {.unnumbered}</span></span>
-<span id="cb16-297"><a href="#cb16-297"></a></span>
-<span id="cb16-298"><a href="#cb16-298"></a>If you finish early:</span>
-<span id="cb16-299"><a href="#cb16-299"></a></span>
-<span id="cb16-300"><a href="#cb16-300"></a><span class="ss">-   </span>Work on homework if not done already</span>
-<span id="cb16-301"><a href="#cb16-301"></a><span class="ss">-   </span>Complete any activities you haven't finished yet, eg, spatial viz, the optional but fun exercises in the Multivariate viz and Bivariate viz activities.</span>
-<span id="cb16-302"><a href="#cb16-302"></a><span class="ss">-   </span>If you've done all that, explore some datasets in <span class="co">[</span><span class="ot">TidyTuesday</span><span class="co">](https://github.com/rfordatascience/tidytuesday/tree/master)</span>.</span>
-<span id="cb16-303"><a href="#cb16-303"></a></span>
-<span id="cb16-304"><a href="#cb16-304"></a>\</span>
-<span id="cb16-305"><a href="#cb16-305"></a>\</span>
-<span id="cb16-306"><a href="#cb16-306"></a>\</span>
-<span id="cb16-307"><a href="#cb16-307"></a>\</span>
+<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="an">title:</span><span class="co"> "Effective Viz"</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">---</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="fu">## Exercises</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="fu">### Exercise 1: Professionalism {.unnumbered}</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a>Let's examine weather in 3 Australian locations.</span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="in">```{r echo = FALSE}</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="in"># Load tidyverse package for plotting and wrangling</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="in"># Import the data</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="in">weather &lt;- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |&gt; </span></span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="in">  mutate(date = as.Date(date))</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="in">```</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a></span>
+<span id="cb8-21"><a href="#cb8-21"></a>The following plot is fine for things like homework or just playing around. But we'll make it more "professional" looking below.</span>
+<span id="cb8-22"><a href="#cb8-22"></a></span>
+<span id="cb8-25"><a href="#cb8-25"></a><span class="in">```{r}</span></span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb8-27"><a href="#cb8-27"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb8-28"><a href="#cb8-28"></a><span class="in">```</span></span>
+<span id="cb8-29"><a href="#cb8-29"></a></span>
+<span id="cb8-30"><a href="#cb8-30"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb8-31"><a href="#cb8-31"></a></span>
+<span id="cb8-32"><a href="#cb8-32"></a>Replace A, B, C, and D in the code below to:</span>
+<span id="cb8-33"><a href="#cb8-33"></a></span>
+<span id="cb8-34"><a href="#cb8-34"></a><span class="ss">-   </span>Add a short, but descriptive title. Under 10 words.</span>
+<span id="cb8-35"><a href="#cb8-35"></a><span class="ss">-   </span>Change the x- and y-axis labels, currently just the names of the variables in the dataset. These should be short and include units.</span>
+<span id="cb8-36"><a href="#cb8-36"></a><span class="ss">-   </span>Change the legend title to "Location" (just for practice, not because it's better than "location").</span>
+<span id="cb8-37"><a href="#cb8-37"></a></span>
+<span id="cb8-40"><a href="#cb8-40"></a><span class="in">```{r}</span></span>
+<span id="cb8-41"><a href="#cb8-41"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location)) <span class="sc">+</span> </span>
+<span id="cb8-42"><a href="#cb8-42"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb8-43"><a href="#cb8-43"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"9 AM Temperature (°C)"</span>, <span class="at">y =</span> <span class="st">"3 PM Temperature (°C)"</span>, <span class="at">title =</span> <span class="st">"Temperature at 9AM and 3PM at same location"</span>, <span class="at">color =</span> <span class="st">"Legend"</span>)</span>
+<span id="cb8-44"><a href="#cb8-44"></a><span class="in">```</span></span>
+<span id="cb8-45"><a href="#cb8-45"></a></span>
+<span id="cb8-46"><a href="#cb8-46"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb8-47"><a href="#cb8-47"></a></span>
+<span id="cb8-48"><a href="#cb8-48"></a>When we're including our plot in an article, paper, book, or other similar outlet, we should (and are expected to) provide a more descriptive figure caption. Typically, this is *instead* of a title and is more descriptive of what exactly is being plotted.</span>
+<span id="cb8-49"><a href="#cb8-49"></a></span>
+<span id="cb8-50"><a href="#cb8-50"></a><span class="ss">-   </span>Add a figure caption in the top of the chunk.</span>
+<span id="cb8-51"><a href="#cb8-51"></a><span class="ss">-   </span>Include your x-axis, y-axis, and legend labels from Part a.</span>
+<span id="cb8-52"><a href="#cb8-52"></a><span class="ss">-   </span>Render your Rmd and check out how the figure caption appears.</span>
+<span id="cb8-53"><a href="#cb8-53"></a></span>
+<span id="cb8-56"><a href="#cb8-56"></a><span class="in">```{r}</span></span>
+<span id="cb8-57"><a href="#cb8-57"></a><span class="co">#| fig-cap: "Temperature at 9AM and 3PM shows positive correlation"</span></span>
+<span id="cb8-58"><a href="#cb8-58"></a></span>
+<span id="cb8-59"><a href="#cb8-59"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> location, <span class="at">size =</span> rainfall)) <span class="sc">+</span> </span>
+<span id="cb8-60"><a href="#cb8-60"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb8-61"><a href="#cb8-61"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"9 AM Temperature (°C)"</span>, <span class="at">y =</span> <span class="st">"3 PM Temperature (°C)"</span>, <span class="at">color =</span> <span class="st">"Island"</span>, <span class="at">size =</span> <span class="st">"Rainfall (mm)"</span>)  </span>
+<span id="cb8-62"><a href="#cb8-62"></a><span class="in">```</span></span>
+<span id="cb8-63"><a href="#cb8-63"></a></span>
+<span id="cb8-64"><a href="#cb8-64"></a>\</span>
+<span id="cb8-65"><a href="#cb8-65"></a>\</span>
+<span id="cb8-66"><a href="#cb8-66"></a>\</span>
+<span id="cb8-67"><a href="#cb8-67"></a>\</span>
+<span id="cb8-68"><a href="#cb8-68"></a></span>
+<span id="cb8-69"><a href="#cb8-69"></a><span class="fu">### Exercise 2: Accessibility {.unnumbered}</span></span>
+<span id="cb8-70"><a href="#cb8-70"></a></span>
+<span id="cb8-71"><a href="#cb8-71"></a>Let's now make a graphic more accessible.</span>
+<span id="cb8-72"><a href="#cb8-72"></a></span>
+<span id="cb8-75"><a href="#cb8-75"></a><span class="in">```{r}</span></span>
+<span id="cb8-76"><a href="#cb8-76"></a><span class="co">#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
+<span id="cb8-77"><a href="#cb8-77"></a><span class="co">#| fig-alt: "???"</span></span>
+<span id="cb8-78"><a href="#cb8-78"></a></span>
+<span id="cb8-79"><a href="#cb8-79"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb8-80"><a href="#cb8-80"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb8-81"><a href="#cb8-81"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span>
+<span id="cb8-82"><a href="#cb8-82"></a><span class="in">```</span></span>
+<span id="cb8-83"><a href="#cb8-83"></a></span>
+<span id="cb8-84"><a href="#cb8-84"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb8-85"><a href="#cb8-85"></a></span>
+<span id="cb8-86"><a href="#cb8-86"></a>Let's add some alt text that can be picked up by screen readers. This is a <span class="co">[</span><span class="ot">great resource on writing alt text for data viz</span><span class="co">](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81)</span>. In short, whereas figure captions are quick descriptions which assume that the viz is accessible, alt text is a longer description which assumes the viz is not accessible. Alt text should concisely articulate:</span>
+<span id="cb8-87"><a href="#cb8-87"></a></span>
+<span id="cb8-88"><a href="#cb8-88"></a><span class="ss">-   </span>What your visualization is (e.g. a density plot of 3pm temperatures in Hobart, Uluru, and Wollongong, Australia).</span>
+<span id="cb8-89"><a href="#cb8-89"></a><span class="ss">-   </span>A 1-sentence description of the most important *takeaway*.</span>
+<span id="cb8-90"><a href="#cb8-90"></a><span class="ss">-   </span>A link to your data source if it's not already in the caption.</span>
+<span id="cb8-91"><a href="#cb8-91"></a></span>
+<span id="cb8-92"><a href="#cb8-92"></a>Add appropriate alt text at the top of the chunk, in <span class="in">`fig-alt`</span>. Then knit your Rmd, and hover over the image in your knitted html file to check out the alt text.</span>
+<span id="cb8-93"><a href="#cb8-93"></a></span>
+<span id="cb8-96"><a href="#cb8-96"></a><span class="in">```{r}</span></span>
+<span id="cb8-97"><a href="#cb8-97"></a><span class="co">#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
+<span id="cb8-98"><a href="#cb8-98"></a><span class="co">#| fig-alt: "Density plots of 3pm temperatures in 3 Australian locations."</span></span>
+<span id="cb8-99"><a href="#cb8-99"></a></span>
+<span id="cb8-100"><a href="#cb8-100"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb8-101"><a href="#cb8-101"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb8-102"><a href="#cb8-102"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>)  </span>
+<span id="cb8-103"><a href="#cb8-103"></a><span class="in">```</span></span>
+<span id="cb8-104"><a href="#cb8-104"></a></span>
+<span id="cb8-105"><a href="#cb8-105"></a>\</span>
+<span id="cb8-106"><a href="#cb8-106"></a>\</span>
+<span id="cb8-107"><a href="#cb8-107"></a>\</span>
+<span id="cb8-108"><a href="#cb8-108"></a>\</span>
+<span id="cb8-109"><a href="#cb8-109"></a></span>
+<span id="cb8-110"><a href="#cb8-110"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb8-111"><a href="#cb8-111"></a></span>
+<span id="cb8-112"><a href="#cb8-112"></a>Color is another important accessibility consideration. Let's check out the color accessibility of our density plot.</span>
+<span id="cb8-113"><a href="#cb8-113"></a></span>
+<span id="cb8-114"><a href="#cb8-114"></a><span class="ss">-   </span>Run the <span class="in">`ggplot()`</span> code from Part a in your console. The viz will pop up in the Plots tab.</span>
+<span id="cb8-115"><a href="#cb8-115"></a><span class="ss">-   </span>In the Plots tab, click "Export" then "Save as image". Save the image somewhere.</span>
+<span id="cb8-116"><a href="#cb8-116"></a><span class="ss">-   </span>Navigate to <span class="ot">&lt;https://www.color-blindness.com/coblis-color-blindness-simulator/&gt;</span></span>
+<span id="cb8-117"><a href="#cb8-117"></a><span class="ss">-   </span>Above the image of crayons (I think it's crayons?), click "Choose file" and choose the plot file you just saved.</span>
+<span id="cb8-118"><a href="#cb8-118"></a><span class="ss">-   </span>Click the various simulator buttons (eg: Red-Weak/Protanomaly) to check out how the colors in this plot might appear to others.</span>
+<span id="cb8-119"><a href="#cb8-119"></a><span class="ss">-   </span>Summarize what you learn. What impact might our color choices have on one's ability to interpret the viz?</span>
+<span id="cb8-120"><a href="#cb8-120"></a></span>
+<span id="cb8-121"><a href="#cb8-121"></a>For color weakness, color scale might affect the understanding. For one-color blindness, inappropriate color scale can be confusing. We shall use color scales that are friendly to colorblind people.</span>
+<span id="cb8-122"><a href="#cb8-122"></a></span>
+<span id="cb8-123"><a href="#cb8-123"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb8-124"><a href="#cb8-124"></a></span>
+<span id="cb8-125"><a href="#cb8-125"></a>We can change our color schemes! There are many <span class="co">[</span><span class="ot">color-blind friendly palettes in R</span><span class="co">](https://cran.r-project.org/web/packages/colorBlindness/vignettes/colorBlindness.html)</span>. In the future, we'll set a default, more color-blind friendly color theme at the top of our Rmds. We can also do this individually for any plot that uses color. Run the chunks below to explore various options.</span>
+<span id="cb8-126"><a href="#cb8-126"></a></span>
+<span id="cb8-129"><a href="#cb8-129"></a><span class="in">```{r}</span></span>
+<span id="cb8-130"><a href="#cb8-130"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">fill =</span> location)) <span class="sc">+</span> </span>
+<span id="cb8-131"><a href="#cb8-131"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb8-132"><a href="#cb8-132"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
+<span id="cb8-133"><a href="#cb8-133"></a>  <span class="fu">scale_fill_viridis_d</span>()    </span>
+<span id="cb8-134"><a href="#cb8-134"></a><span class="in">```</span></span>
+<span id="cb8-135"><a href="#cb8-135"></a></span>
+<span id="cb8-138"><a href="#cb8-138"></a><span class="in">```{r}</span></span>
+<span id="cb8-139"><a href="#cb8-139"></a><span class="co"># In the color scale line:</span></span>
+<span id="cb8-140"><a href="#cb8-140"></a><span class="co"># Change "fill" to "color" since we use color in the aes()</span></span>
+<span id="cb8-141"><a href="#cb8-141"></a><span class="co"># Change "d" (discrete) to "c" (continuous) since maxtemp is on a continuous scale</span></span>
+<span id="cb8-142"><a href="#cb8-142"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">y =</span> temp3pm, <span class="at">x =</span> temp9am, <span class="at">color =</span> maxtemp)) <span class="sc">+</span> </span>
+<span id="cb8-143"><a href="#cb8-143"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb8-144"><a href="#cb8-144"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>) <span class="sc">+</span> </span>
+<span id="cb8-145"><a href="#cb8-145"></a>  <span class="fu">scale_color_viridis_c</span>()</span>
+<span id="cb8-146"><a href="#cb8-146"></a><span class="in">```</span></span>
+<span id="cb8-147"><a href="#cb8-147"></a></span>
+<span id="cb8-148"><a href="#cb8-148"></a>\</span>
+<span id="cb8-149"><a href="#cb8-149"></a>\</span>
+<span id="cb8-150"><a href="#cb8-150"></a>\</span>
+<span id="cb8-151"><a href="#cb8-151"></a>\</span>
+<span id="cb8-152"><a href="#cb8-152"></a></span>
+<span id="cb8-153"><a href="#cb8-153"></a><span class="fu">### Exercise 3: Ethics {.unnumbered}</span></span>
+<span id="cb8-154"><a href="#cb8-154"></a></span>
+<span id="cb8-155"><a href="#cb8-155"></a>Let's scratch the surface of ethics in data viz. Central to this discussion is the consideration of *impact*.</span>
+<span id="cb8-156"><a href="#cb8-156"></a></span>
+<span id="cb8-157"><a href="#cb8-157"></a><span class="fu">#### Part a {.unnumbered}</span></span>
+<span id="cb8-158"><a href="#cb8-158"></a></span>
+<span id="cb8-159"><a href="#cb8-159"></a>At a minimum, our data viz should not mislead. Reconsider the climate change example from above. Why is this plot unethical and what impact might it have on policy, public opinion, etc?</span>
+<span id="cb8-160"><a href="#cb8-160"></a></span>
+<span id="cb8-161"><a href="#cb8-161"></a><span class="al">![](https://mac-stat.github.io/images/112/bad_viz/bad_viz_climate_change.png)</span></span>
+<span id="cb8-162"><a href="#cb8-162"></a></span>
+<span id="cb8-163"><a href="#cb8-163"></a><span class="fu">#### Part b {.unnumbered}</span></span>
+<span id="cb8-164"><a href="#cb8-164"></a></span>
+<span id="cb8-165"><a href="#cb8-165"></a>Again, data viz ethical considerations go beyond whether or not a plot is misleading. As described in the warm-up, we need to consider: visibility, privacy, power, emotion &amp; embodiment, pluralism, &amp; context. Depending upon the audience and goals of a data viz, addressing these points might require more nuance. Mainly, the viz tools we've learned are a great base or foundation, but aren't the only approaches to data viz. </span>
+<span id="cb8-166"><a href="#cb8-166"></a></span>
+<span id="cb8-167"><a href="#cb8-167"></a>Pick one or more of the following examples of data viz to discuss with your group. How do the approaches taken:</span>
+<span id="cb8-168"><a href="#cb8-168"></a></span>
+<span id="cb8-169"><a href="#cb8-169"></a><span class="ss">-   </span>emphasize one or more of: visibility, privacy, power, emotion, embodiment, pluralism, and/or context?</span>
+<span id="cb8-170"><a href="#cb8-170"></a><span class="ss">-   </span>improve upon what we might be able to convey with a simpler bar chart, scatterplot, etc?</span>
+<span id="cb8-171"><a href="#cb8-171"></a></span>
+<span id="cb8-172"><a href="#cb8-172"></a>\</span>
+<span id="cb8-173"><a href="#cb8-173"></a>\</span>
+<span id="cb8-174"><a href="#cb8-174"></a></span>
+<span id="cb8-175"><a href="#cb8-175"></a>Example: **W.E.B. Du Bois (1868–1963)**</span>
+<span id="cb8-176"><a href="#cb8-176"></a></span>
+<span id="cb8-177"><a href="#cb8-177"></a>Du Bois ("Doo Boys") was a "sociologist, socialist, historian, civil rights activist, Pan-Africanist, author, writer, and editor"<span class="ot">[^07-effective-viz-1]</span>. He was also a *pioneer* in elevating emotion and embodiment in data visualization. For the Paris World Fair of 1900, Du Bois and his team of students from Atlanta University presented 60 data visualizations of the Black experience in America, less than 50 years after the abolishment of slavery. Du Bois noted: "I wanted to set down its aim and method in some outstanding way which would bring my work to notice by the thinking world." That is, he wanted to increase the impact of his work by partnering technical visualizations with design that better connects to lived experiences. NOTE: This work uses language common to that time period and addresses the topic of slavery. Check out:</span>
+<span id="cb8-178"><a href="#cb8-178"></a></span>
+<span id="cb8-179"><a href="#cb8-179"></a><span class="ot">[^07-effective-viz-1]: https://en.wikipedia.org/wiki/W.\_E.\_B.\_Du_Bois</span></span>
+<span id="cb8-180"><a href="#cb8-180"></a></span>
+<span id="cb8-181"><a href="#cb8-181"></a><span class="ss">-   </span>A <span class="co">[</span><span class="ot">complete set of the data visualizations provided by Anthony Starks</span><span class="co">](https://speakerdeck.com/ajstarks/du-bois-visualizations-originals)</span> (@ajstarks).</span>
+<span id="cb8-182"><a href="#cb8-182"></a><span class="ss">-   </span>An <span class="co">[</span><span class="ot">article by Allen Hillery</span><span class="co">](https://dataliteracy.com/web-du-bois-story-of-resilience/)</span> (@AlDatavizguy).</span>
+<span id="cb8-183"><a href="#cb8-183"></a></span>
+<span id="cb8-184"><a href="#cb8-184"></a>\</span>
+<span id="cb8-185"><a href="#cb8-185"></a>\</span>
+<span id="cb8-186"><a href="#cb8-186"></a></span>
+<span id="cb8-187"><a href="#cb8-187"></a>Example: **One person's experience with long COVID**</span>
+<span id="cb8-188"><a href="#cb8-188"></a></span>
+<span id="cb8-189"><a href="#cb8-189"></a><span class="co">[</span><span class="ot">NYT article</span><span class="co">](https://www.nytimes.com/interactive/2023/12/14/opinion/my-life-with-long-covid.html?unlocked_article_code=1.F00.Sz4i.NRF1fZrnwEIh&amp;smid=url-share)</span></span>
+<span id="cb8-190"><a href="#cb8-190"></a></span>
+<span id="cb8-191"><a href="#cb8-191"></a>\</span>
+<span id="cb8-192"><a href="#cb8-192"></a>\</span>
+<span id="cb8-193"><a href="#cb8-193"></a></span>
+<span id="cb8-194"><a href="#cb8-194"></a>Example: **Decolonizing data viz**</span>
+<span id="cb8-195"><a href="#cb8-195"></a></span>
+<span id="cb8-196"><a href="#cb8-196"></a><span class="co">[</span><span class="ot">blog post</span><span class="co">](https://stephanieevergreen.com/decolonizing-data-viz/)</span></span>
+<span id="cb8-197"><a href="#cb8-197"></a></span>
+<span id="cb8-198"><a href="#cb8-198"></a>\</span>
+<span id="cb8-199"><a href="#cb8-199"></a>\</span>
+<span id="cb8-200"><a href="#cb8-200"></a></span>
+<span id="cb8-201"><a href="#cb8-201"></a>Example: **Visualizing climate change through art**</span>
+<span id="cb8-202"><a href="#cb8-202"></a></span>
+<span id="cb8-203"><a href="#cb8-203"></a><span class="co">[</span><span class="ot">Futures North with Prof John Kim &amp; Mac students</span><span class="co">](https://www.variableprojects.com/#/phase-change/)</span> (by Prof Kim, Mac research students)</span>
+<span id="cb8-204"><a href="#cb8-204"></a></span>
+<span id="cb8-205"><a href="#cb8-205"></a>\</span>
+<span id="cb8-206"><a href="#cb8-206"></a>\</span>
+<span id="cb8-207"><a href="#cb8-207"></a></span>
+<span id="cb8-208"><a href="#cb8-208"></a>Example: **Personal data collection**</span>
+<span id="cb8-209"><a href="#cb8-209"></a></span>
+<span id="cb8-210"><a href="#cb8-210"></a><span class="co">[</span><span class="ot">Dear Data</span><span class="co">](https://www.dear-data.com/by-week)</span></span>
+<span id="cb8-211"><a href="#cb8-211"></a></span>
+<span id="cb8-212"><a href="#cb8-212"></a>\</span>
+<span id="cb8-213"><a href="#cb8-213"></a>\</span>
+<span id="cb8-214"><a href="#cb8-214"></a></span>
+<span id="cb8-215"><a href="#cb8-215"></a><span class="fu">#### Part c {.unnumbered}</span></span>
+<span id="cb8-216"><a href="#cb8-216"></a></span>
+<span id="cb8-217"><a href="#cb8-217"></a>For a deeper treatment of similar topics, and more examples, read <span class="co">[</span><span class="ot">Data Feminism</span><span class="co">](https://data-feminism.mitpress.mit.edu/)</span>.</span>
+<span id="cb8-218"><a href="#cb8-218"></a></span>
+<span id="cb8-219"><a href="#cb8-219"></a>\</span>
+<span id="cb8-220"><a href="#cb8-220"></a>\</span>
+<span id="cb8-221"><a href="#cb8-221"></a>\</span>
+<span id="cb8-222"><a href="#cb8-222"></a>\</span>
+<span id="cb8-223"><a href="#cb8-223"></a></span>
+<span id="cb8-224"><a href="#cb8-224"></a><span class="fu">### Exercise 4: Critique {.unnumbered}</span></span>
+<span id="cb8-225"><a href="#cb8-225"></a></span>
+<span id="cb8-226"><a href="#cb8-226"></a>Practice critiquing some more complicated data viz listed at <span class="co">[</span><span class="ot">Modern Data Science with R, Exercise 2.5</span><span class="co">](http://mdsr-book.github.io/exercises.html#exercise_25)</span>.</span>
+<span id="cb8-227"><a href="#cb8-227"></a></span>
+<span id="cb8-228"><a href="#cb8-228"></a>Think about the following questions:</span>
+<span id="cb8-229"><a href="#cb8-229"></a></span>
+<span id="cb8-230"><a href="#cb8-230"></a><span class="ss">-   </span>What story does the data graphic tell? What is the main message that you take away from it?</span>
+<span id="cb8-231"><a href="#cb8-231"></a><span class="ss">-   </span>Can the data graphic be described in terms of the Grammar of Graphics (frame, glyphs, aesthetics, facet, scale, guide)? If so, please describe.</span>
+<span id="cb8-232"><a href="#cb8-232"></a><span class="ss">-   </span>Critique and/or praise the visualization choices made by the designer. Do they work? Are they misleading? Thought-provoking? Are there things that you would have done differently?</span>
+<span id="cb8-233"><a href="#cb8-233"></a></span>
+<span id="cb8-234"><a href="#cb8-234"></a>\</span>
+<span id="cb8-235"><a href="#cb8-235"></a>\</span>
+<span id="cb8-236"><a href="#cb8-236"></a>\</span>
+<span id="cb8-237"><a href="#cb8-237"></a>\</span>
+<span id="cb8-238"><a href="#cb8-238"></a></span>
+<span id="cb8-239"><a href="#cb8-239"></a><span class="fu">### Exercise 5: Design Details {.unnumbered}</span></span>
+<span id="cb8-240"><a href="#cb8-240"></a></span>
+<span id="cb8-241"><a href="#cb8-241"></a>This final exercise is just "food for thought".  It's more of a discussion than an exercise, and gets into some of the finer design details and data viz theory. Go as deep or not deep as you'd like here.</span>
+<span id="cb8-242"><a href="#cb8-242"></a></span>
+<span id="cb8-243"><a href="#cb8-243"></a>In refining the details of our data viz, <span class="co">[</span><span class="ot">Visualize This</span><span class="co">](https://www.amazon.com/Visualize-This-FlowingData-Visualization-Statistics/dp/0470944889/)</span> and <span class="co">[</span><span class="ot">Storytelling with Data</span><span class="co">](https://www.amazon.com/Storytelling-Data-Visualization-Business-Professionals/dp/1119002257)</span> provide some of *their* guiding principles. But again, every context is different.</span>
+<span id="cb8-244"><a href="#cb8-244"></a></span>
+<span id="cb8-245"><a href="#cb8-245"></a><span class="ss">-   </span>Put yourself in a reader's shoes. What parts of the data need explanation?</span>
+<span id="cb8-246"><a href="#cb8-246"></a><span class="ss">-   </span>Shine a light on your data. Try to remove any "chart junk" that distracts from the data.</span>
+<span id="cb8-247"><a href="#cb8-247"></a><span class="ss">-   </span>Vary color and style to emphasize the viz elements that are most important to the story you're telling.</span>
+<span id="cb8-248"><a href="#cb8-248"></a><span class="ss">-   </span>It is easier to judge length than it is to judge area or angles.</span>
+<span id="cb8-249"><a href="#cb8-249"></a><span class="ss">-   </span>Be thoughtful about how your categories are ordered for categorical data.</span>
+<span id="cb8-250"><a href="#cb8-250"></a></span>
+<span id="cb8-251"><a href="#cb8-251"></a>Getting into even more of the nitty gritty, we need to be mindful of what geometric elements and aesthetics we use. The following elements/aesthetics are listed in roughly descending order of human ability to perceive and compare nearby objects:<span class="ot">[^07-effective-viz-2]</span></span>
+<span id="cb8-252"><a href="#cb8-252"></a></span>
+<span id="cb8-253"><a href="#cb8-253"></a><span class="ot">[^07-effective-viz-2]: </span>B. S. Baumer, D. T. Kaplan, and N. J. Horton, *Modern Data Science with R*, 2017, p. 15.</span>
+<span id="cb8-254"><a href="#cb8-254"></a></span>
+<span id="cb8-255"><a href="#cb8-255"></a><span class="ss">1.  </span>Position</span>
+<span id="cb8-256"><a href="#cb8-256"></a><span class="ss">2.  </span>Length</span>
+<span id="cb8-257"><a href="#cb8-257"></a><span class="ss">3.  </span>Angle</span>
+<span id="cb8-258"><a href="#cb8-258"></a><span class="ss">4.  </span>Direction</span>
+<span id="cb8-259"><a href="#cb8-259"></a><span class="ss">5.  </span>Shape (but only a very few different shapes)</span>
+<span id="cb8-260"><a href="#cb8-260"></a><span class="ss">6.  </span>Area</span>
+<span id="cb8-261"><a href="#cb8-261"></a><span class="ss">7.  </span>Volume</span>
+<span id="cb8-262"><a href="#cb8-262"></a><span class="ss">8.  </span>Shade</span>
+<span id="cb8-263"><a href="#cb8-263"></a><span class="ss">9.  </span>Color. (Color is the most difficult, because it is a 3-dimensional quantity.)</span>
+<span id="cb8-264"><a href="#cb8-264"></a></span>
+<span id="cb8-265"><a href="#cb8-265"></a>Finally, here are some facts to keep in mind about visual perception from <span class="co">[</span><span class="ot">Now You See It</span><span class="co">](https://www.amazon.com/Now-You-See-Visualization-Quantitative/dp/0970601980)</span>.</span>
+<span id="cb8-266"><a href="#cb8-266"></a></span>
+<span id="cb8-267"><a href="#cb8-267"></a><span class="fu">#### Part a: Selectivity {.unnumbered}</span></span>
+<span id="cb8-268"><a href="#cb8-268"></a></span>
+<span id="cb8-269"><a href="#cb8-269"></a>Visual perception is selective, and our attention is often drawn to contrasts from the norm.</span>
+<span id="cb8-270"><a href="#cb8-270"></a></span>
+<span id="cb8-271"><a href="#cb8-271"></a>**Implication**: We should design visualizations so that the features we want to highlight stand out in contrast from those that are not worth the audience's attention.</span>
+<span id="cb8-272"><a href="#cb8-272"></a></span>
+<span id="cb8-273"><a href="#cb8-273"></a>**Example**: What stands out in this example image? This is originally from C. Ware, *Information Visualization: Perception for Design*, 2004? Source: S. Few, *Now You See It*, 2009, p. 33.</span>
+<span id="cb8-274"><a href="#cb8-274"></a></span>
+<span id="cb8-275"><a href="#cb8-275"></a><span class="al">![](https://mac-stat.github.io/images/112/contrast.png)</span></span>
+<span id="cb8-276"><a href="#cb8-276"></a></span>
+<span id="cb8-277"><a href="#cb8-277"></a><span class="fu">#### Part b: Familiarity {.unnumbered}</span></span>
+<span id="cb8-278"><a href="#cb8-278"></a></span>
+<span id="cb8-279"><a href="#cb8-279"></a>Our eyes are drawn to familiar patterns. We observe what we know and expect.</span>
+<span id="cb8-280"><a href="#cb8-280"></a></span>
+<span id="cb8-281"><a href="#cb8-281"></a>**Implication**: Visualizations work best when they display information as patterns that familiar and easy to spot.</span>
+<span id="cb8-282"><a href="#cb8-282"></a></span>
+<span id="cb8-283"><a href="#cb8-283"></a>**Example**: Do you notice anything embedded in this rose image from coolbubble.com? Source: S. Few, *Now You See It*, 2009, p. 34.</span>
+<span id="cb8-284"><a href="#cb8-284"></a></span>
+<span id="cb8-285"><a href="#cb8-285"></a><span class="al">![](https://mac-stat.github.io/images/112/rose1.png)</span></span>
+<span id="cb8-286"><a href="#cb8-286"></a></span>
+<span id="cb8-287"><a href="#cb8-287"></a><span class="fu">#### Part c: Revisit {.unnumbered}</span></span>
+<span id="cb8-288"><a href="#cb8-288"></a></span>
+<span id="cb8-289"><a href="#cb8-289"></a>Revisit Part b. Do you notice anything in the shadows? Go to <span class="ot">&lt;https://mac-stat.github.io/images/112/rose2.png&gt;</span> for an image.</span>
+<span id="cb8-290"><a href="#cb8-290"></a></span>
+<span id="cb8-291"><a href="#cb8-291"></a>\</span>
+<span id="cb8-292"><a href="#cb8-292"></a>\</span>
+<span id="cb8-293"><a href="#cb8-293"></a>\</span>
+<span id="cb8-294"><a href="#cb8-294"></a>\</span>
+<span id="cb8-295"><a href="#cb8-295"></a></span>
+<span id="cb8-296"><a href="#cb8-296"></a><span class="fu">### Wrapping up {.unnumbered}</span></span>
+<span id="cb8-297"><a href="#cb8-297"></a></span>
+<span id="cb8-298"><a href="#cb8-298"></a>If you finish early:</span>
+<span id="cb8-299"><a href="#cb8-299"></a></span>
+<span id="cb8-300"><a href="#cb8-300"></a><span class="ss">-   </span>Work on homework if not done already</span>
+<span id="cb8-301"><a href="#cb8-301"></a><span class="ss">-   </span>Complete any activities you haven't finished yet, eg, spatial viz, the optional but fun exercises in the Multivariate viz and Bivariate viz activities.</span>
+<span id="cb8-302"><a href="#cb8-302"></a><span class="ss">-   </span>If you've done all that, explore some datasets in <span class="co">[</span><span class="ot">TidyTuesday</span><span class="co">](https://github.com/rfordatascience/tidytuesday/tree/master)</span>.</span>
+<span id="cb8-303"><a href="#cb8-303"></a></span>
+<span id="cb8-304"><a href="#cb8-304"></a>\</span>
+<span id="cb8-305"><a href="#cb8-305"></a>\</span>
+<span id="cb8-306"><a href="#cb8-306"></a>\</span>
+<span id="cb8-307"><a href="#cb8-307"></a>\</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -332,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../ica/ica-uni.html">In-class Activities</a></li><li class="breadcrumb-item"><a href="../ica/ica-multi.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mulivariate Viz</span></a></li></ol></nav><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mulivariate Viz</span>
-</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -352,10 +352,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-story" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="the-story">The story</h3>
 <p>Though far from a perfect assessment of academic preparedness, SAT scores have historically been used as one measurement of a state’s education system. The <code>education</code> dataset contains various education variables for each state:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Import and check out data</span></span>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Import and check out data</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>education <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/sat.csv"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">head</span>(education)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code>       State expend ratio salary frac verbal math  sat  fracCat
 1    Alabama  4.405  17.2 31.144    8    491  538 1029   (0,15]
 2     Alaska  8.963  17.6 47.951   47    445  489  934 (45,100]
@@ -371,21 +371,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="part-a" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a">Part a</h4>
 <p>Construct a plot of how the average <code>sat</code> scores vary from state to state. (Just use 1 variable – <code>sat</code> not <code>State</code>!)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x=</span>sat)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x=</span>sat)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-multi_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -399,13 +387,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The first question we’d like to answer is: Can the variability in <code>sat</code> scores from state to state be partially explained by how much a state spends on education, specifically its per pupil spending (<code>expend</code>) and typical teacher <code>salary</code>?</p>
 <section id="part-a-1" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-1">Part a</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Construct a plot of sat vs expend</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># Include a "best fit linear regression model" (HINT: method = "lm")</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> expend)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Construct a plot of sat vs expend</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Include a "best fit linear regression model" (HINT: method = "lm")</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> expend)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-multi_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -413,13 +398,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Construct a plot of sat vs salary</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># Include a "best fit linear regression model" (HINT: method = "lm")</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> salary)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Construct a plot of sat vs salary</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Include a "best fit linear regression model" (HINT: method = "lm")</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> salary)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-multi_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -432,22 +414,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section></section><section id="exercise-3-sat-scores-vs-per-pupil-spending-and-teacher-salaries" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="exercise-3-sat-scores-vs-per-pupil-spending-and-teacher-salaries">Exercise 3: SAT Scores vs Per Pupil Spending <em>and</em> Teacher Salaries</h3>
 <p>Construct <em>one</em> visualization of the relationship of <code>sat</code> with <code>salary</code> <em>and</em> <code>expend</code>. HINT: Start with just 2 variables and tweak that code to add the third variable. Try out a few things!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> salary, <span class="at">size =</span> expend)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The following aesthetics were dropped during statistical transformation: size.
-ℹ This can happen when ggplot fails to infer the correct grouping structure in
-  the data.
-ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
-  variable into a factor?</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> salary, <span class="at">size =</span> expend)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-multi_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -458,9 +426,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It can be tough to distinguish color scales and size scales for quantitative variables. Another option is to <em>discretize</em> a quantitative variable, or basically cut it up into <em>categories</em>.</p>
 <p>Construct the plot below. Check out the code and think about what’s happening here. What happens if you change “2” to “3”?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">y =</span> sat, <span class="at">x =</span> salary, <span class="at">color =</span> <span class="fu">cut</span>(expend, <span class="dv">3</span>))) <span class="sc">+</span> </span>
-<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">y =</span> sat, <span class="at">x =</span> salary, <span class="at">color =</span> <span class="fu">cut</span>(expend, <span class="dv">3</span>))) <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Describe the trivariate relationship between <code>sat</code>, <code>salary</code>, and <code>expend</code>.</p>
 <p>sat/salary is positively correlated to expend.</p>
@@ -469,8 +438,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="part-a-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-a-2">Part a</h4>
 <p>Build a univariate viz of <code>fracCat</code> to better understand how many states fall into each category.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> fracCat)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> fracCat)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-multi_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -480,8 +449,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="part-b-2" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-2">Part b</h4>
 <p>Build 2 bivariate visualizations that demonstrate the relationship between <code>sat</code> and <code>fracCat</code>. What story does your graphic tell and why does this make contextual sense?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> fracCat, <span class="at">y =</span> sat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> fracCat, <span class="at">y =</span> sat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-multi_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -493,11 +462,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Make a trivariate visualization that demonstrates the relationship of <code>sat</code> with <code>expend</code> AND <code>fracCat</code>. Highlight the differences in <code>fracCat</code> groups through color AND unique trend lines. What story does your graphic tell?<br>
 Does it still seem that SAT scores decrease as spending increases?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> expend, <span class="at">y =</span> sat, <span class="at">color =</span> fracCat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> expend, <span class="at">y =</span> sat, <span class="at">color =</span> fracCat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="ica-multi_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
@@ -521,56 +487,59 @@ Does it still seem that SAT scores decrease as spending increases?</p>
 <li>We’ll improve the plot later, so don’t spend too much time trying to learn something from this plot.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Remove the "State" column and use it to label the rows</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="co"># Then scale the variables</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a>plot_data <span class="ot">&lt;-</span> education <span class="sc">|&gt;</span> </span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">column_to_rownames</span>(<span class="st">"State"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">data.matrix</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">scale</span>()</span>
-<span id="cb19-7"><a href="#cb19-7"></a></span>
-<span id="cb19-8"><a href="#cb19-8"></a><span class="co"># Load the gplots package needed for heatmaps</span></span>
-<span id="cb19-9"><a href="#cb19-9"></a><span class="fu">library</span>(gplots)</span>
-<span id="cb19-10"><a href="#cb19-10"></a></span>
-<span id="cb19-11"><a href="#cb19-11"></a><span class="co"># Construct heatmap 1</span></span>
-<span id="cb19-12"><a href="#cb19-12"></a><span class="fu">heatmap.2</span>(plot_data,</span>
-<span id="cb19-13"><a href="#cb19-13"></a>  <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
-<span id="cb19-14"><a href="#cb19-14"></a>  <span class="at">Rowv =</span> <span class="cn">NA</span>, </span>
-<span id="cb19-15"><a href="#cb19-15"></a>  <span class="at">scale =</span> <span class="st">"column"</span>,</span>
-<span id="cb19-16"><a href="#cb19-16"></a>  <span class="at">keysize =</span> <span class="fl">0.7</span>, </span>
-<span id="cb19-17"><a href="#cb19-17"></a>  <span class="at">density.info =</span> <span class="st">"none"</span>,</span>
-<span id="cb19-18"><a href="#cb19-18"></a>  <span class="at">col =</span> <span class="fu">hcl.colors</span>(<span class="dv">256</span>), </span>
-<span id="cb19-19"><a href="#cb19-19"></a>  <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>),</span>
-<span id="cb19-20"><a href="#cb19-20"></a>  <span class="at">colsep =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>), <span class="at">rowsep =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>), <span class="at">sepwidth =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.05</span>),</span>
-<span id="cb19-21"><a href="#cb19-21"></a>  <span class="at">sepcolor =</span> <span class="st">"white"</span>, <span class="at">trace =</span> <span class="st">"none"</span></span>
-<span id="cb19-22"><a href="#cb19-22"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Remove the "State" column and use it to label the rows</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co"># Then scale the variables</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>plot_data <span class="ot">&lt;-</span> education <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">column_to_rownames</span>(<span class="st">"State"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5"></a>  <span class="fu">data.matrix</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="fu">scale</span>()</span>
+<span id="cb11-7"><a href="#cb11-7"></a></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co"># Load the gplots package needed for heatmaps</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="fu">library</span>(gplots)</span>
+<span id="cb11-10"><a href="#cb11-10"></a></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co"># Construct heatmap 1</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="fu">heatmap.2</span>(plot_data,</span>
+<span id="cb11-13"><a href="#cb11-13"></a>  <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
+<span id="cb11-14"><a href="#cb11-14"></a>  <span class="at">Rowv =</span> <span class="cn">NA</span>, </span>
+<span id="cb11-15"><a href="#cb11-15"></a>  <span class="at">scale =</span> <span class="st">"column"</span>,</span>
+<span id="cb11-16"><a href="#cb11-16"></a>  <span class="at">keysize =</span> <span class="fl">0.7</span>, </span>
+<span id="cb11-17"><a href="#cb11-17"></a>  <span class="at">density.info =</span> <span class="st">"none"</span>,</span>
+<span id="cb11-18"><a href="#cb11-18"></a>  <span class="at">col =</span> <span class="fu">hcl.colors</span>(<span class="dv">256</span>), </span>
+<span id="cb11-19"><a href="#cb11-19"></a>  <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>),</span>
+<span id="cb11-20"><a href="#cb11-20"></a>  <span class="at">colsep =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>), <span class="at">rowsep =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>), <span class="at">sepwidth =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.05</span>),</span>
+<span id="cb11-21"><a href="#cb11-21"></a>  <span class="at">sepcolor =</span> <span class="st">"white"</span>, <span class="at">trace =</span> <span class="st">"none"</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Construct heatmap 2</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">heatmap.2</span>(plot_data,</span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">Rowv =</span> <span class="cn">TRUE</span>,             <span class="do">### WE CHANGED THIS FROM NA TO TRUE</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a>  <span class="at">scale =</span> <span class="st">"column"</span>,</span>
-<span id="cb20-6"><a href="#cb20-6"></a>  <span class="at">keysize =</span> <span class="fl">0.7</span>, </span>
-<span id="cb20-7"><a href="#cb20-7"></a>  <span class="at">density.info =</span> <span class="st">"none"</span>,</span>
-<span id="cb20-8"><a href="#cb20-8"></a>  <span class="at">col =</span> <span class="fu">hcl.colors</span>(<span class="dv">256</span>), </span>
-<span id="cb20-9"><a href="#cb20-9"></a>  <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>),</span>
-<span id="cb20-10"><a href="#cb20-10"></a>  <span class="at">colsep =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>), <span class="at">rowsep =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>), <span class="at">sepwidth =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.05</span>),</span>
-<span id="cb20-11"><a href="#cb20-11"></a>  <span class="at">sepcolor =</span> <span class="st">"white"</span>, <span class="at">trace =</span> <span class="st">"none"</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Construct heatmap 2</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">heatmap.2</span>(plot_data,</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="at">Rowv =</span> <span class="cn">TRUE</span>,             <span class="do">### WE CHANGED THIS FROM NA TO TRUE</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="at">scale =</span> <span class="st">"column"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>  <span class="at">keysize =</span> <span class="fl">0.7</span>, </span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="at">density.info =</span> <span class="st">"none"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8"></a>  <span class="at">col =</span> <span class="fu">hcl.colors</span>(<span class="dv">256</span>), </span>
+<span id="cb12-9"><a href="#cb12-9"></a>  <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>),</span>
+<span id="cb12-10"><a href="#cb12-10"></a>  <span class="at">colsep =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>), <span class="at">rowsep =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>), <span class="at">sepwidth =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.05</span>),</span>
+<span id="cb12-11"><a href="#cb12-11"></a>  <span class="at">sepcolor =</span> <span class="st">"white"</span>, <span class="at">trace =</span> <span class="st">"none"</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Construct heatmap 3</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">heatmap.2</span>(plot_data,</span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="at">dendrogram =</span> <span class="st">"row"</span>,       <span class="do">### WE CHANGED THIS FROM "none" TO "row"</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="at">Rowv =</span> <span class="cn">TRUE</span>,            </span>
-<span id="cb21-5"><a href="#cb21-5"></a>  <span class="at">scale =</span> <span class="st">"column"</span>,</span>
-<span id="cb21-6"><a href="#cb21-6"></a>  <span class="at">keysize =</span> <span class="fl">0.7</span>, </span>
-<span id="cb21-7"><a href="#cb21-7"></a>  <span class="at">density.info =</span> <span class="st">"none"</span>,</span>
-<span id="cb21-8"><a href="#cb21-8"></a>  <span class="at">col =</span> <span class="fu">hcl.colors</span>(<span class="dv">256</span>), </span>
-<span id="cb21-9"><a href="#cb21-9"></a>  <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>),</span>
-<span id="cb21-10"><a href="#cb21-10"></a>  <span class="at">colsep =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>), <span class="at">rowsep =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>), <span class="at">sepwidth =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.05</span>),</span>
-<span id="cb21-11"><a href="#cb21-11"></a>  <span class="at">sepcolor =</span> <span class="st">"white"</span>, <span class="at">trace =</span> <span class="st">"none"</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Construct heatmap 3</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">heatmap.2</span>(plot_data,</span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="at">dendrogram =</span> <span class="st">"row"</span>,       <span class="do">### WE CHANGED THIS FROM "none" TO "row"</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="at">Rowv =</span> <span class="cn">TRUE</span>,            </span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="at">scale =</span> <span class="st">"column"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="at">keysize =</span> <span class="fl">0.7</span>, </span>
+<span id="cb13-7"><a href="#cb13-7"></a>  <span class="at">density.info =</span> <span class="st">"none"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8"></a>  <span class="at">col =</span> <span class="fu">hcl.colors</span>(<span class="dv">256</span>), </span>
+<span id="cb13-9"><a href="#cb13-9"></a>  <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>),</span>
+<span id="cb13-10"><a href="#cb13-10"></a>  <span class="at">colsep =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>), <span class="at">rowsep =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>), <span class="at">sepwidth =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.05</span>),</span>
+<span id="cb13-11"><a href="#cb13-11"></a>  <span class="at">sepcolor =</span> <span class="st">"white"</span>, <span class="at">trace =</span> <span class="st">"none"</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section><section id="part-b-3" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-3">Part b</h4>
 <p>In the final two plots, the states (rows) are rearranged by similarity with respect to these education metrics. The <em>final</em> plot includes a <strong>dendrogram</strong> which further indicates <em>clusters</em> of similar states. In short, states that have a shorter path to connection are more similar than others.</p>
@@ -585,23 +554,25 @@ Does it still seem that SAT scores decrease as spending increases?</p>
 <li>What states appear to be similar? Do these observations agree with those that you gained from the heat map?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">stars</span>(plot_data,</span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="at">flip.labels =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="at">key.loc =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="fl">1.5</span>),</span>
-<span id="cb22-4"><a href="#cb22-4"></a>  <span class="at">cex =</span> <span class="dv">1</span>, </span>
-<span id="cb22-5"><a href="#cb22-5"></a>  <span class="at">draw.segments =</span> <span class="cn">TRUE</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">stars</span>(plot_data,</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="at">flip.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="at">key.loc =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="fl">1.5</span>),</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="at">cex =</span> <span class="dv">1</span>, </span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="at">draw.segments =</span> <span class="cn">TRUE</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section><section id="part-b-4" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="part-b-4">Part b</h4>
 <p>Finally, let’s plot the state stars by <em>geographic</em> location! What new insight do you gain here?!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">stars</span>(plot_data,</span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="at">flip.labels =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="at">locations =</span> <span class="fu">data.matrix</span>(<span class="fu">as.data.frame</span>(state.center)),  <span class="co"># added external data to arrange by geo location</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="at">key.loc =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">110</span>, <span class="dv">28</span>),</span>
-<span id="cb23-5"><a href="#cb23-5"></a>  <span class="at">cex =</span> <span class="dv">1</span>, </span>
-<span id="cb23-6"><a href="#cb23-6"></a>  <span class="at">draw.segments =</span> <span class="cn">TRUE</span></span>
-<span id="cb23-7"><a href="#cb23-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">stars</span>(plot_data,</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="at">flip.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="at">locations =</span> <span class="fu">data.matrix</span>(<span class="fu">as.data.frame</span>(state.center)),  <span class="co"># added external data to arrange by geo location</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="at">key.loc =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">110</span>, <span class="dv">28</span>),</span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="at">cex =</span> <span class="dv">1</span>, </span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="at">draw.segments =</span> <span class="cn">TRUE</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
@@ -1237,250 +1208,250 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb24" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">---</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="an">title:</span><span class="co"> "Mulivariate Viz"</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="co">---</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a></span>
-<span id="cb24-5"><a href="#cb24-5"></a>Use this file for practice with the **mulivariate viz** in-class activity.  Refer to the class website for details.</span>
-<span id="cb24-6"><a href="#cb24-6"></a></span>
-<span id="cb24-7"><a href="#cb24-7"></a><span class="fu">## Exercises (required)</span></span>
-<span id="cb24-8"><a href="#cb24-8"></a></span>
-<span id="cb24-9"><a href="#cb24-9"></a></span>
-<span id="cb24-10"><a href="#cb24-10"></a><span class="fu">### The story {-}</span></span>
-<span id="cb24-11"><a href="#cb24-11"></a></span>
-<span id="cb24-12"><a href="#cb24-12"></a>Though far from a perfect assessment of academic preparedness, SAT scores have historically been used as one measurement of a state's education system. The <span class="in">`education`</span> dataset contains various education variables for each state:</span>
-<span id="cb24-13"><a href="#cb24-13"></a></span>
-<span id="cb24-16"><a href="#cb24-16"></a><span class="in">```{r}</span></span>
-<span id="cb24-17"><a href="#cb24-17"></a><span class="co"># Import and check out data</span></span>
-<span id="cb24-18"><a href="#cb24-18"></a>education <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/sat.csv"</span>)</span>
-<span id="cb24-19"><a href="#cb24-19"></a><span class="fu">head</span>(education)</span>
-<span id="cb24-20"><a href="#cb24-20"></a><span class="in">```</span></span>
-<span id="cb24-21"><a href="#cb24-21"></a></span>
-<span id="cb24-22"><a href="#cb24-22"></a>A codebook is provided by Danny Kaplan who also made these data accessible:</span>
-<span id="cb24-23"><a href="#cb24-23"></a></span>
-<span id="cb24-24"><a href="#cb24-24"></a><span class="al">![](https://mac-stat.github.io/images/112/SATcodebook.png)</span></span>
-<span id="cb24-25"><a href="#cb24-25"></a></span>
-<span id="cb24-26"><a href="#cb24-26"></a></span>
-<span id="cb24-27"><a href="#cb24-27"></a><span class="fu">### Exercise 1: SAT scores {-}</span></span>
-<span id="cb24-28"><a href="#cb24-28"></a></span>
-<span id="cb24-29"><a href="#cb24-29"></a><span class="fu">#### Part a {-}</span></span>
-<span id="cb24-30"><a href="#cb24-30"></a></span>
-<span id="cb24-31"><a href="#cb24-31"></a>Construct a plot of how the average <span class="in">`sat`</span> scores vary from state to state. (Just use 1 variable -- <span class="in">`sat`</span> not <span class="in">`State`</span>!)</span>
-<span id="cb24-32"><a href="#cb24-32"></a></span>
-<span id="cb24-35"><a href="#cb24-35"></a><span class="in">```{r}</span></span>
-<span id="cb24-36"><a href="#cb24-36"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb24-37"><a href="#cb24-37"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x=</span>sat)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span>
-<span id="cb24-38"><a href="#cb24-38"></a><span class="in">```</span></span>
-<span id="cb24-39"><a href="#cb24-39"></a></span>
-<span id="cb24-40"><a href="#cb24-40"></a><span class="fu">#### Part b {-}</span></span>
-<span id="cb24-41"><a href="#cb24-41"></a></span>
-<span id="cb24-42"><a href="#cb24-42"></a>Summarize your observations from the plot. Comment on the basics: range, typical outcomes, shape. (Any theories about what might explain this non-normal shape?)</span>
-<span id="cb24-43"><a href="#cb24-43"></a></span>
-<span id="cb24-44"><a href="#cb24-44"></a>The range is from 840 to 1110. Typical outcome is around 910 and 1030. Shape of the graph is two humps. </span>
-<span id="cb24-45"><a href="#cb24-45"></a></span>
-<span id="cb24-46"><a href="#cb24-46"></a></span>
-<span id="cb24-47"><a href="#cb24-47"></a></span>
-<span id="cb24-48"><a href="#cb24-48"></a><span class="fu">### Exercise 2: SAT Scores vs Per Pupil Spending &amp; SAT Scores vs Salaries {-}</span></span>
-<span id="cb24-49"><a href="#cb24-49"></a></span>
-<span id="cb24-50"><a href="#cb24-50"></a>The first question we'd like to answer is: Can the variability in <span class="in">`sat`</span> scores from state to state be partially explained by how much a state spends on education, specifically its per pupil spending (<span class="in">`expend`</span>) and typical teacher <span class="in">`salary`</span>?</span>
-<span id="cb24-51"><a href="#cb24-51"></a></span>
-<span id="cb24-52"><a href="#cb24-52"></a><span class="fu">#### Part a {-}</span></span>
-<span id="cb24-53"><a href="#cb24-53"></a></span>
-<span id="cb24-56"><a href="#cb24-56"></a><span class="in">```{r}</span></span>
-<span id="cb24-57"><a href="#cb24-57"></a><span class="co"># Construct a plot of sat vs expend</span></span>
-<span id="cb24-58"><a href="#cb24-58"></a><span class="co"># Include a "best fit linear regression model" (HINT: method = "lm")</span></span>
-<span id="cb24-59"><a href="#cb24-59"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> expend)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
-<span id="cb24-60"><a href="#cb24-60"></a><span class="in">```</span></span>
-<span id="cb24-61"><a href="#cb24-61"></a></span>
-<span id="cb24-64"><a href="#cb24-64"></a><span class="in">```{r}</span></span>
-<span id="cb24-65"><a href="#cb24-65"></a><span class="co"># Construct a plot of sat vs salary</span></span>
-<span id="cb24-66"><a href="#cb24-66"></a><span class="co"># Include a "best fit linear regression model" (HINT: method = "lm")</span></span>
-<span id="cb24-67"><a href="#cb24-67"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> salary)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
-<span id="cb24-68"><a href="#cb24-68"></a><span class="in">```</span></span>
-<span id="cb24-69"><a href="#cb24-69"></a></span>
-<span id="cb24-70"><a href="#cb24-70"></a><span class="fu">#### Part b {-}</span></span>
-<span id="cb24-71"><a href="#cb24-71"></a></span>
-<span id="cb24-72"><a href="#cb24-72"></a>What are the relationship trends between SAT scores and spending? Is there anything that surprises you?</span>
-<span id="cb24-73"><a href="#cb24-73"></a></span>
-<span id="cb24-74"><a href="#cb24-74"></a>Negative correlation between SAT score and spending/salary. It is surprising because higher teacher salary might indicate higher education quality?</span>
-<span id="cb24-75"><a href="#cb24-75"></a></span>
-<span id="cb24-76"><a href="#cb24-76"></a><span class="fu">### Exercise 3: SAT Scores vs Per Pupil Spending *and* Teacher Salaries {-}</span></span>
-<span id="cb24-77"><a href="#cb24-77"></a></span>
-<span id="cb24-78"><a href="#cb24-78"></a>Construct *one* visualization of the relationship of `sat` with `salary` *and* <span class="in">`expend`</span>. HINT: Start with just 2 variables and tweak that code to add the third variable. Try out a few things!</span>
-<span id="cb24-79"><a href="#cb24-79"></a></span>
-<span id="cb24-82"><a href="#cb24-82"></a><span class="in">```{r}</span></span>
-<span id="cb24-83"><a href="#cb24-83"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> salary, <span class="at">size =</span> expend)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
-<span id="cb24-84"><a href="#cb24-84"></a><span class="in">```</span></span>
-<span id="cb24-85"><a href="#cb24-85"></a></span>
-<span id="cb24-86"><a href="#cb24-86"></a></span>
-<span id="cb24-87"><a href="#cb24-87"></a></span>
-<span id="cb24-88"><a href="#cb24-88"></a><span class="fu">### Exercise 4: Another way to Incorporate Scale {-}</span></span>
-<span id="cb24-89"><a href="#cb24-89"></a></span>
-<span id="cb24-90"><a href="#cb24-90"></a>It can be tough to distinguish color scales and size scales for quantitative variables. Another option is to *discretize* a quantitative variable, or basically cut it up into *categories*.</span>
-<span id="cb24-91"><a href="#cb24-91"></a></span>
-<span id="cb24-92"><a href="#cb24-92"></a>Construct the plot below. Check out the code and think about what's happening here. What happens if you change "2" to "3"?</span>
-<span id="cb24-93"><a href="#cb24-93"></a></span>
-<span id="cb24-94"><a href="#cb24-94"></a><span class="in">```{r eval = FALSE}</span></span>
-<span id="cb24-95"><a href="#cb24-95"></a><span class="in">ggplot(education, aes(y = sat, x = salary, color = cut(expend, 3))) + </span></span>
-<span id="cb24-96"><a href="#cb24-96"></a><span class="in">  geom_point() + </span></span>
-<span id="cb24-97"><a href="#cb24-97"></a><span class="in">  geom_smooth(se = FALSE, method = "lm")</span></span>
-<span id="cb24-98"><a href="#cb24-98"></a><span class="in">```</span></span>
-<span id="cb24-99"><a href="#cb24-99"></a></span>
-<span id="cb24-100"><a href="#cb24-100"></a>Describe the trivariate relationship between <span class="in">`sat`</span>, <span class="in">`salary`</span>, and <span class="in">`expend`</span>.</span>
-<span id="cb24-101"><a href="#cb24-101"></a></span>
-<span id="cb24-102"><a href="#cb24-102"></a>sat/salary is positively correlated to expend.</span>
-<span id="cb24-103"><a href="#cb24-103"></a></span>
-<span id="cb24-104"><a href="#cb24-104"></a><span class="fu">### Exercise 5: Finally an Explanation {-}</span></span>
-<span id="cb24-105"><a href="#cb24-105"></a></span>
-<span id="cb24-106"><a href="#cb24-106"></a>It's strange that SAT scores *seem* to decrease with spending. But we're leaving out an important variable from our analysis: the fraction of a state's students that actually take the SAT. The <span class="in">`fracCat`</span> variable indicates this fraction: <span class="in">`low`</span> (under 15% take the SAT), <span class="in">`medium`</span> (15-45% take the SAT), and <span class="in">`high`</span> (at least 45% take the SAT).</span>
-<span id="cb24-107"><a href="#cb24-107"></a></span>
-<span id="cb24-108"><a href="#cb24-108"></a><span class="fu">#### Part a {-}</span></span>
-<span id="cb24-109"><a href="#cb24-109"></a></span>
-<span id="cb24-110"><a href="#cb24-110"></a>Build a univariate viz of <span class="in">`fracCat`</span> to better understand how many states fall into each category.</span>
-<span id="cb24-111"><a href="#cb24-111"></a></span>
-<span id="cb24-114"><a href="#cb24-114"></a><span class="in">```{r}</span></span>
-<span id="cb24-115"><a href="#cb24-115"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> fracCat)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span>
-<span id="cb24-116"><a href="#cb24-116"></a><span class="in">```</span></span>
-<span id="cb24-117"><a href="#cb24-117"></a></span>
-<span id="cb24-118"><a href="#cb24-118"></a><span class="fu">#### Part b {-}</span></span>
-<span id="cb24-119"><a href="#cb24-119"></a></span>
-<span id="cb24-120"><a href="#cb24-120"></a>Build 2 bivariate visualizations that demonstrate the relationship between <span class="in">`sat`</span> and <span class="in">`fracCat`</span>. What story does your graphic tell and why does this make contextual sense?</span>
-<span id="cb24-121"><a href="#cb24-121"></a></span>
-<span id="cb24-124"><a href="#cb24-124"></a><span class="in">```{r}</span></span>
-<span id="cb24-125"><a href="#cb24-125"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> fracCat, <span class="at">y =</span> sat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
-<span id="cb24-126"><a href="#cb24-126"></a><span class="in">```</span></span>
-<span id="cb24-127"><a href="#cb24-127"></a></span>
-<span id="cb24-128"><a href="#cb24-128"></a>SAT score is negatively correlated to the percentage of students who take SAT.</span>
-<span id="cb24-129"><a href="#cb24-129"></a></span>
-<span id="cb24-130"><a href="#cb24-130"></a><span class="fu">#### Part c {-}</span></span>
-<span id="cb24-131"><a href="#cb24-131"></a></span>
-<span id="cb24-132"><a href="#cb24-132"></a>Make a trivariate visualization that demonstrates the relationship of <span class="in">`sat`</span> with <span class="in">`expend`</span> AND <span class="in">`fracCat`</span>. Highlight the differences in <span class="in">`fracCat`</span> groups through color AND unique trend lines. What story does your graphic tell?\</span>
-<span id="cb24-133"><a href="#cb24-133"></a>Does it still seem that SAT scores decrease as spending increases?</span>
-<span id="cb24-134"><a href="#cb24-134"></a></span>
-<span id="cb24-137"><a href="#cb24-137"></a><span class="in">```{r}</span></span>
-<span id="cb24-138"><a href="#cb24-138"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> expend, <span class="at">y =</span> sat, <span class="at">color =</span> fracCat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
-<span id="cb24-139"><a href="#cb24-139"></a><span class="in">```</span></span>
-<span id="cb24-140"><a href="#cb24-140"></a></span>
-<span id="cb24-141"><a href="#cb24-141"></a><span class="fu">#### Part d {-}</span></span>
-<span id="cb24-142"><a href="#cb24-142"></a></span>
-<span id="cb24-143"><a href="#cb24-143"></a>Putting all of this together, explain this example of **Simpson’s Paradox**. That is, why did it appear that SAT scores decrease as spending increases even though the *opposite* is true?</span>
-<span id="cb24-144"><a href="#cb24-144"></a></span>
-<span id="cb24-145"><a href="#cb24-145"></a>Because the percentage of students who take SAT is a very important and relevant factor of average SAT score, leaving it out would show the trend to be otherwise.</span>
-<span id="cb24-146"><a href="#cb24-146"></a></span>
-<span id="cb24-147"><a href="#cb24-147"></a></span>
-<span id="cb24-148"><a href="#cb24-148"></a><span class="fu">## Exercises (optional)</span></span>
-<span id="cb24-149"><a href="#cb24-149"></a></span>
-<span id="cb24-150"><a href="#cb24-150"></a><span class="fu">### Exercise 6: Heat Maps {-}</span></span>
-<span id="cb24-151"><a href="#cb24-151"></a></span>
-<span id="cb24-152"><a href="#cb24-152"></a>As usual, we've only just scratched the surface! There are lots of other data viz techniques for exploring multivariate relationships. Let's start with a **heat map**.</span>
-<span id="cb24-153"><a href="#cb24-153"></a></span>
-<span id="cb24-154"><a href="#cb24-154"></a><span class="fu">#### Part a {-}</span></span>
-<span id="cb24-155"><a href="#cb24-155"></a></span>
-<span id="cb24-156"><a href="#cb24-156"></a>Run the chunks below. Check out the code, but don't worry about every little detail! NOTES:</span>
-<span id="cb24-157"><a href="#cb24-157"></a></span>
-<span id="cb24-158"><a href="#cb24-158"></a><span class="ss">-   </span>This is *not* part of the <span class="in">`ggplot()`</span> grammar, making it a bit complicated.</span>
-<span id="cb24-159"><a href="#cb24-159"></a><span class="ss">-   </span>If you're curious about what a line in the plot does, comment it out (<span class="in">`#`</span>) and check out what happens!</span>
-<span id="cb24-160"><a href="#cb24-160"></a><span class="ss">-   </span>In the plot, for each state (row), each variable (column) is scaled to indicate whether the state has a relative high value (yellow), a relatively low value (purple), or something in between (blues/greens).</span>
-<span id="cb24-161"><a href="#cb24-161"></a><span class="ss">-   </span>You can also play with the color scheme. Type <span class="in">`?cm.colors`</span> in the *console* to learn about various options.</span>
-<span id="cb24-162"><a href="#cb24-162"></a><span class="ss">-   </span>We'll improve the plot later, so don't spend too much time trying to learn something from this plot.</span>
-<span id="cb24-163"><a href="#cb24-163"></a></span>
-<span id="cb24-164"><a href="#cb24-164"></a><span class="in">```{r eval = FALSE, fig.width = 8, fig.height = 15}</span></span>
-<span id="cb24-165"><a href="#cb24-165"></a><span class="in"># Remove the "State" column and use it to label the rows</span></span>
-<span id="cb24-166"><a href="#cb24-166"></a><span class="in"># Then scale the variables</span></span>
-<span id="cb24-167"><a href="#cb24-167"></a><span class="in">plot_data &lt;- education |&gt; </span></span>
-<span id="cb24-168"><a href="#cb24-168"></a><span class="in">  column_to_rownames("State") |&gt; </span></span>
-<span id="cb24-169"><a href="#cb24-169"></a><span class="in">  data.matrix() |&gt; </span></span>
-<span id="cb24-170"><a href="#cb24-170"></a><span class="in">  scale()</span></span>
-<span id="cb24-171"><a href="#cb24-171"></a></span>
-<span id="cb24-172"><a href="#cb24-172"></a><span class="in"># Load the gplots package needed for heatmaps</span></span>
-<span id="cb24-173"><a href="#cb24-173"></a><span class="in">library(gplots)</span></span>
-<span id="cb24-174"><a href="#cb24-174"></a></span>
-<span id="cb24-175"><a href="#cb24-175"></a><span class="in"># Construct heatmap 1</span></span>
-<span id="cb24-176"><a href="#cb24-176"></a><span class="in">heatmap.2(plot_data,</span></span>
-<span id="cb24-177"><a href="#cb24-177"></a><span class="in">  dendrogram = "none",</span></span>
-<span id="cb24-178"><a href="#cb24-178"></a><span class="in">  Rowv = NA, </span></span>
-<span id="cb24-179"><a href="#cb24-179"></a><span class="in">  scale = "column",</span></span>
-<span id="cb24-180"><a href="#cb24-180"></a><span class="in">  keysize = 0.7, </span></span>
-<span id="cb24-181"><a href="#cb24-181"></a><span class="in">  density.info = "none",</span></span>
-<span id="cb24-182"><a href="#cb24-182"></a><span class="in">  col = hcl.colors(256), </span></span>
-<span id="cb24-183"><a href="#cb24-183"></a><span class="in">  margins = c(10, 20),</span></span>
-<span id="cb24-184"><a href="#cb24-184"></a><span class="in">  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),</span></span>
-<span id="cb24-185"><a href="#cb24-185"></a><span class="in">  sepcolor = "white", trace = "none"</span></span>
-<span id="cb24-186"><a href="#cb24-186"></a><span class="in">)</span></span>
-<span id="cb24-187"><a href="#cb24-187"></a><span class="in">```</span></span>
-<span id="cb24-188"><a href="#cb24-188"></a></span>
-<span id="cb24-189"><a href="#cb24-189"></a><span class="in">```{r eval = FALSE, fig.width = 8, fig.height = 15}</span></span>
-<span id="cb24-190"><a href="#cb24-190"></a><span class="in"># Construct heatmap 2</span></span>
-<span id="cb24-191"><a href="#cb24-191"></a><span class="in">heatmap.2(plot_data,</span></span>
-<span id="cb24-192"><a href="#cb24-192"></a><span class="in">  dendrogram = "none",</span></span>
-<span id="cb24-193"><a href="#cb24-193"></a><span class="in">  Rowv = TRUE,             ### WE CHANGED THIS FROM NA TO TRUE</span></span>
-<span id="cb24-194"><a href="#cb24-194"></a><span class="in">  scale = "column",</span></span>
-<span id="cb24-195"><a href="#cb24-195"></a><span class="in">  keysize = 0.7, </span></span>
-<span id="cb24-196"><a href="#cb24-196"></a><span class="in">  density.info = "none",</span></span>
-<span id="cb24-197"><a href="#cb24-197"></a><span class="in">  col = hcl.colors(256), </span></span>
-<span id="cb24-198"><a href="#cb24-198"></a><span class="in">  margins = c(10, 20),</span></span>
-<span id="cb24-199"><a href="#cb24-199"></a><span class="in">  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),</span></span>
-<span id="cb24-200"><a href="#cb24-200"></a><span class="in">  sepcolor = "white", trace = "none"</span></span>
-<span id="cb24-201"><a href="#cb24-201"></a><span class="in">)</span></span>
-<span id="cb24-202"><a href="#cb24-202"></a><span class="in">```</span></span>
-<span id="cb24-203"><a href="#cb24-203"></a></span>
-<span id="cb24-204"><a href="#cb24-204"></a><span class="in">```{r eval = FALSE, fig.width = 8, fig.height = 15}</span></span>
-<span id="cb24-205"><a href="#cb24-205"></a><span class="in"># Construct heatmap 3</span></span>
-<span id="cb24-206"><a href="#cb24-206"></a><span class="in">heatmap.2(plot_data,</span></span>
-<span id="cb24-207"><a href="#cb24-207"></a><span class="in">  dendrogram = "row",       ### WE CHANGED THIS FROM "none" TO "row"</span></span>
-<span id="cb24-208"><a href="#cb24-208"></a><span class="in">  Rowv = TRUE,            </span></span>
-<span id="cb24-209"><a href="#cb24-209"></a><span class="in">  scale = "column",</span></span>
-<span id="cb24-210"><a href="#cb24-210"></a><span class="in">  keysize = 0.7, </span></span>
-<span id="cb24-211"><a href="#cb24-211"></a><span class="in">  density.info = "none",</span></span>
-<span id="cb24-212"><a href="#cb24-212"></a><span class="in">  col = hcl.colors(256), </span></span>
-<span id="cb24-213"><a href="#cb24-213"></a><span class="in">  margins = c(10, 20),</span></span>
-<span id="cb24-214"><a href="#cb24-214"></a><span class="in">  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),</span></span>
-<span id="cb24-215"><a href="#cb24-215"></a><span class="in">  sepcolor = "white", trace = "none"</span></span>
-<span id="cb24-216"><a href="#cb24-216"></a><span class="in">)</span></span>
-<span id="cb24-217"><a href="#cb24-217"></a><span class="in">```</span></span>
-<span id="cb24-218"><a href="#cb24-218"></a></span>
-<span id="cb24-219"><a href="#cb24-219"></a><span class="fu">#### Part b {-}</span></span>
-<span id="cb24-220"><a href="#cb24-220"></a></span>
-<span id="cb24-221"><a href="#cb24-221"></a>In the final two plots, the states (rows) are rearranged by similarity with respect to these education metrics. The *final* plot includes a **dendrogram** which further indicates *clusters* of similar states. In short, states that have a shorter path to connection are more similar than others.</span>
-<span id="cb24-222"><a href="#cb24-222"></a></span>
-<span id="cb24-223"><a href="#cb24-223"></a>Putting this all together, what insight do you gain about the education trends across U.S. states? Which states are similar? In what ways are they similar? Are there any outliers with respect to 1 or more of the education metrics?</span>
-<span id="cb24-224"><a href="#cb24-224"></a></span>
-<span id="cb24-225"><a href="#cb24-225"></a>Geographically, the closer the states to each other, the more similiar their eductation. Minnesota, Wisconsin, Illinois are very similar to each other in terms of spending and sat etc, with Michigan being less similar. California and Utah have very high "ratio".</span>
-<span id="cb24-226"><a href="#cb24-226"></a></span>
-<span id="cb24-227"><a href="#cb24-227"></a></span>
-<span id="cb24-228"><a href="#cb24-228"></a><span class="fu">### Exercise 7: Star plots {-}</span></span>
-<span id="cb24-229"><a href="#cb24-229"></a></span>
-<span id="cb24-230"><a href="#cb24-230"></a>Like heat maps, star plots indicate the relative scale of each variable for each state. Thus, we can use star maps to identify similar groups of states, and unusual states!</span>
-<span id="cb24-231"><a href="#cb24-231"></a></span>
-<span id="cb24-232"><a href="#cb24-232"></a><span class="fu">#### Part a {-}</span></span>
-<span id="cb24-233"><a href="#cb24-233"></a></span>
-<span id="cb24-234"><a href="#cb24-234"></a>Construct and check out the star plot below. Note that each state has a "pie", with each segment corresponding to a different variable. The larger a segment, the larger that variable's value is in that state. For example:</span>
-<span id="cb24-235"><a href="#cb24-235"></a></span>
-<span id="cb24-236"><a href="#cb24-236"></a><span class="ss">-   </span>Check out Minnesota. How does Minnesota's education metrics compare to those in other states? What metrics are relatively high? Relatively low?</span>
-<span id="cb24-237"><a href="#cb24-237"></a><span class="ss">-   </span>What states appear to be similar? Do these observations agree with those that you gained from the heat map?</span>
-<span id="cb24-238"><a href="#cb24-238"></a></span>
-<span id="cb24-239"><a href="#cb24-239"></a><span class="in">```{r eval = FALSE, fig.width = 10, fig.height = 20}</span></span>
-<span id="cb24-240"><a href="#cb24-240"></a><span class="in">stars(plot_data,</span></span>
-<span id="cb24-241"><a href="#cb24-241"></a><span class="in">  flip.labels = FALSE,</span></span>
-<span id="cb24-242"><a href="#cb24-242"></a><span class="in">  key.loc = c(10, 1.5),</span></span>
-<span id="cb24-243"><a href="#cb24-243"></a><span class="in">  cex = 1, </span></span>
-<span id="cb24-244"><a href="#cb24-244"></a><span class="in">  draw.segments = TRUE</span></span>
-<span id="cb24-245"><a href="#cb24-245"></a><span class="in">)</span></span>
-<span id="cb24-246"><a href="#cb24-246"></a><span class="in">```</span></span>
-<span id="cb24-247"><a href="#cb24-247"></a></span>
-<span id="cb24-248"><a href="#cb24-248"></a><span class="fu">#### Part b {-}</span></span>
-<span id="cb24-249"><a href="#cb24-249"></a></span>
-<span id="cb24-250"><a href="#cb24-250"></a>Finally, let's plot the state stars by *geographic* location! What new insight do you gain here?!</span>
-<span id="cb24-251"><a href="#cb24-251"></a></span>
-<span id="cb24-252"><a href="#cb24-252"></a><span class="in">```{r eval = FALSE, fig.width = 10, fig.height = 7}</span></span>
-<span id="cb24-253"><a href="#cb24-253"></a><span class="in">stars(plot_data,</span></span>
-<span id="cb24-254"><a href="#cb24-254"></a><span class="in">  flip.labels = FALSE,</span></span>
-<span id="cb24-255"><a href="#cb24-255"></a><span class="in">  locations = data.matrix(as.data.frame(state.center)),  # added external data to arrange by geo location</span></span>
-<span id="cb24-256"><a href="#cb24-256"></a><span class="in">  key.loc = c(-110, 28),</span></span>
-<span id="cb24-257"><a href="#cb24-257"></a><span class="in">  cex = 1, </span></span>
-<span id="cb24-258"><a href="#cb24-258"></a><span class="in">  draw.segments = TRUE</span></span>
-<span id="cb24-259"><a href="#cb24-259"></a><span class="in">)</span></span>
-<span id="cb24-260"><a href="#cb24-260"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb16" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">---</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="an">title:</span><span class="co"> "Mulivariate Viz"</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="co">---</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>Use this file for practice with the **mulivariate viz** in-class activity.  Refer to the class website for details.</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="fu">## Exercises (required)</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a></span>
+<span id="cb16-9"><a href="#cb16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="fu">### The story {-}</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a></span>
+<span id="cb16-12"><a href="#cb16-12"></a>Though far from a perfect assessment of academic preparedness, SAT scores have historically been used as one measurement of a state's education system. The <span class="in">`education`</span> dataset contains various education variables for each state:</span>
+<span id="cb16-13"><a href="#cb16-13"></a></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="in">```{r}</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="co"># Import and check out data</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a>education <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/sat.csv"</span>)</span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="fu">head</span>(education)</span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="in">```</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a></span>
+<span id="cb16-22"><a href="#cb16-22"></a>A codebook is provided by Danny Kaplan who also made these data accessible:</span>
+<span id="cb16-23"><a href="#cb16-23"></a></span>
+<span id="cb16-24"><a href="#cb16-24"></a><span class="al">![](https://mac-stat.github.io/images/112/SATcodebook.png)</span></span>
+<span id="cb16-25"><a href="#cb16-25"></a></span>
+<span id="cb16-26"><a href="#cb16-26"></a></span>
+<span id="cb16-27"><a href="#cb16-27"></a><span class="fu">### Exercise 1: SAT scores {-}</span></span>
+<span id="cb16-28"><a href="#cb16-28"></a></span>
+<span id="cb16-29"><a href="#cb16-29"></a><span class="fu">#### Part a {-}</span></span>
+<span id="cb16-30"><a href="#cb16-30"></a></span>
+<span id="cb16-31"><a href="#cb16-31"></a>Construct a plot of how the average <span class="in">`sat`</span> scores vary from state to state. (Just use 1 variable -- <span class="in">`sat`</span> not <span class="in">`State`</span>!)</span>
+<span id="cb16-32"><a href="#cb16-32"></a></span>
+<span id="cb16-35"><a href="#cb16-35"></a><span class="in">```{r}</span></span>
+<span id="cb16-36"><a href="#cb16-36"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-37"><a href="#cb16-37"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x=</span>sat)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span>
+<span id="cb16-38"><a href="#cb16-38"></a><span class="in">```</span></span>
+<span id="cb16-39"><a href="#cb16-39"></a></span>
+<span id="cb16-40"><a href="#cb16-40"></a><span class="fu">#### Part b {-}</span></span>
+<span id="cb16-41"><a href="#cb16-41"></a></span>
+<span id="cb16-42"><a href="#cb16-42"></a>Summarize your observations from the plot. Comment on the basics: range, typical outcomes, shape. (Any theories about what might explain this non-normal shape?)</span>
+<span id="cb16-43"><a href="#cb16-43"></a></span>
+<span id="cb16-44"><a href="#cb16-44"></a>The range is from 840 to 1110. Typical outcome is around 910 and 1030. Shape of the graph is two humps. </span>
+<span id="cb16-45"><a href="#cb16-45"></a></span>
+<span id="cb16-46"><a href="#cb16-46"></a></span>
+<span id="cb16-47"><a href="#cb16-47"></a></span>
+<span id="cb16-48"><a href="#cb16-48"></a><span class="fu">### Exercise 2: SAT Scores vs Per Pupil Spending &amp; SAT Scores vs Salaries {-}</span></span>
+<span id="cb16-49"><a href="#cb16-49"></a></span>
+<span id="cb16-50"><a href="#cb16-50"></a>The first question we'd like to answer is: Can the variability in <span class="in">`sat`</span> scores from state to state be partially explained by how much a state spends on education, specifically its per pupil spending (<span class="in">`expend`</span>) and typical teacher <span class="in">`salary`</span>?</span>
+<span id="cb16-51"><a href="#cb16-51"></a></span>
+<span id="cb16-52"><a href="#cb16-52"></a><span class="fu">#### Part a {-}</span></span>
+<span id="cb16-53"><a href="#cb16-53"></a></span>
+<span id="cb16-56"><a href="#cb16-56"></a><span class="in">```{r}</span></span>
+<span id="cb16-57"><a href="#cb16-57"></a><span class="co"># Construct a plot of sat vs expend</span></span>
+<span id="cb16-58"><a href="#cb16-58"></a><span class="co"># Include a "best fit linear regression model" (HINT: method = "lm")</span></span>
+<span id="cb16-59"><a href="#cb16-59"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> expend)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb16-60"><a href="#cb16-60"></a><span class="in">```</span></span>
+<span id="cb16-61"><a href="#cb16-61"></a></span>
+<span id="cb16-64"><a href="#cb16-64"></a><span class="in">```{r}</span></span>
+<span id="cb16-65"><a href="#cb16-65"></a><span class="co"># Construct a plot of sat vs salary</span></span>
+<span id="cb16-66"><a href="#cb16-66"></a><span class="co"># Include a "best fit linear regression model" (HINT: method = "lm")</span></span>
+<span id="cb16-67"><a href="#cb16-67"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> salary)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb16-68"><a href="#cb16-68"></a><span class="in">```</span></span>
+<span id="cb16-69"><a href="#cb16-69"></a></span>
+<span id="cb16-70"><a href="#cb16-70"></a><span class="fu">#### Part b {-}</span></span>
+<span id="cb16-71"><a href="#cb16-71"></a></span>
+<span id="cb16-72"><a href="#cb16-72"></a>What are the relationship trends between SAT scores and spending? Is there anything that surprises you?</span>
+<span id="cb16-73"><a href="#cb16-73"></a></span>
+<span id="cb16-74"><a href="#cb16-74"></a>Negative correlation between SAT score and spending/salary. It is surprising because higher teacher salary might indicate higher education quality?</span>
+<span id="cb16-75"><a href="#cb16-75"></a></span>
+<span id="cb16-76"><a href="#cb16-76"></a><span class="fu">### Exercise 3: SAT Scores vs Per Pupil Spending *and* Teacher Salaries {-}</span></span>
+<span id="cb16-77"><a href="#cb16-77"></a></span>
+<span id="cb16-78"><a href="#cb16-78"></a>Construct *one* visualization of the relationship of `sat` with `salary` *and* <span class="in">`expend`</span>. HINT: Start with just 2 variables and tweak that code to add the third variable. Try out a few things!</span>
+<span id="cb16-79"><a href="#cb16-79"></a></span>
+<span id="cb16-82"><a href="#cb16-82"></a><span class="in">```{r}</span></span>
+<span id="cb16-83"><a href="#cb16-83"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> sat, <span class="at">y =</span> salary, <span class="at">size =</span> expend)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb16-84"><a href="#cb16-84"></a><span class="in">```</span></span>
+<span id="cb16-85"><a href="#cb16-85"></a></span>
+<span id="cb16-86"><a href="#cb16-86"></a></span>
+<span id="cb16-87"><a href="#cb16-87"></a></span>
+<span id="cb16-88"><a href="#cb16-88"></a><span class="fu">### Exercise 4: Another way to Incorporate Scale {-}</span></span>
+<span id="cb16-89"><a href="#cb16-89"></a></span>
+<span id="cb16-90"><a href="#cb16-90"></a>It can be tough to distinguish color scales and size scales for quantitative variables. Another option is to *discretize* a quantitative variable, or basically cut it up into *categories*.</span>
+<span id="cb16-91"><a href="#cb16-91"></a></span>
+<span id="cb16-92"><a href="#cb16-92"></a>Construct the plot below. Check out the code and think about what's happening here. What happens if you change "2" to "3"?</span>
+<span id="cb16-93"><a href="#cb16-93"></a></span>
+<span id="cb16-94"><a href="#cb16-94"></a><span class="in">```{r eval = FALSE}</span></span>
+<span id="cb16-95"><a href="#cb16-95"></a><span class="in">ggplot(education, aes(y = sat, x = salary, color = cut(expend, 3))) + </span></span>
+<span id="cb16-96"><a href="#cb16-96"></a><span class="in">  geom_point() + </span></span>
+<span id="cb16-97"><a href="#cb16-97"></a><span class="in">  geom_smooth(se = FALSE, method = "lm")</span></span>
+<span id="cb16-98"><a href="#cb16-98"></a><span class="in">```</span></span>
+<span id="cb16-99"><a href="#cb16-99"></a></span>
+<span id="cb16-100"><a href="#cb16-100"></a>Describe the trivariate relationship between <span class="in">`sat`</span>, <span class="in">`salary`</span>, and <span class="in">`expend`</span>.</span>
+<span id="cb16-101"><a href="#cb16-101"></a></span>
+<span id="cb16-102"><a href="#cb16-102"></a>sat/salary is positively correlated to expend.</span>
+<span id="cb16-103"><a href="#cb16-103"></a></span>
+<span id="cb16-104"><a href="#cb16-104"></a><span class="fu">### Exercise 5: Finally an Explanation {-}</span></span>
+<span id="cb16-105"><a href="#cb16-105"></a></span>
+<span id="cb16-106"><a href="#cb16-106"></a>It's strange that SAT scores *seem* to decrease with spending. But we're leaving out an important variable from our analysis: the fraction of a state's students that actually take the SAT. The <span class="in">`fracCat`</span> variable indicates this fraction: <span class="in">`low`</span> (under 15% take the SAT), <span class="in">`medium`</span> (15-45% take the SAT), and <span class="in">`high`</span> (at least 45% take the SAT).</span>
+<span id="cb16-107"><a href="#cb16-107"></a></span>
+<span id="cb16-108"><a href="#cb16-108"></a><span class="fu">#### Part a {-}</span></span>
+<span id="cb16-109"><a href="#cb16-109"></a></span>
+<span id="cb16-110"><a href="#cb16-110"></a>Build a univariate viz of <span class="in">`fracCat`</span> to better understand how many states fall into each category.</span>
+<span id="cb16-111"><a href="#cb16-111"></a></span>
+<span id="cb16-114"><a href="#cb16-114"></a><span class="in">```{r}</span></span>
+<span id="cb16-115"><a href="#cb16-115"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> fracCat)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span>
+<span id="cb16-116"><a href="#cb16-116"></a><span class="in">```</span></span>
+<span id="cb16-117"><a href="#cb16-117"></a></span>
+<span id="cb16-118"><a href="#cb16-118"></a><span class="fu">#### Part b {-}</span></span>
+<span id="cb16-119"><a href="#cb16-119"></a></span>
+<span id="cb16-120"><a href="#cb16-120"></a>Build 2 bivariate visualizations that demonstrate the relationship between <span class="in">`sat`</span> and <span class="in">`fracCat`</span>. What story does your graphic tell and why does this make contextual sense?</span>
+<span id="cb16-121"><a href="#cb16-121"></a></span>
+<span id="cb16-124"><a href="#cb16-124"></a><span class="in">```{r}</span></span>
+<span id="cb16-125"><a href="#cb16-125"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> fracCat, <span class="at">y =</span> sat)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
+<span id="cb16-126"><a href="#cb16-126"></a><span class="in">```</span></span>
+<span id="cb16-127"><a href="#cb16-127"></a></span>
+<span id="cb16-128"><a href="#cb16-128"></a>SAT score is negatively correlated to the percentage of students who take SAT.</span>
+<span id="cb16-129"><a href="#cb16-129"></a></span>
+<span id="cb16-130"><a href="#cb16-130"></a><span class="fu">#### Part c {-}</span></span>
+<span id="cb16-131"><a href="#cb16-131"></a></span>
+<span id="cb16-132"><a href="#cb16-132"></a>Make a trivariate visualization that demonstrates the relationship of <span class="in">`sat`</span> with <span class="in">`expend`</span> AND <span class="in">`fracCat`</span>. Highlight the differences in <span class="in">`fracCat`</span> groups through color AND unique trend lines. What story does your graphic tell?\</span>
+<span id="cb16-133"><a href="#cb16-133"></a>Does it still seem that SAT scores decrease as spending increases?</span>
+<span id="cb16-134"><a href="#cb16-134"></a></span>
+<span id="cb16-137"><a href="#cb16-137"></a><span class="in">```{r}</span></span>
+<span id="cb16-138"><a href="#cb16-138"></a><span class="fu">ggplot</span>(education, <span class="fu">aes</span>(<span class="at">x =</span> expend, <span class="at">y =</span> sat, <span class="at">color =</span> fracCat)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span>
+<span id="cb16-139"><a href="#cb16-139"></a><span class="in">```</span></span>
+<span id="cb16-140"><a href="#cb16-140"></a></span>
+<span id="cb16-141"><a href="#cb16-141"></a><span class="fu">#### Part d {-}</span></span>
+<span id="cb16-142"><a href="#cb16-142"></a></span>
+<span id="cb16-143"><a href="#cb16-143"></a>Putting all of this together, explain this example of **Simpson’s Paradox**. That is, why did it appear that SAT scores decrease as spending increases even though the *opposite* is true?</span>
+<span id="cb16-144"><a href="#cb16-144"></a></span>
+<span id="cb16-145"><a href="#cb16-145"></a>Because the percentage of students who take SAT is a very important and relevant factor of average SAT score, leaving it out would show the trend to be otherwise.</span>
+<span id="cb16-146"><a href="#cb16-146"></a></span>
+<span id="cb16-147"><a href="#cb16-147"></a></span>
+<span id="cb16-148"><a href="#cb16-148"></a><span class="fu">## Exercises (optional)</span></span>
+<span id="cb16-149"><a href="#cb16-149"></a></span>
+<span id="cb16-150"><a href="#cb16-150"></a><span class="fu">### Exercise 6: Heat Maps {-}</span></span>
+<span id="cb16-151"><a href="#cb16-151"></a></span>
+<span id="cb16-152"><a href="#cb16-152"></a>As usual, we've only just scratched the surface! There are lots of other data viz techniques for exploring multivariate relationships. Let's start with a **heat map**.</span>
+<span id="cb16-153"><a href="#cb16-153"></a></span>
+<span id="cb16-154"><a href="#cb16-154"></a><span class="fu">#### Part a {-}</span></span>
+<span id="cb16-155"><a href="#cb16-155"></a></span>
+<span id="cb16-156"><a href="#cb16-156"></a>Run the chunks below. Check out the code, but don't worry about every little detail! NOTES:</span>
+<span id="cb16-157"><a href="#cb16-157"></a></span>
+<span id="cb16-158"><a href="#cb16-158"></a><span class="ss">-   </span>This is *not* part of the <span class="in">`ggplot()`</span> grammar, making it a bit complicated.</span>
+<span id="cb16-159"><a href="#cb16-159"></a><span class="ss">-   </span>If you're curious about what a line in the plot does, comment it out (<span class="in">`#`</span>) and check out what happens!</span>
+<span id="cb16-160"><a href="#cb16-160"></a><span class="ss">-   </span>In the plot, for each state (row), each variable (column) is scaled to indicate whether the state has a relative high value (yellow), a relatively low value (purple), or something in between (blues/greens).</span>
+<span id="cb16-161"><a href="#cb16-161"></a><span class="ss">-   </span>You can also play with the color scheme. Type <span class="in">`?cm.colors`</span> in the *console* to learn about various options.</span>
+<span id="cb16-162"><a href="#cb16-162"></a><span class="ss">-   </span>We'll improve the plot later, so don't spend too much time trying to learn something from this plot.</span>
+<span id="cb16-163"><a href="#cb16-163"></a></span>
+<span id="cb16-164"><a href="#cb16-164"></a><span class="in">```{r eval = FALSE, fig.width = 8, fig.height = 15}</span></span>
+<span id="cb16-165"><a href="#cb16-165"></a><span class="in"># Remove the "State" column and use it to label the rows</span></span>
+<span id="cb16-166"><a href="#cb16-166"></a><span class="in"># Then scale the variables</span></span>
+<span id="cb16-167"><a href="#cb16-167"></a><span class="in">plot_data &lt;- education |&gt; </span></span>
+<span id="cb16-168"><a href="#cb16-168"></a><span class="in">  column_to_rownames("State") |&gt; </span></span>
+<span id="cb16-169"><a href="#cb16-169"></a><span class="in">  data.matrix() |&gt; </span></span>
+<span id="cb16-170"><a href="#cb16-170"></a><span class="in">  scale()</span></span>
+<span id="cb16-171"><a href="#cb16-171"></a></span>
+<span id="cb16-172"><a href="#cb16-172"></a><span class="in"># Load the gplots package needed for heatmaps</span></span>
+<span id="cb16-173"><a href="#cb16-173"></a><span class="in">library(gplots)</span></span>
+<span id="cb16-174"><a href="#cb16-174"></a></span>
+<span id="cb16-175"><a href="#cb16-175"></a><span class="in"># Construct heatmap 1</span></span>
+<span id="cb16-176"><a href="#cb16-176"></a><span class="in">heatmap.2(plot_data,</span></span>
+<span id="cb16-177"><a href="#cb16-177"></a><span class="in">  dendrogram = "none",</span></span>
+<span id="cb16-178"><a href="#cb16-178"></a><span class="in">  Rowv = NA, </span></span>
+<span id="cb16-179"><a href="#cb16-179"></a><span class="in">  scale = "column",</span></span>
+<span id="cb16-180"><a href="#cb16-180"></a><span class="in">  keysize = 0.7, </span></span>
+<span id="cb16-181"><a href="#cb16-181"></a><span class="in">  density.info = "none",</span></span>
+<span id="cb16-182"><a href="#cb16-182"></a><span class="in">  col = hcl.colors(256), </span></span>
+<span id="cb16-183"><a href="#cb16-183"></a><span class="in">  margins = c(10, 20),</span></span>
+<span id="cb16-184"><a href="#cb16-184"></a><span class="in">  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),</span></span>
+<span id="cb16-185"><a href="#cb16-185"></a><span class="in">  sepcolor = "white", trace = "none"</span></span>
+<span id="cb16-186"><a href="#cb16-186"></a><span class="in">)</span></span>
+<span id="cb16-187"><a href="#cb16-187"></a><span class="in">```</span></span>
+<span id="cb16-188"><a href="#cb16-188"></a></span>
+<span id="cb16-189"><a href="#cb16-189"></a><span class="in">```{r eval = FALSE, fig.width = 8, fig.height = 15}</span></span>
+<span id="cb16-190"><a href="#cb16-190"></a><span class="in"># Construct heatmap 2</span></span>
+<span id="cb16-191"><a href="#cb16-191"></a><span class="in">heatmap.2(plot_data,</span></span>
+<span id="cb16-192"><a href="#cb16-192"></a><span class="in">  dendrogram = "none",</span></span>
+<span id="cb16-193"><a href="#cb16-193"></a><span class="in">  Rowv = TRUE,             ### WE CHANGED THIS FROM NA TO TRUE</span></span>
+<span id="cb16-194"><a href="#cb16-194"></a><span class="in">  scale = "column",</span></span>
+<span id="cb16-195"><a href="#cb16-195"></a><span class="in">  keysize = 0.7, </span></span>
+<span id="cb16-196"><a href="#cb16-196"></a><span class="in">  density.info = "none",</span></span>
+<span id="cb16-197"><a href="#cb16-197"></a><span class="in">  col = hcl.colors(256), </span></span>
+<span id="cb16-198"><a href="#cb16-198"></a><span class="in">  margins = c(10, 20),</span></span>
+<span id="cb16-199"><a href="#cb16-199"></a><span class="in">  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),</span></span>
+<span id="cb16-200"><a href="#cb16-200"></a><span class="in">  sepcolor = "white", trace = "none"</span></span>
+<span id="cb16-201"><a href="#cb16-201"></a><span class="in">)</span></span>
+<span id="cb16-202"><a href="#cb16-202"></a><span class="in">```</span></span>
+<span id="cb16-203"><a href="#cb16-203"></a></span>
+<span id="cb16-204"><a href="#cb16-204"></a><span class="in">```{r eval = FALSE, fig.width = 8, fig.height = 15}</span></span>
+<span id="cb16-205"><a href="#cb16-205"></a><span class="in"># Construct heatmap 3</span></span>
+<span id="cb16-206"><a href="#cb16-206"></a><span class="in">heatmap.2(plot_data,</span></span>
+<span id="cb16-207"><a href="#cb16-207"></a><span class="in">  dendrogram = "row",       ### WE CHANGED THIS FROM "none" TO "row"</span></span>
+<span id="cb16-208"><a href="#cb16-208"></a><span class="in">  Rowv = TRUE,            </span></span>
+<span id="cb16-209"><a href="#cb16-209"></a><span class="in">  scale = "column",</span></span>
+<span id="cb16-210"><a href="#cb16-210"></a><span class="in">  keysize = 0.7, </span></span>
+<span id="cb16-211"><a href="#cb16-211"></a><span class="in">  density.info = "none",</span></span>
+<span id="cb16-212"><a href="#cb16-212"></a><span class="in">  col = hcl.colors(256), </span></span>
+<span id="cb16-213"><a href="#cb16-213"></a><span class="in">  margins = c(10, 20),</span></span>
+<span id="cb16-214"><a href="#cb16-214"></a><span class="in">  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),</span></span>
+<span id="cb16-215"><a href="#cb16-215"></a><span class="in">  sepcolor = "white", trace = "none"</span></span>
+<span id="cb16-216"><a href="#cb16-216"></a><span class="in">)</span></span>
+<span id="cb16-217"><a href="#cb16-217"></a><span class="in">```</span></span>
+<span id="cb16-218"><a href="#cb16-218"></a></span>
+<span id="cb16-219"><a href="#cb16-219"></a><span class="fu">#### Part b {-}</span></span>
+<span id="cb16-220"><a href="#cb16-220"></a></span>
+<span id="cb16-221"><a href="#cb16-221"></a>In the final two plots, the states (rows) are rearranged by similarity with respect to these education metrics. The *final* plot includes a **dendrogram** which further indicates *clusters* of similar states. In short, states that have a shorter path to connection are more similar than others.</span>
+<span id="cb16-222"><a href="#cb16-222"></a></span>
+<span id="cb16-223"><a href="#cb16-223"></a>Putting this all together, what insight do you gain about the education trends across U.S. states? Which states are similar? In what ways are they similar? Are there any outliers with respect to 1 or more of the education metrics?</span>
+<span id="cb16-224"><a href="#cb16-224"></a></span>
+<span id="cb16-225"><a href="#cb16-225"></a>Geographically, the closer the states to each other, the more similiar their eductation. Minnesota, Wisconsin, Illinois are very similar to each other in terms of spending and sat etc, with Michigan being less similar. California and Utah have very high "ratio".</span>
+<span id="cb16-226"><a href="#cb16-226"></a></span>
+<span id="cb16-227"><a href="#cb16-227"></a></span>
+<span id="cb16-228"><a href="#cb16-228"></a><span class="fu">### Exercise 7: Star plots {-}</span></span>
+<span id="cb16-229"><a href="#cb16-229"></a></span>
+<span id="cb16-230"><a href="#cb16-230"></a>Like heat maps, star plots indicate the relative scale of each variable for each state. Thus, we can use star maps to identify similar groups of states, and unusual states!</span>
+<span id="cb16-231"><a href="#cb16-231"></a></span>
+<span id="cb16-232"><a href="#cb16-232"></a><span class="fu">#### Part a {-}</span></span>
+<span id="cb16-233"><a href="#cb16-233"></a></span>
+<span id="cb16-234"><a href="#cb16-234"></a>Construct and check out the star plot below. Note that each state has a "pie", with each segment corresponding to a different variable. The larger a segment, the larger that variable's value is in that state. For example:</span>
+<span id="cb16-235"><a href="#cb16-235"></a></span>
+<span id="cb16-236"><a href="#cb16-236"></a><span class="ss">-   </span>Check out Minnesota. How does Minnesota's education metrics compare to those in other states? What metrics are relatively high? Relatively low?</span>
+<span id="cb16-237"><a href="#cb16-237"></a><span class="ss">-   </span>What states appear to be similar? Do these observations agree with those that you gained from the heat map?</span>
+<span id="cb16-238"><a href="#cb16-238"></a></span>
+<span id="cb16-239"><a href="#cb16-239"></a><span class="in">```{r eval = FALSE, fig.width = 10, fig.height = 20}</span></span>
+<span id="cb16-240"><a href="#cb16-240"></a><span class="in">stars(plot_data,</span></span>
+<span id="cb16-241"><a href="#cb16-241"></a><span class="in">  flip.labels = FALSE,</span></span>
+<span id="cb16-242"><a href="#cb16-242"></a><span class="in">  key.loc = c(10, 1.5),</span></span>
+<span id="cb16-243"><a href="#cb16-243"></a><span class="in">  cex = 1, </span></span>
+<span id="cb16-244"><a href="#cb16-244"></a><span class="in">  draw.segments = TRUE</span></span>
+<span id="cb16-245"><a href="#cb16-245"></a><span class="in">)</span></span>
+<span id="cb16-246"><a href="#cb16-246"></a><span class="in">```</span></span>
+<span id="cb16-247"><a href="#cb16-247"></a></span>
+<span id="cb16-248"><a href="#cb16-248"></a><span class="fu">#### Part b {-}</span></span>
+<span id="cb16-249"><a href="#cb16-249"></a></span>
+<span id="cb16-250"><a href="#cb16-250"></a>Finally, let's plot the state stars by *geographic* location! What new insight do you gain here?!</span>
+<span id="cb16-251"><a href="#cb16-251"></a></span>
+<span id="cb16-252"><a href="#cb16-252"></a><span class="in">```{r eval = FALSE, fig.width = 10, fig.height = 7}</span></span>
+<span id="cb16-253"><a href="#cb16-253"></a><span class="in">stars(plot_data,</span></span>
+<span id="cb16-254"><a href="#cb16-254"></a><span class="in">  flip.labels = FALSE,</span></span>
+<span id="cb16-255"><a href="#cb16-255"></a><span class="in">  locations = data.matrix(as.data.frame(state.center)),  # added external data to arrange by geo location</span></span>
+<span id="cb16-256"><a href="#cb16-256"></a><span class="in">  key.loc = c(-110, 28),</span></span>
+<span id="cb16-257"><a href="#cb16-257"></a><span class="in">  cex = 1, </span></span>
+<span id="cb16-258"><a href="#cb16-258"></a><span class="in">  draw.segments = TRUE</span></span>
+<span id="cb16-259"><a href="#cb16-259"></a><span class="in">)</span></span>
+<span id="cb16-260"><a href="#cb16-260"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
