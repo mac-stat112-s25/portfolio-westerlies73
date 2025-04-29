@@ -1,0 +1,56 @@
+---
+title: "Exam 1"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(tidytuesdayR)
+library(viridisLite)
+```
+
+```{r}
+tuesdata <- tt_load("2020-02-18")
+fc <- tuesdata$food_consumption
+```
+
+```{r}
+str(tuesdata)
+
+head(tuesdata, 6)
+
+dim(tuesdata)
+
+class(tuesdata)
+
+tail(tuesdata, 6)
+```
+
+```{r}
+fc_clean <- fc |>
+  select(c(country, food_category, consumption))
+```
+
+```{r}
+#| fig-height: 22
+#| fig-width: 11
+#| fig-cap: "All countries' different food consumption category plotted on one graph. Countries have very different consumption."
+#| fig-alt: "All countries' different food consumption category plotted on one graph. Countries have very different consumption."
+
+fc_clean |>
+  mutate(country = fct_rev(factor(country)))|>
+  ggplot(aes(x = country, y = consumption, fill = food_category)) +
+    geom_bar(stat = "identity") +
+    labs(title = "Food Consumption by Category Across Countries",
+      x = "Country",
+      y = "Consumption kg/person/year",
+      caption = "Visualized by Benjamin Weng\nSource: TidyTuesday",
+      fill = "Food Category") +
+    theme_minimal() + coord_flip() + scale_fill_viridis_d()
+
+```
+Thought Process: pretty regular stacked bar plotting, but I found the country name hard to read so flipped the coordinates.
+
+Additional Questions:
+  1. What country consumes the most diary product?
+  2. What are the trends of CO2 emission?

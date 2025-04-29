@@ -1,0 +1,64 @@
+---
+title: "Solo Project"
+---
+
+```{r}
+library(tidyverse)
+library(sf)
+library(viridisLite)
+burritos <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2023/2023-05-16/tornados.csv')
+```
+
+
+```{r}
+shape <- read_sf("tl_2024_us_county\\tl_2024_us_county.shp")
+
+ohio_shape <- shape|>
+  filter(STATEFP == 39)|> #Ohio state number
+  mutate(COUNTYFP = as.numeric(COUNTYFP))
+```
+
+```{r}
+OHburritos <- burritos|>
+  filter(st == "OH", ns == 1)|> #Filtering out Ohio tornado. Number of state affected filtered to 1.
+  select(om, date, loss, f1, f2, f3, f4)|>
+  pivot_longer(cols = c(f1, f2, f3, f4), names_to = "county_order", values_to = "county_code")|> #pivot long so I can count
+  count(county_code, name = "n_burritos")|>
+  filter(county_code != 0)|> #0 is placeholder for NA so filter
+  mutate(county_code = as.numeric(county_code))
+```
+
+```{r}
+map_burrito <- ohio_shape |>
+  left_join(OHburritos, by = c("COUNTYFP" = "county_code"))
+```
+
+
+```{r}
+OHpop <- read_csv("PopulationEstimates.csv")
+OHpop <- OHpop |>
+  filter(State == "OH", Attribute == "POP_ESTIMATE_2023", FIPStxt != 39000)|>
+  mutate(FIPStxt = as.numeric(str_sub(FIPStxt, 3)))
+```
+
+```{r}
+map_ohpop <- ohio_shape |>
+  left_join(OHpop, by = c("COUNTYFP" = "FIPStxt"))
+```
+
+```{r}
+#| fig-cap: "Franklin, Van Vert, Lorain, Huron, Medina, Clinton, Miami, and Clark counties are most heavily affected."
+#| fig-alt: "Franklin, Van Vert, Lorain, Huron, Medina, Clinton, Miami, and Clark counties are most heavily affected."
+ggplot() + geom_sf(data = map_burrito, aes(fill = n_burritos)) + labs(title = "Ohio Counties by Number of Tornadoes, 1950 - 2022", fill = "Tornado Count", caption = "Visualized by: Benjamin Weng\nSource: TidyTuesday/NOAA") + theme_minimal() + scale_fill_viridis_c(option = "rocket", direction = -1)
+```
+
+```{r}
+#| fig-cap: "Ohio population by county. Cuyahoga, Franklin, and Hamilton counties are most populated due to cities."
+#| fig-alt: "Ohio population by county. Cuyahoga, Franklin, and Hamilton counties are most populated due to cities."
+ggplot() + geom_sf(data = map_ohpop, aes(fill = Value)) + labs(title = "Ohio Counties by Population, 2023", fill = "Population", caption = "Visualized by: Benjamin Weng\nSource: USDA") + theme_minimal() + scale_fill_viridis_c(option = "rocket", direction = -1)
+```
+
+It almost seems like the surrounding counties of major cities have far more tornadoes. My hypotheses are:
+1. Tornado report is heavily relied on sightings. Without sightings, the rural area has more tornadoes unreported.
+2. Major cities monitor their tornadoes more heavily due to safety concerns. This includes monitoring surrounding counties.
+3. The urban counties themselves don't seem to have too many tornadoes except for Franklin. It might be due to the nature of urban landscape is less prone to tornadoes.
